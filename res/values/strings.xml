@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="main_title">Android for Dummies</string>
     <string name="app_name">TaxiMap</string>
-  	<string name="title">Tic-Tac-Toe</string>
   	<string name="help_title">Help</string>
-	<string name="help_text">
-		<b>About Tic-Tac-Toe</b>\n
-		Tic-Tac-Toe is a two-player game.\n
-		Each player claims one of two symbols\n
-		– “O” or “X” – and attempts to\n
-		alternately place their symbol in empty\n
-		locations in a 3-by-3 grid, so as\n
-		to get three of the same symbol\n
-		adjacent to each other in a straight\n
-		line – either in a row or column, or\n
-		across a diagonal.\n
-		\n\n	
-	</string>
 	<string name="settings_label">Settings</string>
     <string name="login_title">Taxi Map</string>
     <string name="enter_username">Enter Username</string>
@@ -31,4 +16,5 @@
     <string name="done">Done</string>
     <string name="cancel">Cancel</string>
     <string name="permission_launch_activity"> This permission allows launching an activity in this application </string>
+    <string name="hail_taxi_button">Hail Taxi</string>
 </resources>
