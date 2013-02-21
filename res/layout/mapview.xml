@@ -6,15 +6,20 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mapView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:apiKey="AIzaSyC2BCC1wJhshLYkbC7wsgbJFHDtlHKkK3M"
         android:clickable="true" />
 
-    <Button android:layout_below="@+id/mapView"
-        android:text="@+id/hailTaxiButton"
+    <Button
         android:id="@+id/hailTaxi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentCenter="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_centerHorizontal="true"
+        android:text="@string/hail_taxi_button"
+        android:textSize="20sp" />
+
 </RelativeLayout>
