@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
 
 public class SplashScreen extends Activity {
     protected boolean active = true;
@@ -37,7 +39,8 @@ public class SplashScreen extends Activity {
                 } finally {
                     finish();
                     //intent invocation - Matching component name 
-                    startActivity(new Intent("com.example.taximap.Login"));	
+                    startActivity(new Intent("com.example.taximap.Login"));
+                    startActivity(new Intent("com.example.taximap.Navigation"));
                 }
             }
         };
