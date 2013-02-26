@@ -1,5 +1,4 @@
 <resources>
-    
-    
-    
+    <style name="DropDownNav" parent="android:Theme.Holo.Light">
+	</style>
 </resources>
