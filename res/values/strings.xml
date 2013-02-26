@@ -17,4 +17,6 @@
     <string name="cancel">Cancel</string>
     <string name="permission_launch_activity"> This permission allows launching an activity in this application </string>
     <string name="hail_taxi_button">Hail Taxi</string>
+    <string name="pref_button">Preferences</string>
+    <string name="profile_button">User Profile</string>
 </resources>
