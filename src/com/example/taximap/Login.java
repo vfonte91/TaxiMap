@@ -1,14 +1,9 @@
 package com.example.taximap;
 
-import java.util.List;
 import com.example.taximap.R;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,11 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class Login extends Activity implements OnClickListener{
-   private DatabaseHelper dh;					//helper database class
-   private QueryDatabaseLogin qd;					//new database helper
+   //private DatabaseHelper dh;					//from old login system
    private EditText userNameEditableField;
    private EditText passwordEditableField;
-   private final static String OPT_NAME="name";	//what is this OPT_NAME
+   //private final static String OPT_NAME="name";	//from old login system
    private static final String TAG = "Login Activity";
     @Override
     public void onCreate(Bundle savedInstanceState) {
