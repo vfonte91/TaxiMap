@@ -16,7 +16,7 @@ public class Account extends Activity implements OnClickListener{
 	private EditText etUsername;
 	private EditText etPassword;
 	private EditText etConfirm;
-	private DatabaseHelper dh;
+	//private DatabaseHelper dh; - From Old Login Method
 	   
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +38,14 @@ public class Account extends Activity implements OnClickListener{
         String confirm	= etConfirm.getText().toString();
         if ((password.equals(confirm))&&(!username.equals(""))&&(!password.equals(""))&&(!confirm.equals("")))
         {
+        	new QueryDatabaseNewUser(this).execute(username, password);
+        	/* OLD CREATE ACCOUNT METHOD - remove?
         	this.dh = new DatabaseHelper(this);
         	this.dh.insert(username, password);
         	//this.labResult.setText("Added");
         	Toast.makeText(Account.this, "new record inserted",Toast.LENGTH_SHORT).show();
         	finish();
+        	*/
         }
         else if((username.equals(""))||(password.equals(""))||(confirm.equals("")))
         {
@@ -65,7 +68,6 @@ public class Account extends Activity implements OnClickListener{
 		switch (v.getId()) {
   		case R.id.done_button:
 		    CreateAccount();
-		    finish();
 		    break;
 		case R.id.cancel_button:
 		   	finish();
