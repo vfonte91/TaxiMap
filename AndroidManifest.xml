@@ -4,7 +4,7 @@
     package="com.example.taximap"
     android:versionCode="1"
     android:versionName="1.0" >
-
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <permission
         android:name="com.example.taximap.LAUNCHACTIVITY"
         android:description="@string/permission_launch_activity"
@@ -25,7 +25,7 @@
         android:required="true" />
 
     <uses-permission android:name="com.example.taximap.permission.MAPS_RECEIVE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

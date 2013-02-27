@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 public class Login extends Activity implements OnClickListener{
    private DatabaseHelper dh;					//helper database class
+   private QueryDatabaseLogin qd;					//new database helper
    private EditText userNameEditableField;
    private EditText passwordEditableField;
    private final static String OPT_NAME="name";	//what is this OPT_NAME
@@ -64,6 +65,7 @@ public class Login extends Activity implements OnClickListener{
     	Log.i(TAG, "onDestroy()");
     }
     
+    
     public void onRestart(){
     	super.onRestart();
     	Log.i(TAG, "onRestart()");
@@ -71,6 +73,9 @@ public class Login extends Activity implements OnClickListener{
     private void checkLogin(){
     	String username=this.userNameEditableField.getText().toString();
         String password=this.passwordEditableField.getText().toString();
+        new QueryDatabaseLogin(this).execute(username, password);        
+       
+        /* OLD LOGIN METHOD - Can it be deleted?
         this.dh=new DatabaseHelper(this);
         List<String> names=this.dh.selectAll(username,password);
         if(names.size() >0){ // Login successful
@@ -101,6 +106,7 @@ public class Login extends Activity implements OnClickListener{
     		})
     		.show();
         }
+        */
       }
     
     public void onClick(View v) {			//Login activity's click event
