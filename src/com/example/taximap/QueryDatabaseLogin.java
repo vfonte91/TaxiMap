@@ -50,6 +50,7 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer>{
 		        uid = Integer.parseInt(line);
 		}catch(Exception e){
 		        Log.e("log_tag", "Error in http connection "+e.toString());
+		        uid = -5;
 		}
 		
 		return uid;
@@ -65,6 +66,14 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer>{
     		})
     		.show();
             
+        } else if(result==-5){ 
+        	new AlertDialog.Builder(context)
+    		.setTitle("Error")
+    		.setMessage("Trouble Connecting To Database, Check Network Connection")
+    		.setNeutralButton("Try Again", new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int which) {}
+    		})
+    		.show();
         } else { 
         	new AlertDialog.Builder(context)
     		.setTitle("Error")
