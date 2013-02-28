@@ -70,6 +70,7 @@ public class Login extends Activity implements OnClickListener{
         new QueryDatabaseLogin(this).execute(username, password);        
        
         /* OLD LOGIN METHOD - Can it be deleted?
+         * Yeah, Zach. Please Do. Wei.
         this.dh=new DatabaseHelper(this);
         List<String> names=this.dh.selectAll(username,password);
         if(names.size() >0){ // Login successful
