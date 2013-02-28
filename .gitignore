@@ -27,3 +27,6 @@ proguard/
 *.ipr
 *.iws
 .idea/
+AWS Information/.DS_Store
+project.properties
+.DS_Store
