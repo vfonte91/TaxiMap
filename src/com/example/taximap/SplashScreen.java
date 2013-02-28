@@ -21,6 +21,7 @@ public class SplashScreen extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	
+    	// MICHAEL WAS HERE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         
