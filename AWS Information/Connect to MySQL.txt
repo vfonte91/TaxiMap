@@ -1,0 +1,9 @@
+The MySQL Database can not be connected to from outside the AWS EC2 server I set up for security purposes (unless I add your ip address manually, something I want to avoid) For this reason, if you want to make mysq queries they must be made within a PHP script on the EC2 server.
+
+Make MySQL Query:
+
+1) SCP into the EC2 server as described in 'Connect To Web Server SSH.txt'
+
+2) put your php script that runs mysql query in the /var/www/html folder
+
+3) run the php script by going to your web browser to ec2-23-22-121-122.compute-1.amazonaws.com/[scriptname].php

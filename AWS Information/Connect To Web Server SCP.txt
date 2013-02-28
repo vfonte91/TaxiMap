@@ -1,0 +1,28 @@
+Note: I wrote these directions for Windows, Mac may be simial though
+
+Use: SCP can be used to easily add files to the beb server. I have to pay read money (dollars) if we exceed the free teir limits, so please limit use of this space to scripts and pages we need for this class. 
+
+Steps to Connect:
+
+1) Download WinSCP (http://winscp.net/eng/download.php)
+
+2) Install WinSCP (Duh) (I recomend the command mode option [default])
+
+3) Ensure you have the taximap.ppk key, located in this directory
+
+4) Launch WinSCP
+
+5) Use Following Configuration Of Session:
+	File Protocol: SFTP
+	Host Name: ec2-23-22-121-122.compute-1.amazonaws.com
+	Port Number: 22
+	User Name: ec2-user
+	Password: [Leave Blank]
+	Private Key: [Select the taximap.ppk key I created that is in the directory]
+
+6) Click Login
+
+7) For quick future use, go to Session>Save Session
+
+8) Web Directory is in ../var/www/html
+	Please don't upload files in any directory other than this

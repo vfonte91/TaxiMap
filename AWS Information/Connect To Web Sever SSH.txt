@@ -1,0 +1,23 @@
+Note: I wrote these directions for Windows, Mac may be simial though
+
+Use: SSH can be used to access the server terminal for the AWS Server. I have to pay read money (dollars) if we exceed the free teir server limits, so please limit use of this to project related things. 
+
+Steps to Connect:
+
+1) Download Putty(http://sourceforge.net/projects/putty.mirror/?source=dlp)
+
+2) Ensure you have the taximap.ppk key, located in this directory
+
+3) Launch Putty
+
+4) Use Following Configuration Of Putty:
+	Connection Type: SSH
+	Host Name: ec2-23-22-121-122.compute-1.amazonaws.com
+	Port Number: 22
+	Connection>SSH>Auth>Private key file for authentication: Use taximap.ppk key in this folder
+
+5) Go Back to the Session page and type a name for the session in saved sessions and click save to save time for future use
+
+7) When prompted: login as: ec2-user
+
+8) Use the "sudo -i" command to run as root
