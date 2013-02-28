@@ -1,9 +1,13 @@
-The MySQL Database can not be connected to from outside the AWS EC2 server I set up for security purposes (unless I add your ip address manually, something I want to avoid) For this reason, if you want to make mysq queries they must be made within a PHP script on the EC2 server.
+The MySQL Database can not be connected to from outside the OSU network for security purposes (unless I add your ip address manually, something I want to avoid)
 
 Make MySQL Query:
 
-1) SCP into the EC2 server as described in 'Connect To Web Server SSH.txt'
+1) Download MySQL Workbench
 
-2) put your php script that runs mysql query in the /var/www/html folder
+2) Create new connection with following parameters:
+Connection Method: Standard (TCP/IP)
+hostname: taximapdb.cjjop4l4xg9o.us-east-1.rds.amazonaws.com
+port: 3306
+username: taximap
 
-3) run the php script by going to your web browser to ec2-23-22-121-122.compute-1.amazonaws.com/[scriptname].php
+3) Open the connection and when prompted for a password enter 'password'
