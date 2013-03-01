@@ -31,7 +31,7 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
     }
 	
 	protected Integer[] doInBackground(String... username) {
-		Integer uid=0, type=0;
+		Integer[] return_result = new Integer[2];
 		String line;
 		//the data to send
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -51,15 +51,12 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		        JSONObject json_login = new JSONObject(line);
 		        String  uid_string = json_login.getString("uid");
 		        String type_string = json_login.getString("type");
-		        uid = Integer.valueOf(uid_string);
-		        type = Integer.valueOf(type_string);		        
+		        return_result[0] = Integer.valueOf(uid_string);
+		        return_result[1] = Integer.valueOf(type_string);		        
 		}catch(Exception e){
 		        Log.e("log_tag", "Error in http connection "+e.toString());
-		        uid = -5;
-		}
-		Integer[] return_result = new Integer[2];
-		return_result[0] = uid;
-		return_result[1] = type;
+		        return_result[0] = -5;
+		}		
 		return return_result;
 	}
 	
