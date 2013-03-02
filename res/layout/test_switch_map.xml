@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Crimson"
+    android:orientation="horizontal"
+    android:padding="@dimen/default_padding" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/load_driver_map_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:text="Customer Map View" />
+
+        <Button
+            android:id="@+id/load_customer_map_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Driver Map View" />
+
+        <Button
+            android:id="@+id/exit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Exit TaxiMap" />
+    </LinearLayout>
+
+</ScrollView>

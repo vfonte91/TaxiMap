@@ -12,7 +12,7 @@ import android.widget.SpinnerAdapter;
 
 public class SplashScreen extends Activity {
     protected boolean active = true;
-    protected int splashTime = 3000;
+    protected int splashTime = 1000;
     protected int timeIncrement = 100;
     protected int sleepTime = 100;
     private static final String TAG = "Splash Screen Activity";
@@ -40,8 +40,8 @@ public class SplashScreen extends Activity {
                 } finally {
                     finish();
                     //intent invocation - Matching component name 
-                    startActivity(new Intent("com.example.taximap.Login"));
-                    startActivity(new Intent("com.example.taximap.Navigation"));
+                    startActivity(new Intent("com.example.taximap.CustomerMap"));
+                    //startActivity(new Intent("com.example.taximap.Navigation"));		//Navigation.xml missing..
                 }
             }
         };

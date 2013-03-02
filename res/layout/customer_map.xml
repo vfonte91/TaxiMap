@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- View Customers -->
+    <com.google.android.maps.MapView
+        android:id="@+id/customer_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight=".70"
+        android:clickable="true"
+        android:enabled="true" 
+        android:apiKey="@string/maps_api_key"/>
+
+    <Button
+        android:id="@+id/load_customer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top2"
+        android:text="@string/test_load_customers" />
+</LinearLayout>

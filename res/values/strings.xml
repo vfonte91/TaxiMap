@@ -3,6 +3,8 @@
     <string name="app_name">TaxiMap</string>
   	<string name="help_title">Help</string>
 	<string name="settings_label">Settings</string>
+	
+	<!-- start for login -->
     <string name="login_title">Taxi Map</string>
     <string name="enter_username">Enter Username</string>
     <string name="enter_password">Enter Password</string>
@@ -15,13 +17,26 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="done">Done</string>
     <string name="cancel">Cancel</string>
+    <!-- start for login -->
+    
     <string name="permission_launch_activity"> This permission allows launching an activity in this application </string>
     <string name="hail_taxi_button">Hail Taxi</string>
     <string name="pref_button">Preferences</string>
     <string name="profile_button">User Profile</string>
 
+	<!-- start for maps -->
+    <string name="switch_view">Switch View</string>
+    <string name="customer_map_view">Customer Map View</string>
+    <string name="driver_map_view">Driver Map View</string>
+    <string name="maps_api_key">0N1aPlwore4z0JEnVEXxOsCjYEb42yD-KesEAQA</string>
+    <string name="generic_map_label">Map View</string>
+    <string name="test_load_customers">Test Load Customers</string>
+    <string name="test_load_drivers">Test Load Customers</string>
+    <!-- end for maps -->
+    
     <string-array name="nav_list">
         <item>Tab1</item>
         <item>Tab2</item>
     </string-array>
+    
 </resources>
