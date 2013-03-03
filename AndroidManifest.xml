@@ -39,11 +39,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".TestSwitchMap"
+            android:name=".map.TestSwitchMap"
             android:label="@string/generic_map_label" >
         </activity>
         <activity
-            android:name=".CustomerMap"
+            android:name=".map.CustomerMap"
             android:label="@string/generic_map_label" >
 			<!-- Cut and paste this intent-filter to set the activity you want to test as the main activity... Wei -->
             <intent-filter>
@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DriverMap"
+            android:name=".map.DriverMap"
             android:label="@string/generic_map_label" >
         </activity>
     </application>

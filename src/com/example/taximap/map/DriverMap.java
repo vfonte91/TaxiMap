@@ -1,4 +1,4 @@
-package com.example.taximap;
+package com.example.taximap.map;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -14,13 +14,11 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
-import com.google.android.maps.OverlayItem;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 
 /*
 import android.hardware.Sensor;
@@ -31,8 +29,6 @@ import android.hardware.SensorManager;
 
 import com.google.android.maps.Overlay;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import android.view.MotionEvent;
@@ -45,6 +41,9 @@ import java.util.Locale;
 import java.io.IOException;
 
 import com.example.taximap.R;
+import com.example.taximap.R.drawable;
+import com.example.taximap.R.id;
+import com.example.taximap.R.layout;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -54,7 +53,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 
-public class CustomerMap extends MapActivity {
+public class DriverMap extends MapActivity {
 	MapView mapView;
 	MapController mc;
 	GeoPoint p;
@@ -83,7 +82,7 @@ public class CustomerMap extends MapActivity {
             return true;
         }
         
-       /* @Override
+        @Override
         public boolean onTouchEvent(MotionEvent event, MapView mapView) 
         {   
             //---when user lifts his finger---
@@ -92,13 +91,13 @@ public class CustomerMap extends MapActivity {
                     (int) event.getX(),
                     (int) event.getY());
                 
-                
+                /*
                     Toast.makeText(getBaseContext(), 
                     	"Location: "+ 
                         p.getLatitudeE6() / 1E6 + "," + 
                         p.getLongitudeE6() /1E6 , 
                         Toast.LENGTH_SHORT).show();
-                        
+                        */
                 
                 Geocoder geoCoder = new Geocoder(
                         getBaseContext(), Locale.getDefault());
@@ -123,18 +122,17 @@ public class CustomerMap extends MapActivity {
                     return true;
             }                            
             return false;
-        }        	*/
+        }        	
     } 
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		setContentView(R.layout.customer_map);
-
+        setContentView(R.layout.driver_map);       
         
         //---Get version code of app---
-/*        PackageManager pm = getPackageManager();
+        PackageManager pm = getPackageManager();
         try {
             //---get the package info---
             PackageInfo pi =  
@@ -146,52 +144,34 @@ public class CustomerMap extends MapActivity {
         } catch (NameNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }*/
+        }
         //------------------------------        
-        //get map view
-        mapView = (MapView) findViewById(R.id.customer_map_view);
+        
+        mapView = (MapView) findViewById(R.id.driver_map_view);
         mapView.setBuiltInZoomControls(true);
         
         mapView.setSatellite(false);
         mapView.setStreetView(true);
-        mapView.setTraffic(true);
+        //mapView.setTraffic(true);
         
         mc = mapView.getController();
-        mc.setZoom(10);    
-        List<Overlay> mapOverlays = mapView.getOverlays();
-        Drawable drawable = this.getResources().getDrawable(R.drawable.androidmarker);
-        MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable, this);
         
-        // fake customer points
-        List<List<Double>> customerLatLon=new ArrayList<List<Double>>();
-        customerLatLon.add(Arrays.asList(39.988695, -83.051147));
-        customerLatLon.add(Arrays.asList(39.888695, -83.051147));
-        customerLatLon.add(Arrays.asList(39.788695, -83.051147));
-        customerLatLon.add(Arrays.asList(39.988695, -82.851147));
-        customerLatLon.add(Arrays.asList(39.888695, -82.851147));
-        customerLatLon.add(Arrays.asList(39.788695, -82.851147));
-        for(List<Double> latlon:customerLatLon){
-        	GeoPoint point = new GeoPoint((int)(latlon.get(0)* 1E6),(int)(latlon.get(1)* 1E6));
-        	OverlayItem overlayitem = new OverlayItem(point, "Hola, Mundo!", "I'm in Columbus!");
-        	itemizedoverlay.addOverlay(overlayitem);
-        	mapOverlays.add(itemizedoverlay);
-        }
-
         //---navigate to a point first---
-       /* String coordinates[] = {"39.888695", "-82.907202"};
+        String coordinates[] = {"1.352566007", "103.78921587"};
         double lat = Double.parseDouble(coordinates[0]);
         double lng = Double.parseDouble(coordinates[1]); 
         p = new GeoPoint(
             (int) (lat * 1E6), 
             (int) (lng * 1E6)); 
-        //mc.animateTo(p);     
+        //mc.animateTo(p);
+        mc.setZoom(13);         
         
         //---Add a location marker---
         MapOverlay mapOverlay = new MapOverlay();
         List<Overlay> listOfOverlays = mapView.getOverlays();
         listOfOverlays.clear();
         listOfOverlays.add(mapOverlay); 
-        mapView.invalidate();*/
+        mapView.invalidate();
                 
         /*       
         //---reverse geo-coding---
@@ -213,7 +193,7 @@ public class CustomerMap extends MapActivity {
         */
         
         //---use the LocationManager class to obtain locations data---
-        /*lm = (LocationManager) 
+        lm = (LocationManager) 
             getSystemService(Context.LOCATION_SERVICE);
         
         //---PendingIntent to launch activity if the user is within some locations---
@@ -235,7 +215,7 @@ public class CustomerMap extends MapActivity {
                 LocationManager.NETWORK_PROVIDER, 
                 0, 
                 0, 
-                locationListener);*/
+                locationListener);
                 
         /*        
         mySensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);

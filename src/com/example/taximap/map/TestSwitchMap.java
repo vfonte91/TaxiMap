@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.taximap;
+package com.example.taximap.map;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,6 +24,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.example.taximap.R;
+import com.example.taximap.R.id;
+import com.example.taximap.R.layout;
 
 public class TestSwitchMap extends Activity implements OnClickListener {
 
