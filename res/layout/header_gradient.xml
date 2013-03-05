@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/repeat_hd" 
+    android:tileMode="repeat" />
+
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" >
+
+    <gradient
+        android:startColor="#FFFF00"
+        android:centerColor="#FFFF00"
+        android:endColor="#FFFF00"
+        android:angle="270"/>
+    <corners android:radius="5dp" />
+</shape>-->

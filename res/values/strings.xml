@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TaxiMap</string>
+    <string name="app_name">Taxi Map</string>
   	<string name="help_title">Help</string>
 	<string name="settings_label">Settings</string>
 	
@@ -14,10 +14,11 @@
     <string name="new_account">Create New Account</string>
     <string name="new_user">User Name</string>
     <string name="new_password">Password</string>
+    <string name="new_register">New? Register Here</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="done">Done</string>
     <string name="cancel">Cancel</string>
-    <!-- start for login -->
+    <!-- end for login -->
     
     <string name="permission_launch_activity"> This permission allows launching an activity in this application </string>
     <string name="hail_taxi_button">Hail Taxi</string>
