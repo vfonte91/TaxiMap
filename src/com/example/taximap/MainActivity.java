@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
-public class SplashScreen extends Activity {
+public class MainActivity extends Activity {
     protected boolean active = true;
     protected int splashTime = 1000;
     protected int timeIncrement = 100;
