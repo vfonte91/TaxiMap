@@ -40,7 +40,7 @@ public class SplashScreen extends Activity {
                     finish();
                     //intent invocation - Matching component name 
                     startActivity(new Intent("com.example.taximap.Login"));
-                    startActivity(new Intent("com.example.taximap.Navigation"));
+                    //startActivity(new Intent("com.example.taximap.Navigation"));
                 }
             }
         };
