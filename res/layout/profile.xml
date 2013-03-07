@@ -1,8 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-
+        <TextView  
+            android:text="@string/edit_new_password"
+     	    style="@style/AppTheme"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+			android:layout_gravity="center"
+			android:layout_marginBottom="@dimen/margin_bottom1"
+			android:textSize="@dimen/default_title"/>
+     	<EditText
+			android:id="@+id/password"
+     	    style="@style/AppTheme"
+			android:singleLine="true"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="textPassword"/>
+        <TextView  
+            android:text="@string/edit_confirm_password"
+     	    style="@style/AppTheme"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+			android:layout_gravity="center"
+			android:layout_marginBottom="@dimen/margin_bottom1"
+			android:textSize="@dimen/default_title"/>
+     	<EditText
+			android:id="@+id/confirm_password"
+     	    style="@style/AppTheme"
+			android:singleLine="true"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="textPassword"/>
+        <TextView  
+            android:text="@string/edit_phone_number"
+     	    style="@style/AppTheme"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+			android:layout_gravity="center"
+			android:layout_marginBottom="@dimen/margin_bottom1"
+			android:textSize="@dimen/default_title"/>
+     	<EditText
+     	    android:id="@+id/phone_number"
+     	    style="@style/AppTheme"
+     	    android:layout_width="match_parent"
+     	    android:layout_height="wrap_content"
+     	    android:inputType="phone"
+     	    android:singleLine="true" />
+     	<Button
+     	    android:id="@+id/edit_save_button"
+     	    style="@style/AppTheme"
+     	    android:layout_width="match_parent"
+     	    android:layout_height="wrap_content"
+     	    android:text="@string/edit_save" />
+     	<Button
+     	    android:id="@+id/edit_save_cancel"
+     	    style="@style/AppTheme"
+     	    android:layout_width="match_parent"
+     	    android:layout_height="wrap_content"
+     	    android:text="@string/edit_cancel" />
 </LinearLayout>

@@ -33,10 +33,27 @@
     <string name="test_load_customers">Test Load Customers</string>
     <string name="test_load_drivers">Test Load Customers</string>
     <!-- end for maps -->
-    
-    <string-array name="nav_list">
-        <item>Tab1</item>
-        <item>Tab2</item>
+
+
+    <!-- edit profile -->
+    <string name="edit_new_password">New password</string>
+    <string name="edit_confirm_password">New password</string>
+    <string name="edit_phone_number">Phone number</string>
+    <string name="edit_save">Save</string>
+    <string name="edit_cancel">Cancel</string>
+    <!-- end profile -->
+
+	<!-- filter -->
+    <string-array name="car_type">
+        <item>Any</item>
+        <item>Van</item>
+        <item>Car</item>
     </string-array>
-    
+    <string-array name="company_list">
+        <item>Company 1</item>
+        <item>Company 2</item>
+        <item>Company 3</item>
+        <item>Company 4</item>
+    </string-array>
+
 </resources>
