@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
   
     <permission android:name="com.example.taximap.permission.MAPS_RECEIVE" android:protectionLevel="signature" />
