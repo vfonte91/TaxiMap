@@ -50,11 +50,26 @@
         <item>Van</item>
         <item>Car</item>
     </string-array>
-    <string-array name="company_list">
-        <item>Company 1</item>
-        <item>Company 2</item>
-        <item>Company 3</item>
-        <item>Company 4</item>
+    <!-- Changed items the same as defined in the db. Wei -->
+    <string-array name="company_list">		
+        <item>Any</item>
+        <item>Blue Cab</item>
+        <item>Yellow Cab</item>
+        <item>Green Cas</item>
     </string-array>
-
+    <string-array name="rating_list">
+        <item>Any</item>		
+        <item>5 Stars</item>
+        <item>4 Stars and Above</item>
+        <item>3 Stars and Above</item>
+        <item>2 Stars and Above</item>
+        <item>1 Star and Above</item>
+    </string-array>
+	<string-array name="dist_list">
+	    <item>Any</item>		
+        <item>Within 30 mins</item>
+        <item>Within 20 mins</item>
+        <item>Within 10 mins</item>
+        <item>Within 5 mins</item>
+    </string-array>
 </resources>

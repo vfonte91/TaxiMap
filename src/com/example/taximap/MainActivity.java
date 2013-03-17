@@ -24,8 +24,8 @@ public class MainActivity extends Activity {
     	// MICHAEL WAS HERE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-        
-        //Action bar setup
+        // wei commented line 27-45. not compiled.
+        /*//Action bar setup
         ActionBar actionbar = getActionBar();
         //set navigation to tabs
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
         FilterTab.setTabListener(new TabListener(FilterFrag));
         
         actionbar.addTab(EditProfileTab);
-        actionbar.addTab(FilterTab);
+        actionbar.addTab(FilterTab);*/
         
         // thread for displaying the SplashScreen
         Thread splashThread = new Thread() {

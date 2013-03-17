@@ -1,4 +1,4 @@
-package com.example.taximap;
+package com.example.taximap.db;
 
 import android.content.Context;
 import android.database.Cursor;

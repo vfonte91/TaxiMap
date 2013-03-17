@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:title="Settings"
+  android:background="@color/background">
+  <EditTextPreference
+  	android:key="location"
+  	android:title="Enter Address"
+  	android:summary="Enter new default location"
+  	android:defaultValue="Dreese Laboratories, 2015 Neil Avenue, Columbus, OH"
+  /> 
+  <CheckBoxPreference
+  	android:key="enable_location_update"
+  	android:title="Update default location upon login"
+  	android:summary="Check to enable auto-update"
+  	android:defaultValue="true"
+  />
+</PreferenceScreen>
