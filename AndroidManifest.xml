@@ -35,7 +35,6 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.example.taximap.Login" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -61,6 +60,7 @@
             android:label="@string/generic_map_label" >
         </activity>
         
+        
         <activity android:name=".map.TabLayoutActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -70,11 +70,12 @@
         </activity>
  
         
-        <activity android:name=".map.ContentMap" />
-        
-        <activity android:name=".map.ListActivity" />
+        <activity android:name=".map.ContentMapActivity" />
         
         <activity android:name=".map.MapActivity" />
+                
+        <activity android:name=".map.ListActivity" />
+
  		
         <activity android:name=".map.FiltersActivity" />
         

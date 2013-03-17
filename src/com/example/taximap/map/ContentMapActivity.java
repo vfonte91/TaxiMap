@@ -4,14 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
 import com.example.taximap.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,7 +16,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity implements OnClickListener {
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+public class ContentMapActivity extends FragmentActivity implements OnClickListener {
+
 	private static GoogleMap gmap;
 	public static String markerType = "driver";		// set upon login either "driver" or "customer"
 	private static List<Driver> driverLst;
@@ -35,11 +36,11 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_map_layout);
-		/*View btnLoad = (Button)findViewById(R.id.load);
+		View btnLoad = (Button)findViewById(R.id.load);
 		btnLoad.setOnClickListener(this);
 		
 		View btnFilter = (Button)findViewById(R.id.filters_setting);
-		btnFilter.setOnClickListener((android.view.View.OnClickListener) this);*/
+		btnFilter.setOnClickListener((android.view.View.OnClickListener) this);
 		
 		gmap = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap(); // 获取地图对象
@@ -143,13 +144,5 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 			loadMarkers();			
 			break;
 		}
-	}
-
-
-
-	@Override
-	public void onClick(DialogInterface arg0, int arg1) {
-		// TODO Auto-generated method stub
-		
 	}
 }
