@@ -28,7 +28,7 @@ public class TabLayoutActivity extends TabActivity {
         TabSpec mapspec = tabHost.newTabSpec("Map");
         // setting Title and Icon for the Tab
         mapspec.setIndicator("Map", getResources().getDrawable(R.layout.icon_map_tab));
-        Intent mapIntent = new Intent(this, ContentMapActivity.class);
+        Intent mapIntent = new Intent(this, MapViewActivity.class);
         mapspec.setContent(mapIntent);
  
         // Tab for Filters

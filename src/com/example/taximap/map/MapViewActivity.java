@@ -3,6 +3,7 @@ package com.example.taximap.map;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import com.example.taximap.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -23,14 +25,45 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class ContentMapActivity extends FragmentActivity implements OnClickListener {
+public class MapViewActivity extends FragmentActivity implements OnClickListener {
 
 	private static GoogleMap gmap;
 	public static String markerType = "driver";		// set upon login either "driver" or "customer"
 	private static List<Driver> driverLst;
 	private static LatLngBounds.Builder boundsBuilder;
 	
+	static{
+		driverLst = new ArrayList<Driver>();
+		List<LatLng> latlnglst = Arrays.asList(
+				new LatLng(40.066824,-83.097153), 
+				new LatLng(39.963682, -83.000395),
+				new LatLng(39.985630, -83.023232), 
+				new LatLng(39.949662,-82.995415), 
+				new LatLng(40.144633, -82.981110),
+				new LatLng(39.985499, -83.005106), 
+				new LatLng(39.843014,-82.805591), 
+				new LatLng(40.054200, -83.067550),
+				new LatLng(40.016447, -83.011828), 
+				new LatLng(40.116523,-83.014359), 
+				new LatLng(40.014551, -83.011319),
+				new LatLng(39.936106, -82.983422), 
+				new LatLng(39.976447,-83.003342));
+		driverLst.add( new Driver(latlnglst.get(0),"Driver Name1","Blue Cab",5));
+		driverLst.add( new Driver(latlnglst.get(1),"Driver Name2","Blue Cab",5));
+		driverLst.add( new Driver(latlnglst.get(2),"Driver Name3","Blue Cab",5));
+		driverLst.add( new Driver(latlnglst.get(3),"Driver Name4","Blue Cab",4));
+		driverLst.add( new Driver(latlnglst.get(4),"Driver Name5","Yellow Cab",5));
+		driverLst.add( new Driver(latlnglst.get(5),"Driver Name6","Yellow Cab",5));
+		driverLst.add( new Driver(latlnglst.get(6),"Driver Name7","Yellow Cab",5));
+		driverLst.add( new Driver(latlnglst.get(7),"Driver Name8","Yellow Cab",4));
+		driverLst.add( new Driver(latlnglst.get(8),"Driver Name9","Yellow Cab",3));
+		driverLst.add( new Driver(latlnglst.get(9),"Driver Name10","Green Cab",5));
+		driverLst.add( new Driver(latlnglst.get(10),"Driver Name11","Green Cab",5));
+		driverLst.add( new Driver(latlnglst.get(11),"Driver Name12","Green Cab",5));
+		driverLst.add( new Driver(latlnglst.get(12),"Driver Name13","Green Cab",4));
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,30 +78,6 @@ public class ContentMapActivity extends FragmentActivity implements OnClickListe
 		gmap = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap(); // 获取地图对象
 		setupMapView();
-		loadData();
-		
-		
-		//loadMarkers();
-		// Move the camera instantly to Sydney with a zoom of 15.
-		/*
-		 * gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15));
-		 * 
-		 * // Zoom in, animating the camera.
-		 * gmap.animateCamera(CameraUpdateFactory.zoomIn());
-		 * 
-		 * // Zoom out to zoom level 10, animating with a duration of 2 seconds.
-		 * gmap.animateCamera(CameraUpdateFactory.zoomTo(10),2000, null );
-		 * 
-		 * // Construct a CameraPosition focusing on Mountain View and animate
-		 * the camera to that position. CameraPosition cameraPosition = new
-		 * CameraPosition.Builder() .target(MOUNTAIN_VIEW) // Sets the center of
-		 * the map to Mountain View .zoom(17) // Sets the zoom .bearing(90) //
-		 * Sets the orientation of the camera to east .tilt(30) // Sets the tilt
-		 * of the camera to 30 degrees .build(); // Creates a CameraPosition
-		 * from the builder
-		 * gmap.animateCamera(CameraUpdateFactory.newCameraPosition
-		 * (cameraPosition));
-		 */
 	}
 	
 
@@ -91,38 +100,24 @@ public class ContentMapActivity extends FragmentActivity implements OnClickListe
 		settings.setZoomGesturesEnabled(true);
 	}
 
-	private void loadData() {
-		driverLst = new ArrayList<Driver>();
-		List<LatLng> latlnglst = Arrays.asList(
-				new LatLng(39.944537, -82.989767), new LatLng(40.066824,
-						-83.097153), new LatLng(39.963682, -83.000395),
-				new LatLng(39.985630, -83.023232), new LatLng(39.949662,
-						-82.995415), new LatLng(40.144633, -82.981110),
-				new LatLng(39.985499, -83.005106), new LatLng(39.843014,
-						-82.805591), new LatLng(40.054200, -83.067550),
-				new LatLng(40.016447, -83.011828), new LatLng(40.116523,
-						-83.014359), new LatLng(40.014551, -83.011319),
-				new LatLng(39.936106, -82.983422), new LatLng(39.976447,
-						-83.003342));
-		int count = 0;
-		for (LatLng latlng : latlnglst) {
-			count++;
-			Driver driver = new Driver(latlng,
-					"name" + Integer.toString(count), "company"
-							+ Integer.toString(count), count);
-
-			MarkerOptions marker;
-			BitmapDescriptor icon = BitmapDescriptorFactory
-					.fromResource(R.drawable.taxidefault);
-			marker = new MarkerOptions().position(latlng).title(driver.title())
-					.snippet(driver.snippet()).icon(icon);
-			driver.marker = marker;
-			driverLst.add(driver);
-
-		}
+	private static void loadData() {
+		Map <String,Map<String,String>> filters=FilterActivity.filters;
+		if (markerType=="driver")
+			for (Driver driver: driverLst) {
+				MarkerOptions marker;
+				BitmapDescriptor icon = BitmapDescriptorFactory
+						.fromResource(R.drawable.taxidefault);
+				marker = new MarkerOptions().position(driver.latlng).title(driver.title())
+						.snippet(driver.snippet()).icon(icon);
+				driver.marker = marker;
+			}
+		else if(markerType=="customer"){}
+			
 	}
 
 	public static void loadMarkers() {
+		gmap.clear();
+		loadData();
 		boundsBuilder = new LatLngBounds.Builder();
 		if (markerType == "driver") {
 			for (Driver d : driverLst) {
@@ -130,7 +125,7 @@ public class ContentMapActivity extends FragmentActivity implements OnClickListe
 				boundsBuilder.include(d.latlng);
 			}
 			LatLngBounds bounds = boundsBuilder.build();
-			gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 3));
+			gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30));
 		} else if (markerType == "customer") {
 
 		}
@@ -140,9 +135,10 @@ public class ContentMapActivity extends FragmentActivity implements OnClickListe
 		System.out.print(v.getId());
 		switch (v.getId()) {
 		case R.id.load:
-			Log.i("Wei", "load markers");
 			loadMarkers();			
 			break;
+		case R.id.filters_setting:
+			startActivity(new Intent(this,FilterActivity.class));
 		}
 	}
 }
