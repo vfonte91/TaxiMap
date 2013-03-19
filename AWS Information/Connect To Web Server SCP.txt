@@ -1,6 +1,8 @@
 Note: I wrote these directions for Windows, Mac may be simial though
 
-Use: SCP can be used to easily add files to the beb server. I have to pay read money (dollars) if we exceed the free teir limits, so please limit use of this space to scripts and pages we need for this class. 
+Use: SCP can be used to easily add files to the beb server. I have to pay read money (dollars) 
+if we exceed the free teir limits, so please limit use of this space to scripts and pages 
+we need for this class. 
 
 Steps to Connect:
 

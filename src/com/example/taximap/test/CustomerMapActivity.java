@@ -1,4 +1,4 @@
-package com.example.taximap.map;
+package com.example.taximap.test;
 
 import android.app.PendingIntent;
 import android.content.Context;

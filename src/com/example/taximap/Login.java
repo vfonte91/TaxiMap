@@ -1,6 +1,8 @@
 package com.example.taximap;
 
 import com.example.taximap.R;
+import com.example.taximap.db.QueryDatabaseLogin;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

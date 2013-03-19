@@ -1,4 +1,4 @@
-package com.example.taximap;
+package com.example.taximap.db;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
