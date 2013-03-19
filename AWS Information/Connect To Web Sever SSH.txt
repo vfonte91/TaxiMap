@@ -1,6 +1,7 @@
 Note: I wrote these directions for Windows, Mac may be simial though
 
-Use: SSH can be used to access the server terminal for the AWS Server. I have to pay read money (dollars) if we exceed the free teir server limits, so please limit use of this to project related things. 
+Use: SSH can be used to access the server terminal for the AWS Server. 
+I have to pay read money (dollars) if we exceed the free teir server limits, so please limit use of this to project related things. 
 
 Steps to Connect:
 

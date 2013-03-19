@@ -2,6 +2,8 @@ package com.example.taximap;
 
 
 import com.example.taximap.R;
+import com.example.taximap.db.QueryDatabaseNewUser;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
