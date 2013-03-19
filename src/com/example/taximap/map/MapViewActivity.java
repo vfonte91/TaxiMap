@@ -17,15 +17,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MapViewActivity extends FragmentActivity implements OnClickListener {
 
@@ -76,7 +73,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		btnFilter.setOnClickListener((android.view.View.OnClickListener) this);
 		
 		gmap = ((SupportMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.map)).getMap(); // 获取地图对象
+				.findFragmentById(R.id.map)).getMap();
 		setupMapView();
 	}
 	
@@ -121,7 +118,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		boundsBuilder = new LatLngBounds.Builder();
 		if (markerType == "driver") {
 			for (Driver d : driverLst) {
-				gmap.addMarker(d.marker); // 在指定的 纬-经 度上做个标记（气泡）
+				gmap.addMarker(d.marker);
 				boundsBuilder.include(d.latlng);
 			}
 			LatLngBounds bounds = boundsBuilder.build();

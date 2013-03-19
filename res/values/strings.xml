@@ -29,7 +29,6 @@
     <string name="switch_view">Switch View</string>
     <string name="customer_map_view">Customer Map View</string>
     <string name="driver_map_view">Driver Map View</string>
-    <string name="maps_api_key">AIzaSyBnUguIJjTzv47B3hteq9wO0laqgJPSOwM</string>		<!-- V1key: 0N1aPlwore4z0JEnVEXxOsCjYEb42yD-KesEAQA -->
     <string name="generic_map_label">Map View</string>
     <string name="test_load_customers">Test Load Customers</string>
     <string name="test_load_drivers">Test Load Customers</string>
