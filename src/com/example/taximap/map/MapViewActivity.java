@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.taximap.R;
+import com.example.taximap.db.QueryDatabaseCustomerLoc;
+import com.example.taximap.db.QueryDatabaseDriverLoc;
+import com.example.taximap.db.QueryDatabaseLogin;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -28,7 +31,8 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 
 	private static GoogleMap gmap;
 	public static String markerType = "driver";		// set upon login either "driver" or "customer"
-	private static List<Driver> driverLst;
+	public static List<Driver> driverLst;
+	public static List<Customer> customerLst;
 	private static LatLngBounds.Builder boundsBuilder;
 	
 	static{
@@ -127,12 +131,17 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 
 		}
 	}
+	
+	public static void callDB() {
+		if (markerType=="driver") new QueryDatabaseCustomerLoc().execute("1");
+		else new QueryDatabaseDriverLoc().execute("1");
+	}
 
 	public void onClick(View v) {
 		System.out.print(v.getId());
 		switch (v.getId()) {
 		case R.id.load:
-			loadMarkers();			
+			callDB();			
 			break;
 		case R.id.filters_setting:
 			startActivity(new Intent(this,FilterActivity.class));
