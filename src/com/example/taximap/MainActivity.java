@@ -24,25 +24,7 @@ public class MainActivity extends Activity {
     	// MICHAEL WAS HERE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-        // wei commented line 27-45. not compiled.
-        /*//Action bar setup
-        ActionBar actionbar = getActionBar();
-        //set navigation to tabs
-        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        //Initiate tabs
-        ActionBar.Tab EditProfileTab = actionbar.newTab().setText("Edit Profile");
-        ActionBar.Tab FilterTab = actionbar.newTab().setText("Filter");
-        
-        //create two fragments to display content
-        Fragment EditProfileFrag = new FragmentView(R.layout.profile);
-        Fragment FilterFrag = new FragmentView(R.layout.filter);
-        
-        //set tab listener
-        EditProfileTab.setTabListener(new TabListener(EditProfileFrag));
-        FilterTab.setTabListener(new TabListener(FilterFrag));
-        
-        actionbar.addTab(EditProfileTab);
-        actionbar.addTab(FilterTab);*/
+
         
         // thread for displaying the SplashScreen
         Thread splashThread = new Thread() {
