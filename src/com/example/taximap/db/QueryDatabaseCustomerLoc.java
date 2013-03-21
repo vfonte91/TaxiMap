@@ -16,7 +16,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import com.example.taximap.map.Driver;
+import com.example.taximap.map.Customer;
 import com.example.taximap.map.MapViewActivity;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -28,6 +28,7 @@ import android.util.Log;
 public class QueryDatabaseCustomerLoc  extends AsyncTask<String, Void, String[][]>{
 	private WeakReference<MapViewActivity> mParentActivity = null;
 	public QueryDatabaseCustomerLoc() {
+
     }
 	
 	protected String[][] doInBackground(String... driver_info) {
@@ -40,21 +41,17 @@ public class QueryDatabaseCustomerLoc  extends AsyncTask<String, Void, String[][
 		//try connecting to the server
 		try{
 		        HttpClient httpclient = new DefaultHttpClient();
-		        HttpPost httppost = new HttpPost("http://ec2-23-22-121-122.compute-1.amazonaws.com/customer_locations.php");
+		        HttpPost httppost = new HttpPost("http://ec2-23-22-121-122.compute-1.amazonaws.com/driver_locations.php");
 		        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		        HttpResponse response = httpclient.execute(httppost);		  
 		        HttpEntity entity = response.getEntity();
 		        InputStream is = entity.getContent();
 		        BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-		        if (mParentActivity.get() != null) {
-	        		MapViewActivity.driverLst = new ArrayList<Driver>();
-		        }
+	        	MapViewActivity.customerLst = new ArrayList<Customer>();
 		        while((line = reader.readLine()) != null){
-		        	if (mParentActivity.get() != null) {
 				        JSONObject json_convert = new JSONObject(line);
-				        LatLng latlon = new LatLng(json_convert.getLong("lat"), json_convert.getLong("lon"));
-				        MapViewActivity.driverLst.add(new Driver(latlon,json_convert.getString("dname"),json_convert.getString("cname"),json_convert.getInt("rating")));
-		        	}
+				        LatLng latlon = new LatLng(json_convert.getDouble("lat"), json_convert.getDouble("lon"));
+				        MapViewActivity.customerLst.add(new Customer(latlon,json_convert.getString("cname"),json_convert.getInt("numpass")));
 		        }
 		}catch(Exception e){
 		        Log.e("log_tag", "Error in http connection "+e.toString());
@@ -64,9 +61,7 @@ public class QueryDatabaseCustomerLoc  extends AsyncTask<String, Void, String[][
 	
 	protected void onPostExecute(String[][] result) {
 		//call to CustomerMap functions to erase old markers and draw new ones
-		if (mParentActivity.get() != null) {
 			MapViewActivity.loadMarkers();
-		}
     }
 
 }
