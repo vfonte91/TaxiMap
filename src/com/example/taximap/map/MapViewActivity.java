@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.taximap.R;
+import com.example.taximap.db.QueryDatabaseCustomerLoc;
+import com.example.taximap.db.QueryDatabaseDriverLoc;
+import com.example.taximap.db.QueryDatabaseLogin;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -17,7 +20,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -25,45 +27,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MapViewActivity extends FragmentActivity implements OnClickListener {
 
 	private static GoogleMap gmap;
 	public static String markerType = "driver";		// set upon login either "driver" or "customer"
-	private static List<Driver> driverLst;
+	public static List<Driver> driverLst;
+	public static List<Customer> customerLst;
 	private static LatLngBounds.Builder boundsBuilder;
 	
-	static{
-		driverLst = new ArrayList<Driver>();
-		List<LatLng> latlnglst = Arrays.asList(
-				new LatLng(40.066824,-83.097153), 
-				new LatLng(39.963682, -83.000395),
-				new LatLng(39.985630, -83.023232), 
-				new LatLng(39.949662,-82.995415), 
-				new LatLng(40.144633, -82.981110),
-				new LatLng(39.985499, -83.005106), 
-				new LatLng(39.843014,-82.805591), 
-				new LatLng(40.054200, -83.067550),
-				new LatLng(40.016447, -83.011828), 
-				new LatLng(40.116523,-83.014359), 
-				new LatLng(40.014551, -83.011319),
-				new LatLng(39.936106, -82.983422), 
-				new LatLng(39.976447,-83.003342));
-		driverLst.add( new Driver(latlnglst.get(0),"Driver Name1","Blue Cab",5));
-		driverLst.add( new Driver(latlnglst.get(1),"Driver Name2","Blue Cab",5));
-		driverLst.add( new Driver(latlnglst.get(2),"Driver Name3","Blue Cab",5));
-		driverLst.add( new Driver(latlnglst.get(3),"Driver Name4","Blue Cab",4));
-		driverLst.add( new Driver(latlnglst.get(4),"Driver Name5","Yellow Cab",5));
-		driverLst.add( new Driver(latlnglst.get(5),"Driver Name6","Yellow Cab",5));
-		driverLst.add( new Driver(latlnglst.get(6),"Driver Name7","Yellow Cab",5));
-		driverLst.add( new Driver(latlnglst.get(7),"Driver Name8","Yellow Cab",4));
-		driverLst.add( new Driver(latlnglst.get(8),"Driver Name9","Yellow Cab",3));
-		driverLst.add( new Driver(latlnglst.get(9),"Driver Name10","Green Cab",5));
-		driverLst.add( new Driver(latlnglst.get(10),"Driver Name11","Green Cab",5));
-		driverLst.add( new Driver(latlnglst.get(11),"Driver Name12","Green Cab",5));
-		driverLst.add( new Driver(latlnglst.get(12),"Driver Name13","Green Cab",4));
-	}
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +49,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		btnFilter.setOnClickListener((android.view.View.OnClickListener) this);
 		
 		gmap = ((SupportMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.map)).getMap(); // 获取地图对象
+				.findFragmentById(R.id.map)).getMap();
 		setupMapView();
 	}
 	
@@ -121,7 +94,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		boundsBuilder = new LatLngBounds.Builder();
 		if (markerType == "driver") {
 			for (Driver d : driverLst) {
-				gmap.addMarker(d.marker); // 在指定的 纬-经 度上做个标记（气泡）
+				gmap.addMarker(d.marker);
 				boundsBuilder.include(d.latlng);
 			}
 			LatLngBounds bounds = boundsBuilder.build();
@@ -130,12 +103,18 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 
 		}
 	}
+	
+	public static void callDB() {
+		//if (markerType=="driver") new QueryDatabaseCustomerLoc().execute("1");
+		//else new QueryDatabaseDriverLoc().execute("1");
+		new QueryDatabaseDriverLoc().execute("1");
+	}
 
 	public void onClick(View v) {
 		System.out.print(v.getId());
 		switch (v.getId()) {
 		case R.id.load:
-			loadMarkers();			
+			callDB();			
 			break;
 		case R.id.filters_setting:
 			startActivity(new Intent(this,FilterActivity.class));

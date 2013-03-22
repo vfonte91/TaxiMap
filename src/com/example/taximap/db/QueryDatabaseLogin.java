@@ -15,6 +15,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import com.example.taximap.UserState;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -69,6 +71,8 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 	    		.setMessage("Logged in as a driver!")
 	    		.setNeutralButton("Go back to login", new DialogInterface.OnClickListener() {
 	    			public void onClick(DialogInterface dialog, int which) {
+	    				/*UserState appState = ((UserState)getApplicationContext());
+	    			    appState.settype("driver");*/
 	    				//I think you would put the call to the driver map activity here?
 	    			}
 	    		})

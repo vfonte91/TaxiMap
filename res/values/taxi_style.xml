@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="HeaderStyle">
+	    <item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_alignParentTop">true</item>
+		<item name="android:background">@layout/header_footer</item>
+	</style>
+	
+	<style name="FooterStyle">
+	    <item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_alignParentBottom">true</item>
+		<item name="android:background">@layout/header_footer</item>
+	</style>
+	
+	<style name="HeaderBackgroundStyle">
+	    <item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">100dp</item>
+		<item name="android:layout_alignParentTop">true</item>
+		<item name="android:background">@color/Yellow</item>
+	</style>
+	
+	<style name="FooterBackgroundStyle">
+	    <item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">75dp</item>
+		<item name="android:layout_alignParentBottom">true</item>
+		<item name="android:background">@color/Yellow</item>
+	</style>
+</resources>
