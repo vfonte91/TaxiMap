@@ -16,11 +16,15 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import com.example.taximap.UserState;
+import com.example.taximap.map.MapViewActivity;
+import com.example.taximap.map.TabLayoutActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.sax.StartElementListener;
 import android.util.Log;
 
 
@@ -64,30 +68,14 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 	
 	protected void onPostExecute(Integer[] result) {
 		if(result[0]>0){ 
-			if(result[1]==1){
+			if(result[1]==1){		// type 1 driver, type 0 customer
 				//to test this case you can user username: 'a' password: 'a'
-	            new AlertDialog.Builder(context)
-	    		.setTitle("Message")
-	    		.setMessage("Logged in as a driver!")
-	    		.setNeutralButton("Go back to login", new DialogInterface.OnClickListener() {
-	    			public void onClick(DialogInterface dialog, int which) {
-	    				/*UserState appState = ((UserState)getApplicationContext());
-	    			    appState.settype("driver");*/
-	    				//I think you would put the call to the driver map activity here?
-	    			}
-	    		})
-	    		.show();
+	            MapViewActivity.markerType="customer";
+	            context.startActivity(new Intent(context,TabLayoutActivity.class));
 			} else {
 				//to test this case create a new user or use username: 'test' password: 'test'
-				new AlertDialog.Builder(context)
-	    		.setTitle("Message")
-	    		.setMessage("Logged in as a standard user!")
-	    		.setNeutralButton("Go back to login", new DialogInterface.OnClickListener() {
-	    			public void onClick(DialogInterface dialog, int which) {
-	    				//I think you would put the call to the user map activity here?
-	    			}
-	    		})
-	    		.show();
+				MapViewActivity.markerType="driver";
+	            context.startActivity(new Intent(context,TabLayoutActivity.class));
 			}
             
         } else if(result[0]==-5){ 

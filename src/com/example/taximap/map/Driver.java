@@ -9,6 +9,7 @@ public class Driver {
 	private String name;
 	private String company;
 	private int rating;
+	private double distance;		// 1:1
 	public MarkerOptions marker;
 	
 	public Driver(LatLng latlng,String name,String company, int rating) {

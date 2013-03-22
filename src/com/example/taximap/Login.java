@@ -35,7 +35,8 @@ public class Login extends Activity implements OnClickListener{
         btnNewUser.setOnClickListener(this);
      }
 
-    public void onStart(){
+    // The commented functions are for due 3
+    /*public void onStart(){
     	super.onStart();
     	Log.i(TAG, "onStart()");
     }
@@ -63,7 +64,8 @@ public class Login extends Activity implements OnClickListener{
     public void onRestart(){
     	super.onRestart();
     	Log.i(TAG, "onRestart()");
-    }
+    }*/
+    
     private void checkLogin(){
     	String username=this.userNameEditableField.getText().toString();
         String password=this.passwordEditableField.getText().toString();

@@ -31,7 +31,7 @@ import android.widget.Button;
 public class MapViewActivity extends FragmentActivity implements OnClickListener {
 
 	private static GoogleMap gmap;
-	public static String markerType = "driver";		// set upon login either "driver" or "customer"
+	public static String markerType = "";		// set upon login either "driver" or "customer"
 	public static List<Driver> driverLst;
 	public static List<Customer> customerLst;
 	private static LatLngBounds.Builder boundsBuilder;
@@ -105,9 +105,12 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	}
 	
 	public static void callDB() {
-		//if (markerType=="driver") new QueryDatabaseCustomerLoc().execute("1");
-		//else new QueryDatabaseDriverLoc().execute("1");
-		new QueryDatabaseDriverLoc().execute("1");
+		if (markerType=="driver") {
+			new QueryDatabaseCustomerLoc().execute("1");		// pass in uid. modify
+		}
+		else {
+			new QueryDatabaseDriverLoc().execute("1");
+		}
 	}
 
 	public void onClick(View v) {
