@@ -21,8 +21,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
+//import com.google.android.maps.GeoPoint;
+//import com.google.android.maps.MapActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -176,9 +176,11 @@ public class MapViewActivity extends FragmentActivity implements
 
 	public static void callDB() {
 		if (markerType == "driver") {
-			(new QueryDatabaseDriverLoc()).execute("1"); // pass in uid. modify
+			Log.d("----", uID);
+			(new QueryDatabaseDriverLoc()).execute(uID); // pass in uid. modify
 		} else {
-			(new QueryDatabaseCustomerLoc()).execute("1");
+			Log.d("----", uID);
+			(new QueryDatabaseCustomerLoc()).execute(uID);
 		}
 	}
 
