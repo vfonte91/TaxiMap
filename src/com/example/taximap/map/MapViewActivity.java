@@ -9,8 +9,10 @@ import com.example.taximap.R;
 import com.example.taximap.db.QueryDatabaseCustomerLoc;
 import com.example.taximap.db.QueryDatabaseDriverLoc;
 import com.example.taximap.db.QueryDatabaseLogin;
+import com.example.taximap.db.QueryDatabaseUpdateLoc;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -19,50 +21,101 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class MapViewActivity extends FragmentActivity implements OnClickListener {
+public class MapViewActivity extends FragmentActivity implements
+		OnClickListener, LocationListener, LocationSource {
 
 	private static GoogleMap gmap;
-	public static String markerType = "";		// set upon login either "driver" or "customer"
+	public static String markerType = "driver"; // set upon login either
+												// "driver" or
 	public static List<Driver> driverLst;
 	public static List<Customer> customerLst;
 	private static LatLngBounds.Builder boundsBuilder;
+	private static LatLngBounds currentBounds = null;
+	private static TextView myLocationField = null;
 	
+	public static String uID="";
+	public static double myLastLat=0;
+	public static double myLastLng=0;
+	public static String myLastAddress=null;
+	
+	/* private static String bestProvider = null; */
+	private static OnLocationChangedListener mListener;
 
-	
+	// private static LocationManager locationManager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_map_layout);
-		View btnLoad = (Button)findViewById(R.id.load);
-		btnLoad.setOnClickListener(this);
-		
-		View btnFilter = (Button)findViewById(R.id.filters_setting);
-		btnFilter.setOnClickListener((android.view.View.OnClickListener) this);
-		
-		gmap = ((SupportMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.map)).getMap();
-		setupMapView();
-	}
-	
+		/*
+		 * locationManager = (LocationManager)
+		 * getSystemService(LOCATION_SERVICE);
+		 */
+		/*
+		 * if (locationManager != null) { boolean gpsIsEnabled = locationManager
+		 * .isProviderEnabled(LocationManager.GPS_PROVIDER); boolean
+		 * networkIsEnabled = locationManager
+		 * .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+		 * 
+		 * if (gpsIsEnabled) { locationManager.requestLocationUpdates(
+		 * LocationManager.GPS_PROVIDER, 5000L, 10F, this); } else if
+		 * (networkIsEnabled) { locationManager.requestLocationUpdates(
+		 * LocationManager.NETWORK_PROVIDER, 5000L, 10F, this); } else { // Show
+		 * an error dialog that GPS is disabled... } } else { // Show some
+		 * generic error dialog because something must have gone // wrong with
+		 * location manager. }
+		 */
+		setUpMapIfNeeded();
 
-	
+		View btnLoad = (Button) findViewById(R.id.load);
+		btnLoad.setOnClickListener(this);
+
+		View btnFilter = (Button) findViewById(R.id.filters_setting);
+		btnFilter.setOnClickListener((android.view.View.OnClickListener) this);
+
+		myLocationField = (TextView) findViewById(R.id.current_location);
+
+	}
+
+	private void setUpMapIfNeeded() {
+		// Do a null check to confirm that we have not already instantiated the
+		// map.
+		if (gmap == null) {
+			// Try to obtain the map from the SupportMapFragment.
+			gmap = ((SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.map)).getMap();
+			// Check if we were successful in obtaining the map.
+
+			if (gmap != null) {
+				setupMapView();
+			}
+			// This is how you register the LocationSource
+			gmap.setLocationSource(this);
+		}
+	}
+
 	private void setupMapView() {
 		UiSettings settings = gmap.getUiSettings();
-		gmap.animateCamera(CameraUpdateFactory
-				.newCameraPosition(new CameraPosition(new LatLng(39.983434,
-						-83.003082), 13.5f, 30f, 112.5f))); // zoom, tilt,
-															// bearing
-		gmap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-		gmap.setTrafficEnabled(true);
 		settings.setAllGesturesEnabled(true);
 		settings.setCompassEnabled(true);
 		settings.setMyLocationButtonEnabled(true);
@@ -71,21 +124,49 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		settings.setTiltGesturesEnabled(true);
 		settings.setZoomControlsEnabled(true);
 		settings.setZoomGesturesEnabled(true);
+
+		gmap.animateCamera(CameraUpdateFactory
+				.newCameraPosition(new CameraPosition(new LatLng(39.983434,
+						-83.003082), 13.5f, 30f, 112.5f))); // zoom, tilt,
+															// bearing
+		gmap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+		gmap.setTrafficEnabled(true);
+		gmap.setMyLocationEnabled(true);
 	}
 
+	/*
+	 * private String getBestProvider(Context context) { Criteria criteria = new
+	 * Criteria(); criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+	 * criteria.setAltitudeRequired(false); criteria.setBearingRequired(false);
+	 * criteria.setCostAllowed(false);
+	 * criteria.setPowerRequirement(Criteria.POWER_LOW); locationManager =
+	 * (LocationManager) context .getSystemService(Context.LOCATION_SERVICE);
+	 * String provider = locationManager.getBestProvider(criteria, true); //
+	 * here can return null if google map service not available return provider;
+	 * }
+	 * 
+	 * public Location getLastKnowLocation(Context context) { Location lkl =
+	 * null; this.bestProvider = getBestProvider(context);
+	 * 
+	 * if (this.bestProvider != null) { lkl =
+	 * locationManager.getLastKnownLocation(this.bestProvider); } // here can
+	 * return null, meaning getting last known locaiton failed return lkl; }
+	 */
 	private static void loadData() {
-		Map <String,Map<String,String>> filters=FilterActivity.filters;
-		if (markerType=="driver")
-			for (Driver driver: driverLst) {
+		Map<String, Map<String, String>> filters = FilterActivity.filters;
+		if (markerType == "driver")
+			for (Driver driver : driverLst) {
 				MarkerOptions marker;
 				BitmapDescriptor icon = BitmapDescriptorFactory
 						.fromResource(R.drawable.taxidefault);
-				marker = new MarkerOptions().position(driver.latlng).title(driver.title())
-						.snippet(driver.snippet()).icon(icon);
+				marker = new MarkerOptions().position(driver.latlng)
+						.title(driver.title()).snippet(driver.snippet())
+						.icon(icon);
 				driver.marker = marker;
 			}
-		else if(markerType=="customer"){}
-			
+		else if (markerType == "customer") {
+		}
+
 	}
 
 	public static void loadMarkers() {
@@ -97,19 +178,19 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				gmap.addMarker(d.marker);
 				boundsBuilder.include(d.latlng);
 			}
-			LatLngBounds bounds = boundsBuilder.build();
-			gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30));
+			currentBounds = boundsBuilder.build();
+			gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(currentBounds,
+					30));
 		} else if (markerType == "customer") {
 
 		}
 	}
-	
+
 	public static void callDB() {
-		if (markerType=="driver") {
-			new QueryDatabaseCustomerLoc().execute("1");		// pass in uid. modify
-		}
-		else {
-			new QueryDatabaseDriverLoc().execute("1");
+		if (markerType == "driver") {
+			(new QueryDatabaseDriverLoc()).execute("1"); // pass in uid. modify
+		} else {
+			(new QueryDatabaseCustomerLoc()).execute("1");
 		}
 	}
 
@@ -117,10 +198,93 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		System.out.print(v.getId());
 		switch (v.getId()) {
 		case R.id.load:
-			callDB();			
+			callDB();
 			break;
 		case R.id.filters_setting:
-			startActivity(new Intent(this,FilterActivity.class));
+			startActivity(new Intent(this, FilterActivity.class));
 		}
+	}
+
+	/*
+	 * @Override public void onPause() { if (locationManager != null) {
+	 * locationManager.removeUpdates(this); }
+	 * 
+	 * super.onPause(); }
+	 * 
+	 * @Override public void onResume() { super.onResume();
+	 * 
+	 * setUpMapIfNeeded();
+	 * 
+	 * if (locationManager != null) { gmap.setMyLocationEnabled(true); } }
+	 */
+
+	@Override
+	public void activate(OnLocationChangedListener listener) {
+		mListener = listener;
+	}
+
+	@Override
+	public void deactivate() {
+		mListener = null;
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		if (mListener != null) {
+			mListener.onLocationChanged(location);
+			double latitude = location.getLatitude();
+			double longitude = location.getLongitude();
+			GeolocationHelper.getAddressFromLocation(location, this,
+					new GeocoderHandler());
+			
+			CameraPosition cp = new CameraPosition.Builder()
+					.target(new LatLng(latitude, longitude)).zoom(15).build();
+			gmap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
+			if (!currentBounds.contains(new LatLng(latitude, longitude))) { 
+				gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
+						currentBounds, 30));
+			}
+			
+			myLastLat=latitude;
+			myLastLng=longitude;
+		}
+
+	}
+
+	private static class GeocoderHandler extends Handler {
+		@Override
+		public void handleMessage(Message message) {
+			String result;
+			switch (message.what) {
+			case 1:
+				Bundle bundle = message.getData();
+				result = bundle.getString("address");
+				break;
+			default:
+				result = null;
+			}
+			MapViewActivity.myLocationField.setText(result);
+			myLastAddress=result;
+			//Zach, we need implement following class and method 
+			//new QueryDatabaseUpdateLoc().execute(uID,myLastLat,myLastLng,myLastAddress);
+		}
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		Toast.makeText(this, "provider disabled", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		Toast.makeText(this, "provider enabled", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		Toast.makeText(this, "status changed", Toast.LENGTH_SHORT).show();
 	}
 }

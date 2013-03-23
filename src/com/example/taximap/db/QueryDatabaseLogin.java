@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.sax.StartElementListener;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
@@ -56,7 +57,16 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		        line = reader.readLine();
 		        JSONObject json_login = new JSONObject(line);
 		        String  uid_string = json_login.getString("uid");
+		        MapViewActivity.uID=uid_string;			//wei added
 		        String type_string = json_login.getString("type");
+		        if(type_string=="0"){		//customer login
+		        	MapViewActivity.markerType="driver";
+		        }
+		        else if(type_string=="0"){
+		        	MapViewActivity.markerType="customer";
+		        }else{
+		        	Toast.makeText(context, "Invalid user type", Toast.LENGTH_SHORT);
+		        }
 		        return_result[0] = Integer.valueOf(uid_string);
 		        return_result[1] = Integer.valueOf(type_string);		        
 		}catch(Exception e){
@@ -70,11 +80,9 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		if(result[0]>0){ 
 			if(result[1]==1){		// type 1 driver, type 0 customer
 				//to test this case you can user username: 'a' password: 'a'
-	            MapViewActivity.markerType="customer";
 	            context.startActivity(new Intent(context,TabLayoutActivity.class));
 			} else {
 				//to test this case create a new user or use username: 'test' password: 'test'
-				MapViewActivity.markerType="driver";
 	            context.startActivity(new Intent(context,TabLayoutActivity.class));
 			}
             
