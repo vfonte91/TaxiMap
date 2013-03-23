@@ -49,54 +49,60 @@ public class MapViewActivity extends FragmentActivity implements
 												// "driver" or
 	public static List<Driver> driverLst;
 	public static List<Customer> customerLst;
+	
+	
 	private static LatLngBounds.Builder boundsBuilder;
 	private static LatLngBounds currentBounds = null;
 	private static TextView myLocationField = null;
-	
-	public static String uID="";
-	public static double myLastLat=0;
-	public static double myLastLng=0;
-	public static String myLastAddress=null;
-	
+
+	public static String uID = "";
+	public static double myLastLat = 0;
+	public static double myLastLng = 0;
+	public static String myLastAddress = null;
+
 	/* private static String bestProvider = null; */
 	private static OnLocationChangedListener mListener;
 
-	// private static LocationManager locationManager;
+	private static LocationManager locationManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_map_layout);
-		/*
-		 * locationManager = (LocationManager)
-		 * getSystemService(LOCATION_SERVICE);
-		 */
-		/*
-		 * if (locationManager != null) { boolean gpsIsEnabled = locationManager
-		 * .isProviderEnabled(LocationManager.GPS_PROVIDER); boolean
-		 * networkIsEnabled = locationManager
-		 * .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-		 * 
-		 * if (gpsIsEnabled) { locationManager.requestLocationUpdates(
-		 * LocationManager.GPS_PROVIDER, 5000L, 10F, this); } else if
-		 * (networkIsEnabled) { locationManager.requestLocationUpdates(
-		 * LocationManager.NETWORK_PROVIDER, 5000L, 10F, this); } else { // Show
-		 * an error dialog that GPS is disabled... } } else { // Show some
-		 * generic error dialog because something must have gone // wrong with
-		 * location manager. }
-		 */
+		
 		setUpMapIfNeeded();
 
-		View btnLoad = (Button) findViewById(R.id.load);
-		btnLoad.setOnClickListener(this);
-
-		View btnFilter = (Button) findViewById(R.id.filters_setting);
-		btnFilter.setOnClickListener((android.view.View.OnClickListener) this);
-
+		((Button) findViewById(R.id.load)).setOnClickListener(this);
+		((Button) findViewById(R.id.filters_setting)).setOnClickListener(this);
+		((Button) findViewById(R.id.update_loc)).setOnClickListener(this);
 		myLocationField = (TextView) findViewById(R.id.current_location);
 
 	}
 
+	private void enableLocationUpdate(){
+		gmap.setMyLocationEnabled(true);
+		locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		if (locationManager != null) { 
+			boolean gpsIsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER); 
+			boolean networkIsEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+			//update real time location every 5s
+			if (gpsIsEnabled) { 
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10F, this); 
+			} 
+			else if(networkIsEnabled) { 
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 10F, this); } 
+			else { // Show an error dialog that GPS is disabled... 
+				Toast.makeText(this,"GPS is disabled", Toast.LENGTH_SHORT);
+			} 
+		} else { // Show some generic error dialog because something must have gone wrong with
+			Toast.makeText(this,"Location manager error", Toast.LENGTH_SHORT);
+		}
+	}
+	
+	private void disableLocationUpdate(){
+		gmap.setMyLocationEnabled(false);
+		locationManager.removeUpdates(this);
+	}
 	private void setUpMapIfNeeded() {
 		// Do a null check to confirm that we have not already instantiated the
 		// map.
@@ -131,27 +137,9 @@ public class MapViewActivity extends FragmentActivity implements
 															// bearing
 		gmap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 		gmap.setTrafficEnabled(true);
-		gmap.setMyLocationEnabled(true);
 	}
 
-	/*
-	 * private String getBestProvider(Context context) { Criteria criteria = new
-	 * Criteria(); criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-	 * criteria.setAltitudeRequired(false); criteria.setBearingRequired(false);
-	 * criteria.setCostAllowed(false);
-	 * criteria.setPowerRequirement(Criteria.POWER_LOW); locationManager =
-	 * (LocationManager) context .getSystemService(Context.LOCATION_SERVICE);
-	 * String provider = locationManager.getBestProvider(criteria, true); //
-	 * here can return null if google map service not available return provider;
-	 * }
-	 * 
-	 * public Location getLastKnowLocation(Context context) { Location lkl =
-	 * null; this.bestProvider = getBestProvider(context);
-	 * 
-	 * if (this.bestProvider != null) { lkl =
-	 * locationManager.getLastKnownLocation(this.bestProvider); } // here can
-	 * return null, meaning getting last known locaiton failed return lkl; }
-	 */
+
 	private static void loadData() {
 		Map<String, Map<String, String>> filters = FilterActivity.filters;
 		if (markerType == "driver")
@@ -195,13 +183,26 @@ public class MapViewActivity extends FragmentActivity implements
 	}
 
 	public void onClick(View v) {
-		System.out.print(v.getId());
+		Log.d("----", Integer.toString(v.getId()));
 		switch (v.getId()) {
 		case R.id.load:
 			callDB();
 			break;
 		case R.id.filters_setting:
 			startActivity(new Intent(this, FilterActivity.class));
+			break;
+		case R.id.update_loc:
+			Button bt=(Button)findViewById(R.id.update_loc);
+			Log.i("---", (String) bt.getText());
+			
+			if(bt.getText().equals("update")){
+				enableLocationUpdate();
+				bt.setText("stop");
+			}else{
+				disableLocationUpdate();
+				bt.setText("update");
+			}
+			break;
 		}
 	}
 
@@ -234,19 +235,23 @@ public class MapViewActivity extends FragmentActivity implements
 			mListener.onLocationChanged(location);
 			double latitude = location.getLatitude();
 			double longitude = location.getLongitude();
+			LatLng point=new LatLng(latitude, longitude);
 			GeolocationHelper.getAddressFromLocation(location, this,
 					new GeocoderHandler());
-			
+
 			CameraPosition cp = new CameraPosition.Builder()
-					.target(new LatLng(latitude, longitude)).zoom(15).build();
+					.target(point).zoom(15).build();
 			gmap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
-			if (!currentBounds.contains(new LatLng(latitude, longitude))) { 
-				gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
-						currentBounds, 30));
+			if(currentBounds==null){
+				boundsBuilder = new LatLngBounds.Builder();
 			}
+			boundsBuilder.include(point);
+			currentBounds=boundsBuilder.build();
+			gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
+						currentBounds, 30));
 			
-			myLastLat=latitude;
-			myLastLng=longitude;
+			myLastLat = latitude;
+			myLastLng = longitude;
 		}
 
 	}
@@ -264,9 +269,10 @@ public class MapViewActivity extends FragmentActivity implements
 				result = null;
 			}
 			MapViewActivity.myLocationField.setText(result);
-			myLastAddress=result;
-			//Zach, we need implement following class and method 
-			//new QueryDatabaseUpdateLoc().execute(uID,myLastLat,myLastLng,myLastAddress);
+			myLastAddress = result;
+			// Zach, we need implement following class and method
+			// new
+			// QueryDatabaseUpdateLoc().execute(uID,myLastLat,myLastLng,myLastAddress);
 		}
 	}
 
