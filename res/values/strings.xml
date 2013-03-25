@@ -55,7 +55,7 @@
         <item>Any</item>
         <item>Blue Cab</item>
         <item>Yellow Cab</item>
-        <item>Green Cas</item>
+        <item>Green Cab</item>
     </string-array>
     <string-array name="rating_list">
         <item>Any</item>		
@@ -70,6 +70,5 @@
         <item>Within 30 mins</item>
         <item>Within 20 mins</item>
         <item>Within 10 mins</item>
-        <item>Within 5 mins</item>
     </string-array>
 </resources>

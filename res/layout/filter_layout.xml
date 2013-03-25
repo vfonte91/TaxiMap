@@ -5,38 +5,46 @@
     android:padding="@dimen/padding1">
 
     <TableRow>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Classification Options" />
+            android:text="Classification Options"
+            android:textSize="18sp" />
+
     </TableRow>
 
     <TableRow>
+
         <LinearLayout
-            android:orientation="horizontal">
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="By Company" />
+            android:orientation="vertical"
+            android:padding="2dp" >
 
             <CheckBox
+                android:id="@+id/by_company"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="By Rating" />
+                android:text="By Company"
+                android:textSize="14sp" />
 
             <CheckBox
+                android:id="@+id/by_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="By Distance" />
+                android:text="By Rating"
+                android:textSize="14sp" />
+
         </LinearLayout>
     </TableRow>
 
-    <TableRow>
+    <TableRow android:paddingTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Filter Options" />
+            android:text="Filter Options"
+            android:textSize="18sp" />
+
     </TableRow>
     
     <TableRow>
@@ -45,7 +53,8 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Company:" />
+            android:text="Company:"
+            android:textSize="14sp" />
 
         <Spinner
             android:id="@+id/company_filter"
@@ -59,7 +68,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rating:" />
+            android:text="Rating:"
+            android:textSize="14sp" />
 
         <Spinner
             android:id="@+id/rating_filter"
@@ -73,7 +83,8 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Distance:" />
+            android:text="Distance:"
+            android:textSize="14sp" />
 
         <Spinner
             android:id="@+id/dist_filter"
