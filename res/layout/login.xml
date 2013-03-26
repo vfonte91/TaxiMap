@@ -20,35 +20,8 @@
 			    android:background="@layout/header_gradient">
 			</LinearLayout>
 		
-  		<!--HEADER ENDS-->  
-  		
-  		<!--FOOTER STARTS-->
-  		
-	  		<LinearLayout
-	  		    android:id="@+id/footer"
-	  		    android:layout_width="fill_parent"
-	  		    android:layout_height="100dip"
-	  		    android:layout_alignParentBottom="true"
-	  		    android:background="@layout/footer_repeat" >
-	  			<Button
-	  			    android:id="@+id/new_user_button"
-	  			    android:layout_width="wrap_content"
-	  			    android:layout_height="wrap_content"
-	  			    android:gravity="center"
-	  			    android:paddingBottom="30dp"
-	  			    android:paddingLeft="75dp"
-	  			    android:paddingRight="30dp"
-	  			    android:paddingTop="30dp"
-	  			    android:text="@string/new_register"
-	  			    android:textAppearance="?android:attr/textAppearanceMedium"
-	  			    android:textColor="#000000"
-	  			    android:textSize="20sp"
-	  			    android:textStyle="bold" />
-	  		</LinearLayout>
-	  		
-  		<!--FOOTER ENDS-->
-  		
-  		<!-- BODY BEGINS -->
+		<!--HEADER ENDS-->
+		<!-- BODY BEGINS -->
 
 		<LinearLayout
 		    android:layout_width="match_parent"
@@ -99,7 +72,6 @@
 			<!-- PASSWORD ENDS -->				
 
 			<!-- BUTTONS BEGIN -->
-			
 				<Button
 					android:id="@+id/login_button"
 					android:text="@string/login_button"
@@ -107,13 +79,11 @@
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"/>
 				<Button
-					android:id="@+id/cancel_button"
-					android:text="@string/exit_button"
+					android:id="@+id/new_user_button"
+					android:text="@string/new_register"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>	
-				
+					android:layout_height="wrap_content"/>
 			<!-- BUTTONS END -->
-			
 		</LinearLayout>
 		
   		<!-- BODY ENDS -->
