@@ -50,6 +50,7 @@
         <item>Van</item>
         <item>Car</item>
     </string-array>
+    <string name="filter_apply">Apply</string>
     <!-- Changed items the same as defined in the db. Wei -->
     <!-- Company filters -->
     <string-array name="company_list">		

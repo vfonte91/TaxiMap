@@ -30,4 +30,10 @@
     <style name="TextView" parent="AppBaseTheme">
         <item name="android:textStyle">normal</item>
     </style>
+    <style name="Spinner" parent="AppBaseTheme">
+    </style>
+    <style name="Button" parent="AppBaseTheme">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
 </resources>

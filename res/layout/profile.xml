@@ -91,16 +91,13 @@
 
             <Button
                 android:id="@+id/edit_save_button"
-                style="@style/AppTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/Button"
+                android:layout_marginTop="@dimen/margin_top2"
                 android:text="@string/edit_save" />
 
             <Button
                 android:id="@+id/edit_save_cancel"
-                style="@style/AppTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/Button"
                 android:text="@string/edit_cancel" />
         </LinearLayout>
     </RelativeLayout>

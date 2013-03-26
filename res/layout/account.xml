@@ -84,16 +84,14 @@
                 android:singleLine="true" />
 
             <Button
+                style="@style/Button"
                 android:id="@+id/done_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top2"
                 android:text="@string/done" />
 
             <Button
+                style="@style/Button"
                 android:id="@+id/cancel_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/cancel" />
         </LinearLayout>
     </RelativeLayout>
