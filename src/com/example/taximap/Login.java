@@ -28,8 +28,10 @@ public class Login extends Activity implements OnClickListener{
         View btnLogin=(Button)findViewById(R.id.login_button);
         btnLogin.setOnClickListener(this);		//Defined in the onclick function below
 
+        /*  Removed because home button will take care of cancel
         View btnCancel=(Button)findViewById(R.id.cancel_button);
         btnCancel.setOnClickListener(this);
+        */
 
         View btnNewUser=(Button)findViewById(R.id.new_user_button);
         btnNewUser.setOnClickListener(this);
@@ -77,9 +79,11 @@ public class Login extends Activity implements OnClickListener{
   		case R.id.login_button:
 		    checkLogin();
 		    break;
+		    /* Removed because home button will take care of cancel
   		case R.id.cancel_button:
 	    	finish();
     		break;
+		     */
     	case R.id.new_user_button:
     	    startActivity(new Intent(this, Account.class));		// start a new activity Direct invocation 
     	    break;
