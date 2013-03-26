@@ -36,9 +36,10 @@
 
 
     <!-- edit profile -->
-    <string name="edit_new_password">New password</string>
-    <string name="edit_confirm_password">New password</string>
-    <string name="edit_phone_number">Phone number</string>
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="edit_new_password">New Password</string>
+    <string name="edit_confirm_password">Confirm New Password</string>
+    <string name="edit_phone_number">Phone Number</string>
     <string name="edit_save">Save</string>
     <string name="edit_cancel">Cancel</string>
     <!-- end profile -->
