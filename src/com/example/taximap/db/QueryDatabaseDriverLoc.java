@@ -3,7 +3,6 @@ package com.example.taximap.db;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -26,7 +25,6 @@ import android.util.Log;
 
 //Pass in the driver id, as well as their lat and long cords as a string array
 public class QueryDatabaseDriverLoc  extends AsyncTask<String, Void, Integer>{
-	private WeakReference<MapViewActivity> mParentActivity = null;
 	public QueryDatabaseDriverLoc() {
     }
 	protected Integer doInBackground(String... driver_info) {
@@ -35,6 +33,8 @@ public class QueryDatabaseDriverLoc  extends AsyncTask<String, Void, Integer>{
 		//the data to send
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("id",String.valueOf(driver_info[0])));
+		nameValuePairs.add(new BasicNameValuePair("lat",String.valueOf(driver_info[1])));
+		nameValuePairs.add(new BasicNameValuePair("lon",String.valueOf(driver_info[2])));
 		 
 		//try connecting to the server
 		try{

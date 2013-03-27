@@ -58,7 +58,7 @@ public class MapViewActivity extends FragmentActivity implements
 	private static TextView myLocationField = null;
 	private static Handler loadMarkerHandler;
 	private static Runnable loadMarkerRunnable;
-	public static String uID = "1";
+	public static String uID = "18";
 	public static LatLng myLastLatLng = null;
 	public static String myLastAddress = null;
 	
@@ -72,15 +72,14 @@ public class MapViewActivity extends FragmentActivity implements
 		setContentView(R.layout.content_map_layout);
 		setUpMapIfNeeded();
 		enableLocationUpdate();
-		loadMarkers();
-		/*loadMarkerHandler= new Handler();
+		loadMarkerHandler= new Handler();
 		loadMarkerRunnable=new Runnable(){
 			public void run(){
-				loadMarkers();
-				loadMarkerHandler.postDelayed(this, 5000);
+				callDB();
+				long delayTime=5000;
+				loadMarkerHandler.postDelayed(this, delayTime);
 			}
 		};
-		new Thread(loadMarkerRunnable).run();*/
 	}
 
 	private void setUpMapIfNeeded() {
@@ -103,8 +102,8 @@ public class MapViewActivity extends FragmentActivity implements
 			boolean networkIsEnabled = locationManager
 					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			// update real time location every 5s
-			long timeInterval=2000;
-			float distDifference=10;
+			long timeInterval=10000;
+			float distDifference=30;
 			if (gpsIsEnabled) {
 				// public void requestLocationUpdates (String provider, long
 				// minTime, float minDistance, LocationListener listener)
@@ -164,7 +163,7 @@ public class MapViewActivity extends FragmentActivity implements
 			if(currentDriver==null){
 				BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.customerdefault);
 				MarkerOptions markerOptions = new MarkerOptions().position(myLastLatLng)
-						.title(username);
+						.title(username).icon(icon);
 				currentCustomer=new Customer(myLastLatLng,username);
 				currentCustomer.markerOptions=markerOptions;
 				currentCustomer.marker=gmap.addMarker(markerOptions);
@@ -176,11 +175,12 @@ public class MapViewActivity extends FragmentActivity implements
 				boundsBuilder.include(myLastLatLng);
 				currentBounds = boundsBuilder.build();
 				//gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(currentBounds, 50));	//50px
-				myLastLatLng = new LatLng(latitude, longitude);
 			}else{
 				currentCustomer.marker.setPosition(myLastLatLng);
 			}
 		}
+		new Thread(loadMarkerRunnable).run();
+/*		callDB();*/
 	}
 
 	private static class GeocoderHandler extends Handler {
@@ -219,6 +219,16 @@ public class MapViewActivity extends FragmentActivity implements
 		}
 	}
 	
+	public static void callDB() {
+		if (markerType == "driver") {
+			Log.d("----", uID);
+			(new QueryDatabaseDriverLoc()).execute(uID,Double.toString(myLastLatLng.latitude),Double.toString(myLastLatLng.longitude)); // pass in uid. modify
+		} else {
+			Log.d("----", uID);
+			(new QueryDatabaseCustomerLoc()).execute(uID);
+		}
+	}	
+	
 	// load markers to the map every 5 seconds based on filter and classification setting.
 	// first query db based on myLastLatLng
 	// render markers on the map using classification and filter settings.
@@ -227,13 +237,17 @@ public class MapViewActivity extends FragmentActivity implements
 		if (markerType.equals("driver")) {
 			if (driverLst != null) {
 				for(Driver d:driverLst){
-					d.marker.remove();
+					if(d.marker!=null){
+						d.marker.remove();
+					}else{
+						break;
+					}
 				}
 			}
-			callDB();
-			for (Driver driver : driverLst) {
+			//callDB();
+			/*for (Driver driver : driverLst) {
 				driver.isActive = true;
-			}
+			}*/
 			// set up filter mapping
 			Map<String, String> companies = new HashMap<String, String>();
 			companies.put("Blue Cab", "Blue Cab");
@@ -327,7 +341,7 @@ public class MapViewActivity extends FragmentActivity implements
 			}
 
 		}
-		if (s.equals("01")) {
+		else if (s.equals("01")) {
 			Map<Integer, Integer> resource = new HashMap<Integer, Integer>();
 			resource.put(5, R.drawable.taxi5);
 			resource.put(4, R.drawable.taxi4);
@@ -342,7 +356,7 @@ public class MapViewActivity extends FragmentActivity implements
 						.fromResource(R.drawable.taxidefault);
 			}
 		}
-		if (s.equals("11")) {
+		else if (s.equals("11")) {
 			Map<String, Integer> resource = new HashMap<String, Integer>();
 			resource.put("Blue Cab5", R.drawable.taxiblue5);
 			resource.put("Blue Cab4", R.drawable.taxiblue4);
@@ -366,20 +380,13 @@ public class MapViewActivity extends FragmentActivity implements
 				icon = BitmapDescriptorFactory
 						.fromResource(R.drawable.taxidefault);
 			}
-
+		}else{
+			// default driver icon
+			icon = BitmapDescriptorFactory
+					.fromResource(R.drawable.taxidefault);
 		}
 		return icon;
 	}
-
-	public static void callDB() {
-		if (markerType == "driver") {
-			Log.d("----", uID);
-			(new QueryDatabaseDriverLoc()).execute(uID); // pass in uid. modify
-		} else {
-			Log.d("----", uID);
-			(new QueryDatabaseCustomerLoc()).execute(uID);
-		}
-	}	
 
 	@Override
 	public void onProviderDisabled(String provider) {
@@ -396,7 +403,7 @@ public class MapViewActivity extends FragmentActivity implements
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
-		Toast.makeText(this, "status changed", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Location Updated!", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

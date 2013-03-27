@@ -19,6 +19,7 @@
         android:padding="2dp" >
 
         <!-- Relative location: below load -->
+
         <Button
             style="@style/Button"
 	        android:id="@+id/hailTaxi"
