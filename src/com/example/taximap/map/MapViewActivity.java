@@ -188,6 +188,7 @@ public class MapViewActivity extends FragmentActivity implements
 				Bundle bundle = message.getData();
 				result = bundle.getString("address");
 				myLastAddress = result;
+				ProfileViewActivity.updateLocation(myLastAddress,myLastLatLng);
 				if(markerType.equals("driver")){
 					currentCustomer.marker.setSnippet(result);
 					 new Thread() {
