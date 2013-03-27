@@ -14,18 +14,24 @@ public class Driver {
 	public String name;
 	public String company;
 	public int rating;
-	public double distance;		
+	public double distance;	
+	public int capacity;
+	public String lastlocation;
+	public String phone;
 	public MarkerOptions markerOptions;
 	public Marker marker;
 	public boolean isActive=true;
 	public View view;
 	
-	public Driver(LatLng latlng,String name,String company, int rating, double distance) {
+	public Driver(LatLng latlng,String name,String company, int rating, double distance, int capacity, String lastlocation, String phone) {
 		this.latlng=latlng;
 		this.name=name;
 		this.company=company;
 		this.rating=rating;
 		this.distance=distance;
+		this.capacity=capacity;
+		this.lastlocation=lastlocation;
+		this.phone=phone;
 	}
 	
 	public String title(){

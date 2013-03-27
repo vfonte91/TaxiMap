@@ -50,7 +50,7 @@ public class QueryDatabaseDriverLoc  extends AsyncTask<String, Void, Integer>{
 		        	return_count++;
 				    JSONObject json_convert = new JSONObject(line);
 				    LatLng latlon = new LatLng(json_convert.getDouble("lat"), json_convert.getDouble("lon"));
-				    MapViewActivity.driverLst.add(new Driver(latlon,json_convert.getString("dname"),json_convert.getString("cname"),json_convert.getInt("rating"),json_convert.getDouble("distance")));
+				    MapViewActivity.driverLst.add(new Driver(latlon,json_convert.getString("dname"),json_convert.getString("cname"),json_convert.getInt("rating"),json_convert.getDouble("distance"),json_convert.getInt("capacity"),json_convert.getString("lastlocation"),json_convert.getString("phone")));
 		        }
 		}catch(Exception e){
 		        Log.e("log_tag", "Error in http connection "+e.toString());
