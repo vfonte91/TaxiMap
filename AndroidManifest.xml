@@ -54,8 +54,7 @@
             </intent-filter>
  </activity>
         <activity android:name=".map.MapViewActivity" />
-        <activity android:name=".map.MapActivity" />
-        <activity android:name=".map.ListActivity" />
+        <activity android:name=".map.ListViewActivity" />
         <activity android:name=".map.FilterActivity"/>
         <activity android:name=".map.HelpActivity" />
     </application>

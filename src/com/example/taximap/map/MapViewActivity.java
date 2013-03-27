@@ -37,6 +37,7 @@ import android.media.audiofx.Equalizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.sax.StartElementListener;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -77,7 +78,7 @@ public class MapViewActivity extends FragmentActivity implements
 		loadMarkerRunnable=new Runnable(){
 			public void run(){
 				callDB();
-				long delayTime=10000;
+				long delayTime=10000000;
 				loadMarkerHandler.postDelayed(this, delayTime);
 			}
 		};
@@ -104,7 +105,7 @@ public class MapViewActivity extends FragmentActivity implements
 			boolean networkIsEnabled = locationManager
 					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			// update real time location every 5s
-			long timeInterval=20000;
+			long timeInterval=100000000;
 			float distDifference=50;
 			if (gpsIsEnabled) {
 				// public void requestLocationUpdates (String provider, long
@@ -323,6 +324,7 @@ public class MapViewActivity extends FragmentActivity implements
 				firstMap=false;
 			}
 			//showMessages(this, "Drivers Updated");
+			//updateListView();
 			Toast.makeText(context, "Drivers Updated", Toast.LENGTH_SHORT).show();
 		} else if (markerType.equals("customer")) {
 		
@@ -330,10 +332,11 @@ public class MapViewActivity extends FragmentActivity implements
 		
 	}
 	
-/*	private static void showMessages(Context context, String msg){
-		Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
+	private static void updateListView(){
+		context.startActivity(new Intent(context,ListViewActivity.class));
 	}
-*/
+	
 	private static BitmapDescriptor findIcon(Driver driver) {
 		BitmapDescriptor icon = null;
 		// company, rating

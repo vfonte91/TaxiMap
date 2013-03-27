@@ -1,6 +1,7 @@
 package com.example.taximap.map;
 
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,20 +25,20 @@ public class TabLayoutActivity extends TabActivity {
  
         TabHost tabHost = getTabHost();
  
-        // Tab for Map
+        // Tab for MapView
         TabSpec mapspec = tabHost.newTabSpec("Map");
         // setting Title and Icon for the Tab
         mapspec.setIndicator("Map", getResources().getDrawable(R.layout.icon_map_tab));
         Intent mapIntent = new Intent(this, MapViewActivity.class);
         mapspec.setContent(mapIntent);
  
-        // Tab for Filters
+        // Tab for ListView
         TabSpec listspec = tabHost.newTabSpec("List");
         listspec.setIndicator("List", getResources().getDrawable(R.layout.icon_list_tab));
-        Intent listIntent = new Intent(this, ListActivity.class);
+        Intent listIntent = new Intent(this, ListViewActivity.class);
         listspec.setContent(listIntent);
  
-        // Tab for Help
+        // Tab for Profile
         TabSpec helpspec = tabHost.newTabSpec("Help");
         helpspec.setIndicator("Help", getResources().getDrawable(R.layout.icon_help_tab));
         Intent helpIntent = new Intent(this, HelpActivity.class);

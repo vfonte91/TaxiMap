@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * id, name, latlng, company, rating, distance*/
 public class Driver {
 	public LatLng latlng;
-	private String name;
+	public String name;
 	public String company;
 	public int rating;
 	public double distance;		
