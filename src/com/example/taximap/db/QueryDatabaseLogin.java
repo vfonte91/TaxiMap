@@ -15,7 +15,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import com.example.taximap.UserState;
 import com.example.taximap.map.MapViewActivity;
 import com.example.taximap.map.TabLayoutActivity;
 
