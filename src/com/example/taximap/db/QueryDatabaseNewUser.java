@@ -14,6 +14,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.example.taximap.Account;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -61,10 +64,9 @@ public class QueryDatabaseNewUser  extends AsyncTask<String, Void, Integer>{
     		.setTitle("Message")
     		.setMessage("New User Created!")
     		.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-    			public void onClick(DialogInterface dialog, int which) {}
+    			public void onClick(DialogInterface dialog, int which) {((Activity)context).finish();}
     		})
     		.show();
-            
         } else if(result==2){ 
         	new AlertDialog.Builder(context)
     		.setTitle("Error")
