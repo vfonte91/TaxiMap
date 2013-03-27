@@ -19,16 +19,22 @@
         android:padding="2dp" >
 
         <!-- Relative location: below load -->
+
         <Button
-            style="@style/Button"
-	        android:id="@+id/hailTaxi"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentBottom="true"
-	        android:text="@string/hail_taxi_button"
-        	android:textSize="20sp" />
+            android:id="@+id/filters_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Filters" />
+
+        <Button
+            android:id="@+id/load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/filters_setting"
+            android:text="Load" />
         <!-- Relative location: right of filters_setting -->
-<!--
+
         <TextView
             android:id="@+id/current_location"
             android:layout_width="wrap_content"
@@ -41,7 +47,7 @@
             android:text="Positioning current location..."
             android:textColor="@color/Black"
             android:textSize="16sp" />
-  
+
         <Button
             android:id="@+id/update_loc"
             android:layout_width="wrap_content"
@@ -54,14 +60,6 @@
             android:text="update"
             android:textColor="@color/Black"
             android:textSize="16sp" />
--->
-        <Button
-            android:id="@+id/filters_setting"
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:layout_above="@+id/hailTaxi"
-            android:layout_alignParentLeft="true"
-            android:text="@string/filters_button" />
 
     </RelativeLayout>
 
