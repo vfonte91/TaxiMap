@@ -87,7 +87,8 @@ public class MapViewActivity extends FragmentActivity implements
 			boolean networkIsEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			//update real time location every 5s
 			if (gpsIsEnabled) { 
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10F, this); 
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10F, this);
+				
 			} 
 			else if(networkIsEnabled) { 
 				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 10F, this); } 
@@ -176,10 +177,10 @@ public class MapViewActivity extends FragmentActivity implements
 
 	public static void callDB() {
 		if (markerType == "driver") {
-			Log.d("----", uID);
-			(new QueryDatabaseDriverLoc()).execute(uID); // pass in uid. modify
+			Log.d("--c--", uID);
+			new QueryDatabaseDriverLoc().execute(uID, "39.95", "-82.99"); // pass in uid. modify
 		} else {
-			Log.d("----", uID);
+			Log.d("--d--", uID);
 			(new QueryDatabaseCustomerLoc()).execute(uID);
 		}
 	}
