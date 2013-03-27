@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 //import com.google.android.maps.GeoPoint;
 //import com.google.android.maps.MapActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -65,7 +66,7 @@ public class MapViewActivity extends FragmentActivity implements
 	// private static OnLocationChangedListener mListener;
 	private static LocationManager locationManager;
 	private static final String TAG = "-------------";
-
+	private static MapViewActivity context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,6 +81,7 @@ public class MapViewActivity extends FragmentActivity implements
 				loadMarkerHandler.postDelayed(this, delayTime);
 			}
 		};
+		context=this;
 	}
 
 	private void setUpMapIfNeeded() {
@@ -196,19 +198,22 @@ public class MapViewActivity extends FragmentActivity implements
 					currentCustomer.marker.setSnippet(result);
 					 new Thread() {
 					        @Override public void run() {
-					        	try {
-
-					        		while(MapViewActivity.currentCustomer.marker==null){
-										//loop and wait for currentCustomer constructor to complete
-										Log.i(TAG, "currentCustomer.marker==null");
-									}
-					        		//MapViewActivity.currentCustomer.marker.showInfoWindow();
-									Thread.sleep(2000);
-									//MapViewActivity.currentCustomer.marker.hideInfoWindow();
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+					        	while(MapViewActivity.currentCustomer.marker==null){
+									//loop and wait for currentCustomer constructor to complete
+									Log.i(TAG, "currentCustomer.marker==null");
 								}
+								context.runOnUiThread(new Runnable() {
+								    public void run() {
+								    	MapViewActivity.currentCustomer.marker.showInfoWindow();
+										try {
+											Thread.sleep(2000);
+										} catch (InterruptedException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										MapViewActivity.currentCustomer.marker.hideInfoWindow();
+								    }
+								});
 					        }
 					 }.start();
 				}
