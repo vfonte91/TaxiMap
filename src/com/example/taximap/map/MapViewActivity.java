@@ -62,7 +62,7 @@ public class MapViewActivity extends FragmentActivity implements
 	public static String uID = "18";
 	public static LatLng myLastLatLng = null;
 	public static String myLastAddress = null;
-	
+	private static boolean firstMap=true;
 	// private static OnLocationChangedListener mListener;
 	private static LocationManager locationManager;
 	private static final String TAG = "-------------";
@@ -77,7 +77,7 @@ public class MapViewActivity extends FragmentActivity implements
 		loadMarkerRunnable=new Runnable(){
 			public void run(){
 				callDB();
-				long delayTime=5000;
+				long delayTime=10000;
 				loadMarkerHandler.postDelayed(this, delayTime);
 			}
 		};
@@ -104,13 +104,12 @@ public class MapViewActivity extends FragmentActivity implements
 			boolean networkIsEnabled = locationManager
 					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			// update real time location every 5s
-			long timeInterval=10000;
-			float distDifference=30;
+			long timeInterval=20000;
+			float distDifference=50;
 			if (gpsIsEnabled) {
 				// public void requestLocationUpdates (String provider, long
 				// minTime, float minDistance, LocationListener listener)
 				// min time interval 5s, min difference meters 10m.
-
 				locationManager.requestLocationUpdates(
 						LocationManager.GPS_PROVIDER, timeInterval, distDifference, this);
 			} else if (networkIsEnabled) {
@@ -318,14 +317,23 @@ public class MapViewActivity extends FragmentActivity implements
 				}
 			}
 			currentBounds = boundsBuilder.build();
-			gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
+			if(firstMap){
+				gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
 					currentBounds, 50)); // padding 50
-			
+				firstMap=false;
+			}
+			//showMessages(this, "Drivers Updated");
+			Toast.makeText(context, "Drivers Updated", Toast.LENGTH_SHORT).show();
 		} else if (markerType.equals("customer")) {
 		
 		}
+		
 	}
-
+	
+/*	private static void showMessages(Context context, String msg){
+		Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+	}
+*/
 	private static BitmapDescriptor findIcon(Driver driver) {
 		BitmapDescriptor icon = null;
 		// company, rating
