@@ -39,8 +39,8 @@ public class TabLayoutActivity extends TabActivity {
         listspec.setContent(listIntent);
  
         // Tab for Profile
-        TabSpec helpspec = tabHost.newTabSpec("Help");
-        helpspec.setIndicator("Help", getResources().getDrawable(R.layout.icon_help_tab));
+        TabSpec helpspec = tabHost.newTabSpec("Profile");
+        helpspec.setIndicator("Profile", getResources().getDrawable(R.layout.icon_profile_tab));
         Intent helpIntent = new Intent(this, ProfileViewActivity.class);
         helpspec.setContent(helpIntent);
  

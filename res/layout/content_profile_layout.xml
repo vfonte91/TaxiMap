@@ -8,34 +8,22 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/bot" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:src="@drawable/bot"
+        android:layout_marginBottom="100dp" />
 
     <TextView
         android:id="@+id/name_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="The login name will be here."
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Last known location"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+    
     <TextView
         android:id="@+id/location_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="The last known location will be here."
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>

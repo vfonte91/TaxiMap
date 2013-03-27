@@ -56,7 +56,7 @@
         <activity android:name=".map.MapViewActivity" />
         <activity android:name=".map.ListViewActivity" />
         <activity android:name=".map.FilterActivity"/>
-        <activity android:name=".map.HelpActivity" />
+        <activity android:name=".map.ProfileViewActivity" />
     </application>
 
     <uses-feature

@@ -61,8 +61,9 @@ public class MapViewActivity extends FragmentActivity implements
 	private static Handler loadMarkerHandler;
 	private static Runnable loadMarkerRunnable;
 	public static String uID = "18";
+	public static String uName="TaxiMap User";
 	public static LatLng myLastLatLng = new LatLng(39.983434,-83.003082);
-	public static String myLastAddress = null;
+	public static String myLastAddress = "Mahoning CT, Columbus OH 43210";
 	private static boolean firstMap=true;
 	// private static OnLocationChangedListener mListener;
 	private static LocationManager locationManager;
