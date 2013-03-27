@@ -48,7 +48,7 @@
         <activity
             android:name=".map.TabLayoutActivity"
             android:label="@string/app_name" >
-            <intent-filter>
+                                    <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
