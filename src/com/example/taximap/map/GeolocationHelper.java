@@ -43,8 +43,9 @@ public class GeolocationHelper {
 	                    Bundle bundle = new Bundle();
 	                    bundle.putString("address", result);
 	                    msg.setData(bundle);
-	                } else 
+	                } else {
 	                    msg.what = 0;
+	                }
 	                msg.sendToTarget();
 	            }
 	        }

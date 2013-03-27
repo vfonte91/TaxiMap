@@ -56,17 +56,8 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		        BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
 		        line = reader.readLine();
 		        JSONObject json_login = new JSONObject(line);
-		        String  uid_string = json_login.getString("uid");
-		        MapViewActivity.uID=uid_string;			//wei added
+		        String  uid_string = json_login.getString("uid");		       
 		        String type_string = json_login.getString("type");
-		        if(type_string=="0"){		//customer login
-		        	MapViewActivity.markerType="driver";
-		        }
-		        else if(type_string=="0"){
-		        	MapViewActivity.markerType="customer";
-		        }else{
-		        	Toast.makeText(context, "Invalid user type", Toast.LENGTH_SHORT);
-		        }
 		        return_result[0] = Integer.valueOf(uid_string);
 		        return_result[1] = Integer.valueOf(type_string);		        
 		}catch(Exception e){
@@ -78,14 +69,16 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 	
 	protected void onPostExecute(Integer[] result) {
 		if(result[0]>0){ 
-			if(result[1]==1){		// type 1 driver, type 0 customer
-				//to test this case you can user username: 'a' password: 'a'
-	            context.startActivity(new Intent(context,TabLayoutActivity.class));
-			} else {
-				//to test this case create a new user or use username: 'test' password: 'test'
-	            context.startActivity(new Intent(context,TabLayoutActivity.class));
-			}
-            
+			 MapViewActivity.uID=result[0].toString();			//wei added
+			 if(result[1].toString()=="0"){		//customer login
+		        	MapViewActivity.markerType="driver";
+		        }
+		        else if(result[1].toString()=="1"){
+		        	MapViewActivity.markerType="customer";
+		        }else{
+		        	Toast.makeText(context, "Invalid user type", Toast.LENGTH_SHORT);
+		        }
+	            context.startActivity(new Intent(context,TabLayoutActivity.class));          
         } else if(result[0]==-5){ 
         	new AlertDialog.Builder(context)
     		.setTitle("Error")

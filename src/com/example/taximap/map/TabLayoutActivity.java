@@ -76,9 +76,6 @@ public class TabLayoutActivity extends TabActivity {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_settings:
-			startActivity(new Intent(this, Settings.class));
-			return true;
 		case R.id.menu_help:
 			startActivity(new Intent(this, Help.class));
 			return true;
