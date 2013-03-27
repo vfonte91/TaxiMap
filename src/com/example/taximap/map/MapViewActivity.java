@@ -61,7 +61,7 @@ public class MapViewActivity extends FragmentActivity implements
 	private static Handler loadMarkerHandler;
 	private static Runnable loadMarkerRunnable;
 	public static String uID = "18";
-	public static LatLng myLastLatLng = null;
+	public static LatLng myLastLatLng = new LatLng(39.983434,-83.003082);
 	public static String myLastAddress = null;
 	private static boolean firstMap=true;
 	// private static OnLocationChangedListener mListener;
@@ -72,27 +72,20 @@ public class MapViewActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_map_layout);
-		setUpMapIfNeeded();
+		gmap = ((SupportMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.map)).getMap();
+		setupMapView();
 		enableLocationUpdate();
 		loadMarkerHandler= new Handler();
 		loadMarkerRunnable=new Runnable(){
 			public void run(){
 				callDB();
-				long delayTime=10000000;
+				long delayTime=60000;
 				loadMarkerHandler.postDelayed(this, delayTime);
 			}
 		};
 		context=this;
-	}
-
-	private void setUpMapIfNeeded() {
-		if (gmap == null) {
-			gmap = ((SupportMapFragment) getSupportFragmentManager()
-					.findFragmentById(R.id.map)).getMap();
-			if (gmap != null) {
-				setupMapView();
-			}
-		}
+		callDB();
 	}
 
 	private void enableLocationUpdate() {
@@ -105,8 +98,8 @@ public class MapViewActivity extends FragmentActivity implements
 			boolean networkIsEnabled = locationManager
 					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			// update real time location every 5s
-			long timeInterval=100000000;
-			float distDifference=50;
+			long timeInterval=60000;
+			float distDifference=30;
 			if (gpsIsEnabled) {
 				// public void requestLocationUpdates (String provider, long
 				// minTime, float minDistance, LocationListener listener)

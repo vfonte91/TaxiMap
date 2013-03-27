@@ -29,6 +29,6 @@ public class Driver {
 		return String.format("Driver %s", this.company,this.rating);
 	}
 	public String snippet(){
-		return String.format("%s company, %d stars, %f distance", this.company,this.rating,this.distance);
+		return String.format("%s company, %d stars, %f miles", this.company,this.rating,this.distance);
 	}
 }
