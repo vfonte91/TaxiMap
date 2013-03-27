@@ -1,5 +1,7 @@
 package com.example.taximap.map;
 
+import android.view.View;
+
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -16,6 +18,7 @@ public class Driver {
 	public MarkerOptions markerOptions;
 	public Marker marker;
 	public boolean isActive=true;
+	public View view;
 	
 	public Driver(LatLng latlng,String name,String company, int rating, double distance) {
 		this.latlng=latlng;

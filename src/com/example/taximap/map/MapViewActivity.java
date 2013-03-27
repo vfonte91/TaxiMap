@@ -428,7 +428,7 @@ public class MapViewActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case R.id.menu_filter:
 			// requestCode=1
-			startActivityForResult(new Intent(this, FilterActivity.class), 1);
+			startActivityForResult(new Intent(context, FilterActivity.class), 1);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

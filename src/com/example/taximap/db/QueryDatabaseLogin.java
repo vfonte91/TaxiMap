@@ -75,7 +75,7 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		        else if(result[1].toString()=="1"){
 		        	MapViewActivity.markerType="customer";
 		        }else{
-		        	Toast.makeText(context, "Invalid user type", Toast.LENGTH_SHORT);
+		        	Toast.makeText(context, "Invalid user type", Toast.LENGTH_SHORT).show();
 		        }
 	            context.startActivity(new Intent(context,TabLayoutActivity.class));          
         } else if(result[0]==-5){ 
