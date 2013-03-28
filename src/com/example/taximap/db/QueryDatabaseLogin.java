@@ -58,7 +58,7 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		        String  uid_string = json_login.getString("uid");		       
 		        String type_string = json_login.getString("type");
 		        return_result[0] = Integer.valueOf(uid_string);
-		        return_result[1] = Integer.valueOf(type_string);		        
+		        return_result[1] = Integer.valueOf(type_string);
 		}catch(Exception e){
 		        Log.e("log_tag", "Error in http connection "+e.toString());
 		        return_result[0] = -5;
@@ -69,14 +69,12 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 	protected void onPostExecute(Integer[] result) {
 		if(result[0]>0){ 
 			 MapViewActivity.uID=result[0].toString();			//wei added
-			 if(result[1].toString()=="0"){		//customer login
+			 Log.e("???",result[0].toString()+" "+result[1].toString());
+			 if(result[1]==0){		//customer login
 		        	MapViewActivity.markerType="driver";
-		        }
-		        else if(result[1].toString()=="1"){
+		     }else{
 		        	MapViewActivity.markerType="customer";
-		        }else{
-		        	Toast.makeText(context, "Invalid user type", Toast.LENGTH_SHORT).show();
-		        }
+		     }
 	            context.startActivity(new Intent(context,TabLayoutActivity.class));          
         } else if(result[0]==-5){ 
         	new AlertDialog.Builder(context)
