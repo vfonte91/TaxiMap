@@ -73,7 +73,6 @@
 	
 	<style name="YellowButtonStyle" parent="Button">
         <item name="android:background">@drawable/button_style_yellow</item>
-        <item name="android:layout_marginTop">10dp</item>
         <item name="android:textColor">@color/Yellow</item>
         <item name="android:textStyle">bold</item>
 	</style>

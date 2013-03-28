@@ -94,12 +94,14 @@
             <Button
                 style="@style/YellowButtonStyle"
                 android:id="@+id/login_button"
-                android:text="@string/login_button" />
+                android:text="@string/login_button"
+                android:layout_marginTop="10dp" />
 
             <Button
                 style="@style/YellowButtonStyle"
                 android:id="@+id/new_user_button"
-                android:text="@string/new_register" />
+                android:text="@string/new_register"
+                android:layout_marginTop="10dp" />
             
             <!-- BUTTONS END -->
             
