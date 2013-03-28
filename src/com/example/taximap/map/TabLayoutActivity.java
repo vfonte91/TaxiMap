@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TabHost;
+import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 import com.example.taximap.*;
 import com.example.taximap.menu.ContactsView;
@@ -77,6 +78,10 @@ public class TabLayoutActivity extends TabActivity {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.menu_filter:
+			// requestCode=1
+			startActivityForResult(new Intent(this, FilterActivity.class), 1);
+			break;
 		case R.id.menu_help:
 			startActivity(new Intent(this, Help.class));
 			return true;
@@ -87,6 +92,24 @@ public class TabLayoutActivity extends TabActivity {
 			startActivity(new Intent(this, ContactsView.class));
 			return true;
 		}
-		return false;
+		return super.onOptionsItemSelected(item);
+	}
+
+
+	// callback from filter activity
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+			// do something
+			if (resultCode == RESULT_OK) {
+				MapViewActivity.loadMarkers();
+			} else {
+				Toast.makeText(this, "Filter Cancelled", Toast.LENGTH_SHORT)
+						.show();
+			}
+		} else {
+			Toast.makeText(this, "Request Code Error", Toast.LENGTH_SHORT)
+					.show();
+		}
+
 	}
 }

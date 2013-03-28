@@ -29,6 +29,7 @@ import com.example.taximap.*;
 public class ListViewActivity extends Activity implements
 		android.view.View.OnClickListener {
 	private static Activity context;
+	private static String sortField="name";
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_list_layout);
@@ -41,13 +42,15 @@ public class ListViewActivity extends Activity implements
 
 	public void onResume() {
 		super.onResume();
-		createList("name");
+		createList();
 	}
 
-	private void createList(String sortField) {
-
+	public static void createList() {
 		// bind ListView and use it as the container for listitem
-		ListView list = (ListView) findViewById(R.id.listview);
+		if(context==null){
+			return;
+		}
+		ListView list = (ListView) context.findViewById(R.id.listview);
 		list.setAdapter(null);
 		ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
 		// sort DriverList by name default
@@ -95,7 +98,7 @@ public class ListViewActivity extends Activity implements
 				map.put("itemtext", d.snippet());
 				mylist.add(map);
 			}
-			SimpleAdapter adapter = new SimpleAdapter(this, mylist, // data
+			SimpleAdapter adapter = new SimpleAdapter(context, mylist, // data
 																	// source
 					R.layout.listviewitem, // ListItem XML
 					// key correspondence
@@ -114,7 +117,7 @@ public class ListViewActivity extends Activity implements
 					for(int i=0;i<parent.getChildCount();i++){
 						parent.getChildAt(i).setBackgroundColor(0x000000);
 					}
-					parent.getChildAt(position).setBackgroundColor(getResources().getColor(R.color.Yellow));
+					parent.getChildAt(position).setBackgroundColor(context.getResources().getColor(R.color.Yellow));
 					/*for(View v:parent.get)
 			    	view.setBackgroundColor(color)
 					try {
@@ -134,16 +137,20 @@ public class ListViewActivity extends Activity implements
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 		case R.id.sort_by_name:
-			createList("name");
+			sortField="name";
+			createList();
 			break;
 		case R.id.sort_by_company:
-			createList("company");
+			sortField="company";
+			createList();
 			break;
 		case R.id.sort_by_rating:
-			createList("rating");
+			sortField="rating";
+			createList();
 			break;
 		case R.id.sort_by_distance:
-			createList("distance");
+			sortField="distance";
+			createList();
 			break;
 		}
 

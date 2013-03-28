@@ -26,8 +26,10 @@ public class ProfileViewActivity extends Activity {
         context=this;
     }
     public static void updateLocation(String add, LatLng latlng){
-    	address.setText(String.format("Last Address: %s", add));
-    	location.setText(String.format("Last Location: %.6f,%.6f", latlng.latitude,latlng.longitude));
+    	if(address!=null)
+    		address.setText(String.format("Last Address: %s", add));
+    	if(location!=null)
+    		location.setText(String.format("Last Location: %.6f,%.6f", latlng.latitude,latlng.longitude));
     	
         
     }
