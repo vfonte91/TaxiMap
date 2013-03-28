@@ -14,28 +14,67 @@
 
 
     <!-- Application theme. -->
+    
     <style name="AppTheme" parent="AppBaseTheme">
     </style>
+    
     <style name="ScrollView" parent="AppBaseTheme">
         <item name="android:background">@color/Yellow</item>
     </style>
+    
     <style name="LinearLayout" parent="AppBaseTheme">
         <item name="android:background">@color/Black</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
     </style>
+    
     <style name="RelativeLayout" parent="AppBaseTheme">
         <item name="android:background">@color/Black</item>
     </style>
+    
     <style name="TextView" parent="AppBaseTheme">
         <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
     </style>
+    
     <style name="Spinner" parent="AppBaseTheme">
     </style>
+    
     <style name="Button" parent="AppBaseTheme">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
     </style>
     
-    <!-- TEST PUSH FOR XML STYLES -->
+	<style name="HeaderStyle">
+	    <item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_alignParentTop">true</item>
+		<item name="android:background">@layout/header_footer</item>
+	</style>
+	
+	<style name="FooterStyle">
+	    <item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_alignParentBottom">true</item>
+		<item name="android:background">@layout/header_footer</item>
+	</style>
+	
+	<style name="HeaderBackgroundStyle">
+	    <item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">10dp</item>
+		<item name="android:background">@color/Yellow</item>
+	</style>
+	
+	<style name="FooterBackgroundStyle">
+	    <item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">10dp</item>
+		<item name="android:background">@color/Yellow</item>
+	</style>
+	
+	<style name="YellowButtonStyle" parent="Button">
+        <item name="android:background">@drawable/button_style_yellow</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">@color/Yellow</item>
+        <item name="android:textStyle">bold</item>
+	</style>
 </resources>
