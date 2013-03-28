@@ -68,7 +68,7 @@ public class MapViewActivity extends FragmentActivity implements
 	// private static OnLocationChangedListener mListener;
 	private static LocationManager locationManager;
 	private static final String TAG = "-------------";
-	private static MapViewActivity context;
+	private static Activity context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -244,10 +244,9 @@ public class MapViewActivity extends FragmentActivity implements
 					}
 				}
 			}
-			//callDB();
-			/*for (Driver driver : driverLst) {
+			for (Driver driver : driverLst) {
 				driver.isActive = true;
-			}*/
+			}
 			// set up filter mapping
 			Map<String, String> companies = new HashMap<String, String>();
 			companies.put("Blue Cab", "Blue Cab");
@@ -319,17 +318,12 @@ public class MapViewActivity extends FragmentActivity implements
 				firstMap=false;
 			}
 			//showMessages(this, "Drivers Updated");
-			//updateListView();
-			Toast.makeText(context, "Drivers Updated", Toast.LENGTH_SHORT).show();
+			/*updateListView();*/
+			ListViewActivity.createList();
 		} else if (markerType.equals("customer")) {
 		
 		}
 		
-	}
-	
-
-	private static void updateListView(){
-		context.startActivity(new Intent(context,ListViewActivity.class));
 	}
 	
 	private static BitmapDescriptor findIcon(Driver driver) {
@@ -415,43 +409,6 @@ public class MapViewActivity extends FragmentActivity implements
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
 		Toast.makeText(this, "Location Updated!", Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.id.menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		switch (item.getItemId()) {
-		case R.id.menu_filter:
-			// requestCode=1
-			startActivityForResult(new Intent(context, FilterActivity.class), 1);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
-
-	// callback from filter activity
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1) {
-			// do something
-			if (resultCode == RESULT_OK) {
-				loadMarkers();
-			} else {
-				Toast.makeText(this, "Filter Cancelled", Toast.LENGTH_SHORT)
-						.show();
-			}
-		} else {
-			Toast.makeText(this, "Request Code Error", Toast.LENGTH_SHORT)
-					.show();
-		}
-
 	}
 
 	@Override

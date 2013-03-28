@@ -27,9 +27,7 @@ import com.example.taximap.menu.Settings;
 
 public class FilterActivity extends Activity implements OnItemSelectedListener,
 		OnClickListener {
-	public static Map<String, Map<String, String>> filters; // return to calling
-															// activity through
-															// intent
+	public static Map<String, Map<String, String>> filters; 
 	public static Map<String, Map<String, Boolean>> classifications;	
 	private static String markerType;
 	private static CheckBox companyCheck,ratingCheck,distanceCheck;
@@ -55,7 +53,10 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 		ratingCheck=((CheckBox) findViewById(R.id.by_rating));
 		ratingCheck.setChecked(false);
 	}
-	
+	protected void onResume(){
+		super.onResume();
+		resetFilter();
+	}
 	private static void resetFilter(){
 		filters = new HashMap<String, Map<String, String>>();
 		if (markerType.equals("driver")) {
@@ -126,10 +127,6 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 	// fires on new selection
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
-		/*
-		 * Toast.makeText(getBaseContext(), "you select : " +
-		 * parent.getItemAtPosition(pos), Toast.LENGTH_SHORT).show();
-		 */
 		String value="";
 		switch (parent.getId()) {
 		case R.id.company_filter:
@@ -172,7 +169,6 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 			}else{
 				classificationCode[1]='0';
 			}
-			
 			this.setResult(RESULT_OK, intent);
             this.finish();
 			break;
