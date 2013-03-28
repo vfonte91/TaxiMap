@@ -63,6 +63,7 @@
         <activity android:name=".map.ProfileViewActivity" android:screenOrientation="portrait" />
         <activity android:name=".menu.Help" android:screenOrientation="portrait" />
         <activity android:name=".menu.Contact" android:screenOrientation="portrait" />
+        
     </application>
 
     <uses-feature
