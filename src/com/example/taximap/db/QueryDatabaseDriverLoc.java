@@ -59,8 +59,7 @@ public class QueryDatabaseDriverLoc  extends AsyncTask<String, Void, Integer>{
 	}
 	
 	protected void onPostExecute(Integer result) {
-		//call to CustomerMap functions to erase old markers and draw new ones
-			if(result!=0)MapViewActivity.loadMarkers();
+		if(result!=0)MapViewActivity.loadMarkers();
 				
     }
 

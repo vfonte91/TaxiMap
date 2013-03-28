@@ -35,9 +35,9 @@ public class Driver {
 	}
 	
 	public String title(){
-		return String.format("Driver %s", this.company,this.rating);
+		return String.format("Driver: %s", this.name);
 	}
 	public String snippet(){
-		return String.format("%s company, %d stars, %f miles", this.company,this.rating,this.distance);
+		return String.format("%s company, %d star, %.2f miles", this.company,this.rating,this.distance);
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Version Name following project dues 
-	1.x is the xth due.
+	1.x is the xth due.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.taximap"
@@ -40,6 +40,11 @@
         <activity
             android:name=".Login"
             android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Account"
@@ -48,15 +53,13 @@
         <activity
             android:name=".map.TabLayoutActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
- </activity>
+        </activity>
         <activity android:name=".map.MapViewActivity" />
         <activity android:name=".map.ListViewActivity" />
-        <activity android:name=".map.FilterActivity"/>
+        <activity android:name=".map.FilterActivity" />
         <activity android:name=".map.ProfileViewActivity" />
+        <activity android:name=".menu.Help" />
+        <activity android:name=".menu.Contact" />
     </application>
 
     <uses-feature

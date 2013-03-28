@@ -18,16 +18,17 @@
         android:orientation="vertical"
         android:padding="2dp" >
 
-        <!-- Relative location: below load -->
-
         <Button
+            android:id="@+id/hailTaxi"
             style="@style/Button"
-	        android:id="@+id/hailTaxi"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentBottom="true"
-	        android:text="@string/hail_taxi_button"
-        	android:textSize="20sp" />
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/WhiteSmoke"
+            android:text="@string/hail_taxi_button"
+            android:textColor="@color/Black"
+            android:textSize="20sp" />
+
     </RelativeLayout>
 
 </RelativeLayout>

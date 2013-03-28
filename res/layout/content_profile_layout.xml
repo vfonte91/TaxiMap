@@ -26,16 +26,24 @@
         android:id="@+id/address_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="The last known address will be here."
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:layout_gravity="center_horizontal"/>
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/location_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="The last known location will be here."
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:layout_gravity="center_horizontal"/>
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/hail_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Hail status will be shown here."
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>

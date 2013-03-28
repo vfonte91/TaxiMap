@@ -29,6 +29,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PaintDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -39,6 +41,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.sax.StartElementListener;
 import android.support.v4.app.FragmentActivity;
+import android.text.InputFilter.LengthFilter;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,7 +51,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
-public class MapViewActivity extends FragmentActivity implements
+public class MapViewActivity extends FragmentActivity implements OnClickListener,
 		LocationListener, LocationSource {
 	private static GoogleMap gmap;
 	public static String markerType = "driver";
@@ -60,11 +64,11 @@ public class MapViewActivity extends FragmentActivity implements
 	private static TextView myLocationField = null;
 	private static Handler loadMarkerHandler;
 	private static Runnable loadMarkerRunnable;
-	public static String uID = "18";
+	public static String uID = "10";
 	public static String uName="TaxiMap User";
 	public static LatLng myLastLatLng = new LatLng(39.983434,-83.003082);
 	public static String myLastAddress = "Mahoning CT, Columbus OH 43210";
-	private static boolean firstMap=true;
+	private static boolean hailStatus=false;
 	// private static OnLocationChangedListener mListener;
 	private static LocationManager locationManager;
 	private static final String TAG = "-------------";
@@ -76,6 +80,7 @@ public class MapViewActivity extends FragmentActivity implements
 		gmap = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 		setupMapView();
+
 		enableLocationUpdate();
 		loadMarkerHandler= new Handler();
 		loadMarkerRunnable=new Runnable(){
@@ -86,7 +91,9 @@ public class MapViewActivity extends FragmentActivity implements
 			}
 		};
 		context=this;
-		callDB();
+		//callDB();
+		new Thread(loadMarkerRunnable).run();
+		((Button)findViewById(R.id.hailTaxi)).setOnClickListener(this);
 	}
 
 	private void enableLocationUpdate() {
@@ -107,12 +114,16 @@ public class MapViewActivity extends FragmentActivity implements
 				// min time interval 5s, min difference meters 10m.
 				locationManager.requestLocationUpdates(
 						LocationManager.GPS_PROVIDER, timeInterval, distDifference, this);
-			} else if (networkIsEnabled) {
+			} else{
+				Toast.makeText(this, "GPS is disabled will try Network location",
+						Toast.LENGTH_LONG).show();
+			} 
+			 if (networkIsEnabled) {
 				locationManager.requestLocationUpdates(
 						LocationManager.NETWORK_PROVIDER, timeInterval, distDifference, this);
 			} else { // Show an error dialog that GPS is disabled...
-				Toast.makeText(this, "Both GPS and Network are disabled",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Both GPS and Network are disabled. Location will not be updated.",
+						Toast.LENGTH_LONG).show();
 			}
 		} else { // Show some generic error dialog because something must have
 					// gone wrong with
@@ -131,12 +142,7 @@ public class MapViewActivity extends FragmentActivity implements
 		UiSettings settings = gmap.getUiSettings();
 		settings.setAllGesturesEnabled(true);
 		settings.setCompassEnabled(true);
-		settings.setMyLocationButtonEnabled(true);
-		settings.setRotateGesturesEnabled(true);
-		settings.setScrollGesturesEnabled(true);
-		settings.setTiltGesturesEnabled(true);
 		settings.setZoomControlsEnabled(false);
-		settings.setZoomGesturesEnabled(true);
 		gmap.animateCamera(CameraUpdateFactory
 				.newCameraPosition(new CameraPosition(new LatLng(39.983434,
 						-83.003082), 8f, 0, 0)));
@@ -151,7 +157,6 @@ public class MapViewActivity extends FragmentActivity implements
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
 		myLastLatLng=new LatLng(latitude, longitude);
-		String username="User Name";
 		// get physical address from that lat lon location
 		GeolocationHelper.getAddressFromLocation(location, this, new GeocoderHandler());
 		// add a marker to show current user location.
@@ -159,11 +164,10 @@ public class MapViewActivity extends FragmentActivity implements
 			if(currentDriver==null){
 				BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.customerdefault);
 				MarkerOptions markerOptions = new MarkerOptions().position(myLastLatLng)
-						.title(username).icon(icon);
-				currentCustomer=new Customer(myLastLatLng,username);
+						.title(uName).icon(icon);
+				currentCustomer=new Customer(myLastLatLng,uName);
 				currentCustomer.markerOptions=markerOptions;
 				currentCustomer.marker=gmap.addMarker(markerOptions);
-				currentCustomer.marker.showInfoWindow();
 				gmap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(myLastLatLng,10f,0,0)));
 				if (currentBounds == null) {
 					boundsBuilder = new LatLngBounds.Builder();
@@ -175,50 +179,49 @@ public class MapViewActivity extends FragmentActivity implements
 				currentCustomer.marker.setPosition(myLastLatLng);
 			}
 		}
-		new Thread(loadMarkerRunnable).run();
-/*		callDB();*/
 	}
 
 	private static class GeocoderHandler extends Handler {
 		@Override
 		public void handleMessage(Message message) {
-			String result;
+			String address;
 			switch (message.what) {
 			case 1:
 				Bundle bundle = message.getData();
-				result = bundle.getString("address");
-				myLastAddress = result;
+				address = bundle.getString("address");
+				myLastAddress = address;
+				showUserMarker();
 				ProfileViewActivity.updateLocation(myLastAddress,myLastLatLng);
-				if(markerType.equals("driver")){
-					currentCustomer.marker.setSnippet(result);
-					 new Thread() {
-					        @Override public void run() {
-					        	while(MapViewActivity.currentCustomer.marker==null){
-									//loop and wait for currentCustomer constructor to complete
-									Log.i(TAG, "currentCustomer.marker==null");
-								}
-								context.runOnUiThread(new Runnable() {
-								    public void run() {
-								    	MapViewActivity.currentCustomer.marker.showInfoWindow();
-										try {
-											Thread.sleep(2000);
-										} catch (InterruptedException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-										MapViewActivity.currentCustomer.marker.hideInfoWindow();
-								    }
-								});
-					        }
-					 }.start();
-				}
 				break;
-			default:
-				result = null;
 			}
 		}
 	}
 	
+	private static void showUserMarker(){
+		if(markerType.equals("driver")){
+			currentCustomer.marker.setSnippet(myLastAddress);
+			 new Thread() {
+			        @Override public void run() {
+			        	while(MapViewActivity.currentCustomer.marker==null){
+							//loop and wait for currentCustomer constructor to complete
+							Log.i(TAG, "currentCustomer.marker==null");
+						}
+						context.runOnUiThread(new Runnable() {
+						    public void run() {
+						    	MapViewActivity.currentCustomer.marker.showInfoWindow();
+								try {
+									Thread.sleep(2000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								MapViewActivity.currentCustomer.marker.hideInfoWindow();
+						    }
+						});
+			        }
+			 }.start();
+		}
+	}
 	public static void callDB() {
 		if (markerType == "driver") {
 			Log.d("----", uID);
@@ -235,6 +238,7 @@ public class MapViewActivity extends FragmentActivity implements
 	public static void loadMarkers() {
 		// clear all markers except for the current user
 		if (markerType.equals("driver")) {
+			gmap.clear();/*
 			if (driverLst != null) {
 				for(Driver d:driverLst){
 					if(d.marker!=null){
@@ -243,6 +247,10 @@ public class MapViewActivity extends FragmentActivity implements
 						break;
 					}
 				}
+			}*/
+			if(currentCustomer!=null){
+				gmap.addMarker(currentCustomer.markerOptions);
+				showUserMarker();
 			}
 			for (Driver driver : driverLst) {
 				driver.isActive = true;
@@ -287,7 +295,7 @@ public class MapViewActivity extends FragmentActivity implements
 						}
 						if (key.equals("distance")) {
 							for (Driver driver : driverLst) {
-								if (driver.distance < ratings.get(value)) {
+								if (driver.distance > distance.get(value)) {
 									driver.isActive = false;
 								}
 							}
@@ -312,11 +320,10 @@ public class MapViewActivity extends FragmentActivity implements
 				}
 			}
 			currentBounds = boundsBuilder.build();
-			if(firstMap){
-				gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
-					currentBounds, 50)); // padding 50
-				firstMap=false;
-			}
+
+			gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
+				currentBounds, 50)); // padding 50
+
 			//showMessages(this, "Drivers Updated");
 			/*updateListView();*/
 			ListViewActivity.createList();
@@ -368,11 +375,11 @@ public class MapViewActivity extends FragmentActivity implements
 			resource.put("Blue Cab3", R.drawable.taxiblue3);
 			resource.put("Blue Cab2", R.drawable.taxiblue2);
 			resource.put("Blue Cab1", R.drawable.taxiblue1);
-			resource.put("Yellow Cab5", R.drawable.taxiblue5);
-			resource.put("Yellow Cab4", R.drawable.taxiblue4);
-			resource.put("Yellow Cab3", R.drawable.taxiblue3);
-			resource.put("Yellow Cab2", R.drawable.taxiblue2);
-			resource.put("Yellow Cab1", R.drawable.taxiblue1);
+			resource.put("Yellow Cab5", R.drawable.taxiyellow5);
+			resource.put("Yellow Cab4", R.drawable.taxiyellow4);
+			resource.put("Yellow Cab3", R.drawable.taxiyellow3);
+			resource.put("Yellow Cab2", R.drawable.taxiyellow2);
+			resource.put("Yellow Cab1", R.drawable.taxiyellow1);
 			resource.put("Green Cab5", R.drawable.taxigreen5);
 			resource.put("Green Cab4", R.drawable.taxigreen4);
 			resource.put("Green Cab3", R.drawable.taxigreen3);
@@ -421,5 +428,43 @@ public class MapViewActivity extends FragmentActivity implements
 	public void deactivate() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void onClick(View v) {
+		int yellow=R.color.Yellow;
+		int lightYellow=R.color.LightYellow;
+		switch(v.getId()){
+		case R.id.hailTaxi:
+			if(hailStatus==true){
+				v.setBackgroundColor(getResources().getColor(lightYellow));
+				ProfileViewActivity.cancelHail();
+				Toast.makeText(this, "Pick-up request Cancelled.",
+						Toast.LENGTH_SHORT).show();
+				hailStatus=false;
+			}else{
+				v.setBackgroundColor(getResources().getColor(yellow));
+				Time today = new Time(Time.getCurrentTimezone());
+				today.setToNow();
+				String waitTime=getAverageArrivalTime();
+				ProfileViewActivity.updateHail(today.format("%k:%M:%S"), waitTime);
+				Toast.makeText(this, "Pick-up request sent to all drivers in the view. Arrive in "
+						+" "+waitTime+"  minutes",
+						Toast.LENGTH_SHORT).show();
+				hailStatus=true;
+			}
+		}
+	}
+	
+	private static String getAverageArrivalTime(){
+		double sum=0;
+		int count=0;
+		for(Driver d:driverLst){
+			if(d.isActive){		//30 miles/hour speed
+				sum+=d.distance;
+				count++;
+			}
+		}
+		return Integer.toString((int)(sum/count/30*60));
 	}
 }
