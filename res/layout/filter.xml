@@ -7,25 +7,44 @@
 
     <RelativeLayout
         style="@style/RelativeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="320dp" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
-        <!-- HEADER STARTS -->
+         <!-- HEADER STARTS -->	
 
-        <LinearLayout
-            android:id="@+id/header"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@layout/header_gradient" >
-        </LinearLayout>
+		<LinearLayout
+			    android:id="@+id/header"
+			    style="@style/HeaderStyle">
+		</LinearLayout>
+		
+  		<LinearLayout
+  		    	android:id="@+id/header_background"
+  		    	android:layout_below="@id/header"
+  		    	style="@style/HeaderBackgroundStyle">
+  		</LinearLayout>
 
         <!-- HEADER ENDS -->
+        
+  		<!--FOOTER STARTS-->
+  		
+   		<LinearLayout
+	  		    android:id="@+id/footer"
+	  		    style="@style/FooterStyle" >
+	  	</LinearLayout>
+	  	
+   		<LinearLayout
+  		    	android:id="@+id/footer_background"
+  		    	android:layout_above="@id/footer"
+  		    	style="@style/FooterBackgroundStyle" >
+  		</LinearLayout>  		
+	  		
+  		<!--FOOTER ENDS-->
+
         <!-- BODY BEGINS -->
 
         <LinearLayout
             style="@style/LinearLayout"
-            android:layout_below="@id/header"
+            android:layout_below="@id/header_background"
             android:orientation="vertical"
             android:padding="10dip" >
 
@@ -42,9 +61,10 @@
                 android:layout_height="wrap_content" />
 
             <Button
-                style="@style/Button"
+                style="@style/YellowButtonStyle"
                 android:id="@+id/button_apply_filter"
                 android:text="@string/filter_apply" />
+            
         </LinearLayout>
     </RelativeLayout>
 
