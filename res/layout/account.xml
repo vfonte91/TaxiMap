@@ -53,7 +53,9 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/padding2"
                 android:text="@string/new_account"
-                android:textSize="@dimen/text2" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/Yellow" />
 
             <!-- USERNAME BEGINS -->
             
@@ -117,12 +119,14 @@
             <Button
                 style="@style/YellowButtonStyle"
                 android:id="@+id/done_button"
-                android:text="@string/done" />
+                android:text="@string/done"
+                android:layout_marginTop="10dp" />
 
             <Button
                 style="@style/YellowButtonStyle"
                 android:id="@+id/cancel_button"
-                android:text="@string/cancel" />
+                android:text="@string/cancel"
+                android:layout_marginTop="10dp" />
             
             <!-- BUTTONS END -->
             
