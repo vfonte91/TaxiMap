@@ -13,7 +13,7 @@ import android.widget.TabHost;
 import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 import com.example.taximap.*;
-import com.example.taximap.menu.ContactsView;
+import com.example.taximap.menu.Contact;
 import com.example.taximap.menu.Help;
 import com.example.taximap.menu.Settings;
  
@@ -85,11 +85,11 @@ public class TabLayoutActivity extends TabActivity {
 		case R.id.menu_help:
 			startActivity(new Intent(this, Help.class));
 			return true;
+		case R.id.menu_contacts:
+			startActivity(new Intent(this, Contact.class));
+			return true;
 		case R.id.menu_exit:
 			quitApplication();
-			return true;
-		case R.id.menu_contacts:
-			startActivity(new Intent(this, ContactsView.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
