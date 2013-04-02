@@ -4,6 +4,7 @@ package com.example.taximap;
 import com.example.taximap.R;
 import com.example.taximap.db.QueryDatabaseNewUser;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,7 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Account extends Activity implements OnClickListener{
+public class AccountActivity extends Activity implements OnClickListener{
 	private EditText etUsername;
 	private EditText etPassword;
 	private EditText etConfirm;
@@ -51,7 +52,7 @@ public class Account extends Activity implements OnClickListener{
         }
         else if((username.equals(""))||(password.equals(""))||(confirm.equals("")))
         {
-        	Toast.makeText(Account.this, "Missing entry",Toast.LENGTH_SHORT).show();
+        	Toast.makeText(AccountActivity.this, "Missing entry",Toast.LENGTH_SHORT).show();
         }
         else if(!password.equals(confirm))
         {
