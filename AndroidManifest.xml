@@ -70,7 +70,7 @@
         </activity>
         <activity android:name=".menu.Help" android:screenOrientation="portrait" />
         <activity android:name=".menu.Contact" android:screenOrientation="portrait" />
-        <service android:name="AuthenticatationService">
+        <service android:name=".AuthenticationService">
 			<intent-filter>
 				<action android:name="android.accounts.AccountAuthenticator"></action>
 			</intent-filter>
