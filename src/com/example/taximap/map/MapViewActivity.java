@@ -44,6 +44,7 @@ import android.support.v4.app.FragmentActivity;
 import android.text.InputFilter.LengthFilter;
 import android.text.format.Time;
 import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -354,7 +355,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 
 		}
 		else if (s.equals("01")) {
-			Map<Integer, Integer> resource = new HashMap<Integer, Integer>();
+			SparseIntArray resource = new SparseIntArray();
 			resource.put(5, R.drawable.taxi5);
 			resource.put(4, R.drawable.taxi4);
 			resource.put(3, R.drawable.taxi3);
