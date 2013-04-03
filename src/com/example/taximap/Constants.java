@@ -10,4 +10,9 @@ public class Constants {
      * Key for Account getUserData
      */
     public static final String USER_DATA_KEY = "username";
+
+    /**
+     * Key for log out
+     */
+    public static final String LOGOUT = "logout";
 }

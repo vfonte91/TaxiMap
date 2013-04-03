@@ -8,7 +8,6 @@ import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -34,11 +33,6 @@ public class Login extends Activity implements OnClickListener{
 	
 	        View btnLogin=(Button)findViewById(R.id.login_button);
 	        btnLogin.setOnClickListener(this);		//Defined in the onclick function below
-	
-	        /*  Removed because home button will take care of cancel
-	        View btnCancel=(Button)findViewById(R.id.cancel_button);
-	        btnCancel.setOnClickListener(this);
-	        */
 	
 	        View btnNewUser=(Button)findViewById(R.id.new_user_button);
 	        btnNewUser.setOnClickListener(this);
@@ -76,17 +70,29 @@ public class Login extends Activity implements OnClickListener{
     	Log.i(TAG, "onRestart()");
     }*/
     
+    //Check if account exists on device
     private boolean savedAccount() {
     	boolean result = false;
-    	String username, password;
+    	String username, password, logout;
+    	//Grab all accounts for this application on this device
     	Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+    	//If any exist
     	if (accounts.length > 0) {
     		//There maybe more than one account, so the last one created is used
     		Account userAccount = accounts[accounts.length - 1];
+    		//Grab username form the account's user info
     		username = mAccountManager.getUserData(userAccount, Constants.USER_DATA_KEY);
+    		//Get password
         	password = mAccountManager.getPassword(userAccount);
-        	checkLogin(username, password);
-        	result = true;
+        	//get log out variable
+    		logout = mAccountManager.getUserData(userAccount, Constants.LOGOUT);
+    		//if log out variable is null, then the user has not previously logged out
+        	if (logout == null) {
+        		checkLogin(username, password);
+        		//Once user logs in, they will automatically be logged in until they log out
+				mAccountManager.setUserData(userAccount, Constants.LOGOUT, null);
+        		result = true;
+        	}
     	}
 		return result;
     }
@@ -95,16 +101,17 @@ public class Login extends Activity implements OnClickListener{
         new QueryDatabaseLogin(this).execute(username, password);
       }
 
-    public void onClick(View v) {			//Login activity's click event
+    //Login activity's click event
+    public void onClick(View v) {
 		switch (v.getId()) {
   		case R.id.login_button:
-		    checkLogin(this.userNameEditableField.getText().toString(), this.passwordEditableField.getText().toString());
+  			//Get username from screen
+  			String username = this.userNameEditableField.getText().toString();
+  			//get password from screen and hash it
+  			String password = Hash.hashString(this.passwordEditableField.getText().toString());
+  			//login
+		    checkLogin(username, password);
 		    break;
-		    /* Removed because home button will take care of cancel
-  		case R.id.cancel_button:
-	    	finish();
-    		break;
-		     */
     	case R.id.new_user_button:
     	    startActivity(new Intent(this, AccountActivity.class));		// start a new activity Direct invocation 
     	    break;

@@ -16,6 +16,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.example.taximap.AccountActivity;
 import com.example.taximap.Constants;
+import com.example.taximap.Hash;
 
 import android.accounts.AccountManager;
 import android.accounts.Account;
@@ -46,7 +47,7 @@ public class QueryDatabaseNewUser  extends AsyncTask<String, Void, Integer>{
 		//the data to send
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		username = credentials[0];
-		password = hashString(credentials[1]);
+		password = Hash.hashString(credentials[1]);
 		nameValuePairs.add(new BasicNameValuePair("username",username));
 		nameValuePairs.add(new BasicNameValuePair("password",password));
 		 
@@ -72,10 +73,10 @@ public class QueryDatabaseNewUser  extends AsyncTask<String, Void, Integer>{
 		if(result==1){
 			//Create new account based on username and account type
 			Account account = new Account(username, Constants.ACCOUNT_TYPE);
-			//Bundle used to save user data. username is saved
+			//Bundle is used to save user data. username is saved
 			Bundle userData = new Bundle();
 			userData.putString(Constants.USER_DATA_KEY, username);
-			//Add account to AccountManager
+			//Add account and password to AccountManager
 			mAccountManager.addAccountExplicitly(account, password, userData);
 			
             new AlertDialog.Builder(context)
@@ -103,10 +104,5 @@ public class QueryDatabaseNewUser  extends AsyncTask<String, Void, Integer>{
     		.show();
         }
     }
-	
-	private String hashString(String string) {
-		int hash  = string.hashCode();
-		return Integer.toString(hash);
-	}
 
 }
