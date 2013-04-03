@@ -2,8 +2,7 @@
 
 <PreferenceScreen
   xmlns:android="http://schemas.android.com/apk/res/android" 
-  android:title="Settings"
-  android:background="@color/background">
+  android:title="Settings">
   <EditTextPreference
   	android:key="location"
   	android:title="Enter Address"
