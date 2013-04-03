@@ -13,6 +13,6 @@
         android:title="Contacts"/>
     <item
         android:id="@+id/menu_exit"
-        android:title="Exit"/>
+        android:title="Log Out"/>
 
 </menu>
