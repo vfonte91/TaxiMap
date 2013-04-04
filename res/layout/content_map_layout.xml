@@ -12,23 +12,55 @@
         class="com.google.android.gms.maps.SupportMapFragment" />
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="2dp" >
 
-        <Button
-            android:id="@+id/load"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Load" />
+        <!-- Relative location: below load -->
 
         <Button
             android:id="@+id/filters_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Filters" 
-            android:layout_below="@id/load"/>
+            android:layout_alignParentBottom="true"
+            android:text="Filters" />
+
+        <Button
+            android:id="@+id/load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/filters_setting"
+            android:text="Load" />
+        <!-- Relative location: right of filters_setting -->
+
+        <TextView
+            android:id="@+id/current_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="false"
+            android:layout_centerInParent="false"
+            android:layout_margin="4dp"
+            android:background="@color/White"
+            android:text="Positioning current location..."
+            android:textColor="@color/Black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/update_loc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/current_location"
+            android:layout_margin="4dp"
+            android:layout_toRightOf="@id/current_location"
+            android:background="@color/White"
+            android:padding="4dp"
+            android:text="update"
+            android:textColor="@color/Black"
+            android:textSize="16sp" />
+
     </RelativeLayout>
 
 </RelativeLayout>
