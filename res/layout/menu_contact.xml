@@ -9,21 +9,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20px"
+        android:layout_marginTop="20dp"
         android:text="CSE5236 Project Team 2013 Spring"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
+        android:layout_marginTop="10dp"
         android:text="(Order Alphabetically By Last Name)"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
+        android:layout_marginTop="10dp"
         android:text="Wei Chen, chen.1381@osu.edu"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -48,7 +48,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20px"
+        android:layout_marginTop="20dp"
         android:text="Many thanks to Prof. Rajiv Ramnath and Mr. Niranjan Konda for their generous help!"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

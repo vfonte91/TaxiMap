@@ -148,7 +148,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40px"
+        android:layout_marginTop="40dp"
         android:text="HELP"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

@@ -10,7 +10,7 @@
                 android:layout_height="wrap_content"   
                 android:layout_width="fill_parent"   
                 android:id="@+id/itemtitle"   
-                android:textSize="24dip">  
+                android:textSize="24sp">  
         </TextView>  
         <TextView   
                 android:layout_height="wrap_content"   
