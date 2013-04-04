@@ -59,7 +59,9 @@ public class QueryDatabaseDriverLoc  extends AsyncTask<String, Void, Integer>{
 	}
 	
 	protected void onPostExecute(Integer result) {
-		if(result!=0)MapViewActivity.loadMarkers();
+		if(result!=0) {
+			MapViewActivity.loadMarkers();
+		}
 				
     }
 

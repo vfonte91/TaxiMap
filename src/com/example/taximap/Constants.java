@@ -15,4 +15,13 @@ public class Constants {
      * Key for log out
      */
     public static final String LOGOUT = "logout";
+    
+    /**
+     * Driver marker type
+     */
+    public static final int DRIVER = 5;
+    /**
+     * Customer marker type
+     */
+    public static final int CUSTOMER = 6;
 }

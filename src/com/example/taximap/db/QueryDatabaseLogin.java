@@ -15,6 +15,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import com.example.taximap.Constants;
 import com.example.taximap.map.MapViewActivity;
 import com.example.taximap.map.TabLayoutActivity;
 
@@ -69,9 +70,9 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 			 MapViewActivity.uID=result[0].toString();			//wei added
 			 Log.e("???",result[0].toString()+" "+result[1].toString());
 			 if(result[1]==0){		//customer login
-		        	MapViewActivity.markerType="driver";
+		        	MapViewActivity.markerType = Constants.DRIVER;
 		     }else{
-		        	MapViewActivity.markerType="customer";
+		        	MapViewActivity.markerType = Constants.CUSTOMER;
 		     }
 	            context.startActivity(new Intent(context,TabLayoutActivity.class));          
         } else if(result[0]==-5){ 

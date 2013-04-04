@@ -44,7 +44,7 @@ public class ListViewActivity extends Activity implements
 		list.setAdapter(null);
 		ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
 		// sort DriverList by name default
-		if (MapViewActivity.markerType.equals("driver")) {
+		if (MapViewActivity.markerType == Constants.DRIVER) {
 			if (MapViewActivity.driverLst == null) {
 				return;
 			}
