@@ -59,9 +59,15 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	private static LocationManager locationManager;
 	private static final String TAG = "-------------";
 	private static Activity context;
+	private static Map<String, String> companies;
+	private static Map<String, Integer> ratings;
+	private static Map<String, Integer> distance;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//Create user filters
+		createFilters();
 		setContentView(R.layout.content_map_layout);
 		gmap = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
@@ -243,21 +249,6 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				for (Driver driver : driverLst) {
 					driver.isActive = true;
 				}
-				// set up filter mapping
-				Map<String, String> companies = new HashMap<String, String>();
-				companies.put("Blue Cab", "Blue Cab");
-				companies.put("Yellow Cab", "Yellow Cab");
-				companies.put("Green Cab", "Green Cab");
-				Map<String, Integer> ratings = new HashMap<String, Integer>();
-				ratings.put("5 Stars", 5);
-				ratings.put("4 Stars and Above", 4);
-				ratings.put("3 Stars and Above", 3);
-				ratings.put("2 Stars and Above", 2);
-				ratings.put("1 Star and Above", 1);
-				Map<String, Integer> distance = new HashMap<String, Integer>();
-				distance.put("Within 30 mins", 15); // 15 miles, 30 miles/hour speed
-				distance.put("Within 20 mins", 10);
-				distance.put("Within 10 mins", 5);
 				if (FilterActivity.filters != null) { // filter is previously set
 					for (String key : FilterActivity.filters.get(Constants.DRIVER).keySet()) {
 						String value = FilterActivity.filters.get(Constants.DRIVER)
@@ -462,5 +453,25 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 			}
 		}
 		return Integer.toString((int)(sum/count/30*60));
+	}
+	
+	//Creates user filters
+	private static void createFilters() {
+		// set up filter mapping
+		companies = new HashMap<String, String>();
+		companies.put("Blue Cab", "Blue Cab");
+		companies.put("Yellow Cab", "Yellow Cab");
+		companies.put("Green Cab", "Green Cab");
+		ratings = new HashMap<String, Integer>();
+		ratings.put("5 Stars", 5);
+		ratings.put("4 Stars and Above", 4);
+		ratings.put("3 Stars and Above", 3);
+		ratings.put("2 Stars and Above", 2);
+		ratings.put("1 Star and Above", 1);
+		distance = new HashMap<String, Integer>();
+		distance.put("Within 30 mins", 15); // 15 miles, 30 miles/hour speed
+		distance.put("Within 20 mins", 10);
+		distance.put("Within 10 mins", 5);
+		
 	}
 }
