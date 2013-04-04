@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.taximap.Constants;
 import com.example.taximap.R;
 import com.example.taximap.db.QueryDatabaseCustomerLoc;
 import com.example.taximap.db.QueryDatabaseDriverLoc;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
@@ -40,14 +42,13 @@ import android.widget.*;
 public class MapViewActivity extends FragmentActivity implements OnClickListener,
 		LocationListener, LocationSource {
 	private static GoogleMap gmap;
-	public static String markerType = "driver";
+	public static int markerType = Constants.DRIVER;
 	public static List<Driver> driverLst;
 	public static List<Customer> customerLst;
 	private static Driver currentDriver;
 	private static Customer currentCustomer;
 	private static LatLngBounds.Builder boundsBuilder;
 	private static LatLngBounds currentBounds = null;
-	private static TextView myLocationField = null;
 	private static Handler loadMarkerHandler;
 	private static Runnable loadMarkerRunnable;
 	public static String uID = "10";
@@ -146,7 +147,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		// get physical address from that lat lon location
 		GeolocationHelper.getAddressFromLocation(location, this, new GeocoderHandler());
 		// add a marker to show current user location.
-		if(markerType.equals("driver")){
+		if(markerType == Constants.DRIVER){
 			if(currentDriver==null){
 				BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.customerdefault);
 				MarkerOptions markerOptions = new MarkerOptions().position(myLastLatLng)
@@ -184,7 +185,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	}
 	
 	private static void showUserMarker(){
-		if(markerType.equals("driver")){
+		if(markerType == Constants.DRIVER){
 			currentCustomer.marker.setSnippet(myLastAddress);
 			 new Thread() {
 			        @Override public void run() {
@@ -209,7 +210,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		}
 	}
 	public static void callDB() {
-		if (markerType == "driver") {
+		if (markerType == Constants.DRIVER) {
 			Log.d("----", uID);
 			(new QueryDatabaseDriverLoc()).execute(uID,Double.toString(myLastLatLng.latitude),Double.toString(myLastLatLng.longitude)); // pass in uid. modify
 		} else {
@@ -222,8 +223,10 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	// first query db based on myLastLatLng
 	// render markers on the map using classification and filter settings.
 	public static void loadMarkers() {
+
+		try {
 		// clear all markers except for the current user
-		if (markerType.equals("driver")) {
+		if (markerType == Constants.DRIVER) {
 			gmap.clear();/*
 			if (driverLst != null) {
 				for(Driver d:driverLst){
@@ -257,8 +260,8 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 			distance.put("Within 20 mins", 10);
 			distance.put("Within 10 mins", 5);
 			if (FilterActivity.filters != null) { // filter is previously set
-				for (String key : FilterActivity.filters.get("driver").keySet()) {
-					String value = FilterActivity.filters.get("driver")
+				for (String key : FilterActivity.filters.get(Constants.DRIVER).keySet()) {
+					String value = FilterActivity.filters.get(Constants.DRIVER)
 							.get(key);
 					if (!value.equals("Any")) { // is not "Any"
 						if (key.equals("company")) {
@@ -313,8 +316,12 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 			//showMessages(this, "Drivers Updated");
 			/*updateListView();*/
 			ListViewActivity.createList();
-		} else if (markerType.equals("customer")) {
+		} else if (markerType == Constants.CUSTOMER) {
 		
+		}
+		} catch (java.lang.IllegalStateException e) {
+			//Do not load markers if map size is 0
+			//Markers will be loaded next time location is updated
 		}
 		
 	}
@@ -407,14 +414,19 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	@Override
 	public void activate(OnLocationChangedListener arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void deactivate() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
+	
+    public void onCameraChange(CameraPosition arg0) {
+        // Move camera.
+        gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 10));
+        // Remove listener to prevent position reset on camera move.
+        gmap.setOnCameraChangeListener(null);
+    }
 
 	@Override
 	public void onClick(View v) {
