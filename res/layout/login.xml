@@ -65,6 +65,7 @@
                 android:layout_marginBottom="20dip"
                 android:layout_marginTop="5dip"
                 android:inputType="text"
+                android:maxLength="16"
                 android:singleLine="true" />
 
             <!-- LOGIN ENDS -->
