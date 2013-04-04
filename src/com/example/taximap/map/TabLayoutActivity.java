@@ -1,5 +1,7 @@
 package com.example.taximap.map;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.TabActivity;
@@ -18,10 +20,13 @@ import com.example.taximap.menu.Help;
 import com.example.taximap.menu.Settings;
  
 public class TabLayoutActivity extends TabActivity {
+	
+	private AccountManager mAccountManager;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAccountManager = AccountManager.get(this);
         setContentView(R.layout.tablayout);
  
         TabHost tabHost = getTabHost();
@@ -53,14 +58,21 @@ public class TabLayoutActivity extends TabActivity {
     
     private void quitApplication() {
 		new AlertDialog.Builder(this)
-				.setTitle("Exit")
-				.setMessage("Quit Taxi Map?")
+				.setTitle("Log Out")
+				.setMessage("Log Out of Taxi Map?")
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setPositiveButton("Yes",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int which) {
-								System.exit(0);
+								//Get all the accounts for this application on this device
+						    	Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+					    		//There maybe more than one account, so the last one created is used
+					    		Account userAccount = accounts[accounts.length - 1];
+					    		//set LOGOUT key to null in users Account so it won't automatically log in
+								mAccountManager.setUserData(userAccount, Constants.LOGOUT, "true");
+								//Go back to log in screen
+								startActivity(new Intent(TabLayoutActivity.this, Login.class));
 							}
 						})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -76,7 +88,7 @@ public class TabLayoutActivity extends TabActivity {
 		return true;
 	}
 
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {		// menu/action bar
 		switch (item.getItemId()) {
 		case R.id.menu_filter:
 			// requestCode=1

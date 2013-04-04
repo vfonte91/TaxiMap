@@ -1,8 +1,9 @@
 package com.example.taximap.map;
 
+import java.util.Locale;
+
 import android.view.View;
 
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -38,6 +39,6 @@ public class Driver {
 		return String.format("Driver: %s", this.name);
 	}
 	public String snippet(){
-		return String.format("%s company, %d star, %.2f miles", this.company,this.rating,this.distance);
+		return String.format(Locale.US,"%s company, %d star, %.2f miles", this.company,this.rating,this.distance);
 	}
 }

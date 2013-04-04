@@ -1,16 +1,13 @@
 package com.example.taximap.map;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.taximap.Constants;
 import com.example.taximap.R;
 import com.example.taximap.db.QueryDatabaseCustomerLoc;
 import com.example.taximap.db.QueryDatabaseDriverLoc;
-import com.example.taximap.db.QueryDatabaseLogin;
-import com.example.taximap.db.QueryDatabaseUpdateLoc;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
@@ -21,32 +18,22 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 //import com.google.android.maps.GeoPoint;
 //import com.google.android.maps.MapActivity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PaintDrawable;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.audiofx.Equalizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.sax.StartElementListener;
 import android.support.v4.app.FragmentActivity;
-import android.text.InputFilter.LengthFilter;
 import android.text.format.Time;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -54,14 +41,13 @@ import android.widget.*;
 public class MapViewActivity extends FragmentActivity implements OnClickListener,
 		LocationListener, LocationSource {
 	private static GoogleMap gmap;
-	public static String markerType = "driver";
+	public static int markerType = Constants.DRIVER;
 	public static List<Driver> driverLst;
 	public static List<Customer> customerLst;
 	private static Driver currentDriver;
 	private static Customer currentCustomer;
 	private static LatLngBounds.Builder boundsBuilder;
 	private static LatLngBounds currentBounds = null;
-	private static TextView myLocationField = null;
 	private static Handler loadMarkerHandler;
 	private static Runnable loadMarkerRunnable;
 	public static String uID = "10";
@@ -160,7 +146,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		// get physical address from that lat lon location
 		GeolocationHelper.getAddressFromLocation(location, this, new GeocoderHandler());
 		// add a marker to show current user location.
-		if(markerType.equals("driver")){
+		if(markerType == Constants.DRIVER){
 			if(currentDriver==null){
 				BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.customerdefault);
 				MarkerOptions markerOptions = new MarkerOptions().position(myLastLatLng)
@@ -198,7 +184,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	}
 	
 	private static void showUserMarker(){
-		if(markerType.equals("driver")){
+		if(markerType == Constants.DRIVER){
 			currentCustomer.marker.setSnippet(myLastAddress);
 			 new Thread() {
 			        @Override public void run() {
@@ -223,7 +209,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		}
 	}
 	public static void callDB() {
-		if (markerType == "driver") {
+		if (markerType == Constants.DRIVER) {
 			Log.d("----", uID);
 			(new QueryDatabaseDriverLoc()).execute(uID,Double.toString(myLastLatLng.latitude),Double.toString(myLastLatLng.longitude)); // pass in uid. modify
 		} else {
@@ -236,99 +222,104 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	// first query db based on myLastLatLng
 	// render markers on the map using classification and filter settings.
 	public static void loadMarkers() {
-		// clear all markers except for the current user
-		if (markerType.equals("driver")) {
-			gmap.clear();/*
-			if (driverLst != null) {
-				for(Driver d:driverLst){
-					if(d.marker!=null){
-						d.marker.remove();
-					}else{
-						break;
-					}
-				}
-			}*/
-			if(currentCustomer!=null){
-				gmap.addMarker(currentCustomer.markerOptions);
-				showUserMarker();
-			}
-			for (Driver driver : driverLst) {
-				driver.isActive = true;
-			}
-			// set up filter mapping
-			Map<String, String> companies = new HashMap<String, String>();
-			companies.put("Blue Cab", "Blue Cab");
-			companies.put("Yellow Cab", "Yellow Cab");
-			companies.put("Green Cab", "Green Cab");
-			Map<String, Integer> ratings = new HashMap<String, Integer>();
-			ratings.put("5 Stars", 5);
-			ratings.put("4 Stars and Above", 4);
-			ratings.put("3 Stars and Above", 3);
-			ratings.put("2 Stars and Above", 2);
-			ratings.put("1 Star and Above", 1);
-			Map<String, Integer> distance = new HashMap<String, Integer>();
-			distance.put("Within 30 mins", 15); // 15 miles, 30 miles/hour speed
-			distance.put("Within 20 mins", 10);
-			distance.put("Within 10 mins", 5);
-			if (FilterActivity.filters != null) { // filter is previously set
-				for (String key : FilterActivity.filters.get("driver").keySet()) {
-					String value = FilterActivity.filters.get("driver")
-							.get(key);
-					if (!value.equals("Any")) { // is not "Any"
-						if (key.equals("company")) {
-							for (Driver driver : driverLst) {
-								if (!driver.company.equals(companies.get(value))) { 
-									driver.isActive = false;
-								}
-							}
-							FilterActivity.classificationCode[0] = '1';
-						}
-						if (key.equals("rating")) {
-							for (Driver driver : driverLst) {
-								if (driver.rating < ratings.get(value)) { 
-									Log.e(TAG, String.format("%s<%s",
-											driver.rating, ratings.get(value)));
-									driver.isActive = false;
-								}
-							}
-							FilterActivity.classificationCode[1] = '1';
-						}
-						if (key.equals("distance")) {
-							for (Driver driver : driverLst) {
-								if (driver.distance > distance.get(value)) {
-									driver.isActive = false;
-								}
-							}
+
+		try {
+			// clear all markers except for the current user
+			if (markerType == Constants.DRIVER) {
+				gmap.clear();/*
+				if (driverLst != null) {
+					for(Driver d:driverLst){
+						if(d.marker!=null){
+							d.marker.remove();
+						}else{
+							break;
 						}
 					}
+				}*/
+				if(currentCustomer!=null){
+					gmap.addMarker(currentCustomer.markerOptions);
+					showUserMarker();
 				}
-			}
-			// map out active markers and classify by assigning different icons
-			boundsBuilder = new LatLngBounds.Builder();
-			if (myLastLatLng != null) {
-				boundsBuilder.include(myLastLatLng);
-			}
-			for (Driver driver : driverLst) {
-				if (driver.isActive) {
-					BitmapDescriptor icon = findIcon(driver);
-					MarkerOptions markerOptions = new MarkerOptions().position(driver.latlng)
-							.title(driver.title())
-							.snippet(driver.snippet()).icon(icon);
-					driver.markerOptions = markerOptions;
-					driver.marker=gmap.addMarker(markerOptions);
-					boundsBuilder.include(driver.latlng);
+				for (Driver driver : driverLst) {
+					driver.isActive = true;
 				}
+				// set up filter mapping
+				Map<String, String> companies = new HashMap<String, String>();
+				companies.put("Blue Cab", "Blue Cab");
+				companies.put("Yellow Cab", "Yellow Cab");
+				companies.put("Green Cab", "Green Cab");
+				Map<String, Integer> ratings = new HashMap<String, Integer>();
+				ratings.put("5 Stars", 5);
+				ratings.put("4 Stars and Above", 4);
+				ratings.put("3 Stars and Above", 3);
+				ratings.put("2 Stars and Above", 2);
+				ratings.put("1 Star and Above", 1);
+				Map<String, Integer> distance = new HashMap<String, Integer>();
+				distance.put("Within 30 mins", 15); // 15 miles, 30 miles/hour speed
+				distance.put("Within 20 mins", 10);
+				distance.put("Within 10 mins", 5);
+				if (FilterActivity.filters != null) { // filter is previously set
+					for (String key : FilterActivity.filters.get(Constants.DRIVER).keySet()) {
+						String value = FilterActivity.filters.get(Constants.DRIVER)
+								.get(key);
+						if (!value.equals("Any")) { // is not "Any"
+							if (key.equals("company")) {
+								for (Driver driver : driverLst) {
+									if (!driver.company.equals(companies.get(value))) { 
+										driver.isActive = false;
+									}
+								}
+								FilterActivity.classificationCode[0] = '1';
+							}
+							if (key.equals("rating")) {
+								for (Driver driver : driverLst) {
+									if (driver.rating < ratings.get(value)) { 
+										Log.e(TAG, String.format("%s<%s",
+												driver.rating, ratings.get(value)));
+										driver.isActive = false;
+									}
+								}
+								FilterActivity.classificationCode[1] = '1';
+							}
+							if (key.equals("distance")) {
+								for (Driver driver : driverLst) {
+									if (driver.distance > distance.get(value)) {
+										driver.isActive = false;
+									}
+								}
+							}
+						}
+					}
+				}
+				// map out active markers and classify by assigning different icons
+				boundsBuilder = new LatLngBounds.Builder();
+				if (myLastLatLng != null) {
+					boundsBuilder.include(myLastLatLng);
+				}
+				for (Driver driver : driverLst) {
+					if (driver.isActive) {
+						BitmapDescriptor icon = findIcon(driver);
+						MarkerOptions markerOptions = new MarkerOptions().position(driver.latlng)
+								.title(driver.title())
+								.snippet(driver.snippet()).icon(icon);
+						driver.markerOptions = markerOptions;
+						driver.marker=gmap.addMarker(markerOptions);
+						boundsBuilder.include(driver.latlng);
+					}
+				}
+				currentBounds = boundsBuilder.build();
+	
+				gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
+					currentBounds, 50)); // padding 50
+	
+				//showMessages(this, "Drivers Updated");
+				/*updateListView();*/
+				ListViewActivity.createList();
+			} else if (markerType == Constants.CUSTOMER) {
 			}
-			currentBounds = boundsBuilder.build();
-
-			gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
-				currentBounds, 50)); // padding 50
-
-			//showMessages(this, "Drivers Updated");
-			/*updateListView();*/
-			ListViewActivity.createList();
-		} else if (markerType.equals("customer")) {
-		
+		} catch (java.lang.IllegalStateException e) {
+			//Do not load markers if map size is 0
+			//Markers will be loaded next time location is updated
 		}
 		
 	}
@@ -354,7 +345,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 
 		}
 		else if (s.equals("01")) {
-			Map<Integer, Integer> resource = new HashMap<Integer, Integer>();
+			SparseIntArray resource = new SparseIntArray();
 			resource.put(5, R.drawable.taxi5);
 			resource.put(4, R.drawable.taxi4);
 			resource.put(3, R.drawable.taxi3);
@@ -421,14 +412,19 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	@Override
 	public void activate(OnLocationChangedListener arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void deactivate() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
+	
+    public void onCameraChange(CameraPosition arg0) {
+        // Move camera.
+        gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 10));
+        // Remove listener to prevent position reset on camera move.
+        gmap.setOnCameraChangeListener(null);
+    }
 
 	@Override
 	public void onClick(View v) {

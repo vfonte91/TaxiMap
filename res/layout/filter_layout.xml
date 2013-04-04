@@ -39,226 +39,86 @@
   		</LinearLayout>  		
 	  		
   		<!--FOOTER ENDS-->
+        
+        
+        <!-- BODY BEGINS -->
   
-	  <TableLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-        android:layout_below="@id/header_background"
-	    android:padding="@dimen/padding1">
-	    
-	    <TableRow>
-	
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="Classification Options"
-	            android:textSize="18sp"
-	            android:textColor="@color/Yellow" 
-	            android:textStyle="bold"/>
-	
-	    </TableRow>
-	
-	    <TableRow>
-	
+		<LinearLayout
+            style="@style/LinearLayout"
+            android:layout_below="@id/header_background"
+            android:orientation="vertical"
+            android:padding="10dip">
 	        <LinearLayout
-	            android:orientation="vertical"
+	            android:orientation="horizontal"
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
 	            android:padding="2dp" >
 	
 	            <CheckBox
 	                android:id="@+id/by_company"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="By Company"
+	                android:text="@string/filter_by_company"
 	                android:textSize="14sp" />
 	
 	            <CheckBox
 	                android:id="@+id/by_rating"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="By Rating"
+	                android:text="@string/filter_by_rating"
 	                android:textSize="14sp" />
 	
 	        </LinearLayout>
-	    </TableRow>
-	
-	    <TableRow android:paddingTop="5dp" >
 	
 	        <TextView
-	            android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:text="Filter Options"
+	            android:text="@string/filter_options"
 	            android:textSize="18sp"
 	            android:textColor="@color/Yellow"
 	            android:textStyle="bold" />
 	
-	    </TableRow>
-	    
-	    <TableRow>
-	
 	        <TextView
 	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:text="Company:"
+	            android:text="@string/filter_company"
 	            android:textSize="14sp" />
 	
 	        <Spinner
 	            android:id="@+id/company_filter"
-	            android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
 	            android:layout_height="wrap_content" />
-	    </TableRow>
-	
-	    <TableRow>
 	
 	        <TextView
 	            android:id="@+id/textView2"
-	            android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:text="Rating:"
+	            android:text="@string/filter_rating"
 	            android:textSize="14sp" />
 	
 	        <Spinner
 	            android:id="@+id/rating_filter"
-	            android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
 	            android:layout_height="wrap_content" />
-	    </TableRow>
-	
-	    <TableRow>
 	
 	        <TextView
 	            android:id="@+id/textView3"
-	            android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:text="Distance:"
+	            android:text="@string/filter_distance"
 	            android:textSize="14sp" />
-	
+
 	        <Spinner
 	            android:id="@+id/dist_filter"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content" />
-	    </TableRow>
-	
-	    <TableRow
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:gravity="center" >
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"/>
 
 	        <Button
-	            android:id="@+id/button_apply_filter"
-	            android:layout_width="fill_parent"
                 style="@style/YellowButtonStyle"
-	            android:text="Apply" />
-	    </TableRow>
-	
-	</TableLayout>		
+	            android:id="@+id/button_apply_filter"
+	            android:text="@string/filter_apply" 
+                android:layout_marginTop="10dp" />
+		</LinearLayout>
   	</RelativeLayout>
 </ScrollView>
-
-<!-- PREVIOUS IMPLEMENTATION
-<?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/padding1">
-    
-    <TableRow>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Classification Options"
-            android:textSize="18sp" />
-
-    </TableRow>
-
-    <TableRow>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:padding="2dp" >
-
-            <CheckBox
-                android:id="@+id/by_company"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="By Company"
-                android:textSize="14sp" />
-
-            <CheckBox
-                android:id="@+id/by_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="By Rating"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-    </TableRow>
-
-    <TableRow android:paddingTop="10dp" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filter Options"
-            android:textSize="18sp" />
-
-    </TableRow>
-    
-    <TableRow>
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Company:"
-            android:textSize="14sp" />
-
-        <Spinner
-            android:id="@+id/company_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
-
-    <TableRow>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rating:"
-            android:textSize="14sp" />
-
-        <Spinner
-            android:id="@+id/rating_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
-
-    <TableRow>
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Distance:"
-            android:textSize="14sp" />
-
-        <Spinner
-            android:id="@+id/dist_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
-
-    <TableRow>
-    </TableRow>
-
-    <TableRow>
-        <Button
-            android:id="@+id/button_apply_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Apply" />
-    </TableRow>
-
-</TableLayout>
--->

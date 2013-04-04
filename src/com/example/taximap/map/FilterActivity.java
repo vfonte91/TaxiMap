@@ -1,42 +1,36 @@
 package com.example.taximap.map;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.example.taximap.Constants;
 import com.example.taximap.R;
-import com.example.taximap.menu.Help;
-import com.example.taximap.menu.Settings;
 
 public class FilterActivity extends Activity implements OnItemSelectedListener,
 		OnClickListener {
-	public static Map<String, Map<String, String>> filters; 
-	public static Map<String, Map<String, Boolean>> classifications;	
-	private static String markerType;
-	private static CheckBox companyCheck,ratingCheck,distanceCheck;
+	public static SparseArray<Map<String, String>> filters; 
+	public static SparseArray<Map<String, Boolean>> classifications;	
+	private static int markerType;
+	private static CheckBox companyCheck,ratingCheck;
 	public static char[] classificationCode={'0','0'}; //company and rating 
 	static {
-		if (MapViewActivity.markerType != null) {
+		if (MapViewActivity.markerType != 0) {
 			markerType = MapViewActivity.markerType;
 		} else {
-			markerType = "driver";
+			markerType = Constants.DRIVER;
 		}
 	}
 	
@@ -58,32 +52,32 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 		resetFilter();
 	}
 	private static void resetFilter(){
-		filters = new HashMap<String, Map<String, String>>();
-		if (markerType.equals("driver")) {
-			filters.put("driver", new HashMap<String, String>());
-			filters.get("driver").put("company", "");
-			filters.get("driver").put("rating", "");
-			filters.get("driver").put("distance", "");
-		} else if (markerType.equals("customer")) {
-			filters.put("customer", new HashMap<String, String>());
-			filters.get("customer").put("distance", "");
+		filters = new SparseArray<Map<String, String>>();
+		if (markerType == Constants.DRIVER) {
+			filters.put(Constants.DRIVER, new HashMap<String, String>());
+			filters.get(Constants.DRIVER).put("company", "");
+			filters.get(Constants.DRIVER).put("rating", "");
+			filters.get(Constants.DRIVER).put("distance", "");
+		} else if (markerType == Constants.CUSTOMER) {
+			filters.put(Constants.CUSTOMER, new HashMap<String, String>());
+			filters.get(Constants.CUSTOMER).put("distance", "");
 		}
-		classifications = new HashMap<String, Map<String, Boolean>>();
-		if (markerType.equals("driver")) {
-			classifications.put("driver", new HashMap<String, Boolean>());
-			classifications.get("driver").put("company", false);
-			classifications.get("driver").put("rating", false);
-			classifications.get("driver").put("distance", false);
-		} else if (markerType.equals("customer")) {
-			classifications.put("customer", new HashMap<String, Boolean>());
-			classifications.get("customer").put("distance", false);
+		classifications = new SparseArray<Map<String, Boolean>>();
+		if (markerType == Constants.DRIVER) {
+			classifications.put(Constants.DRIVER, new HashMap<String, Boolean>());
+			classifications.get(Constants.DRIVER).put("company", false);
+			classifications.get(Constants.DRIVER).put("rating", false);
+			classifications.get(Constants.DRIVER).put("distance", false);
+		} else if (markerType == Constants.CUSTOMER) {
+			classifications.put(Constants.CUSTOMER, new HashMap<String, Boolean>());
+			classifications.get(Constants.CUSTOMER).put("distance", false);
 		}
 	}
 	
 	private void initSpinner() {		//set filters to empty
 		Spinner sp;
 		int itemLst = 0, viewId = 0;
-		if (markerType == "driver") {
+		if (markerType == Constants.DRIVER) {
 			findViewById(R.id.textView1).setVisibility(View.VISIBLE);
 			findViewById(R.id.textView2).setVisibility(View.VISIBLE);
 			findViewById(R.id.company_filter).setVisibility(View.VISIBLE);
@@ -108,7 +102,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 				sp.setAdapter(adapter);
 				sp.setOnItemSelectedListener(this);
 			}
-		} else if (markerType == "customer") { // not tested
+		} else if (markerType == Constants.CUSTOMER) { // not tested
 			findViewById(R.id.textView1).setVisibility(View.GONE);
 			findViewById(R.id.textView2).setVisibility(View.GONE);
 			findViewById(R.id.company_filter).setVisibility(View.GONE);

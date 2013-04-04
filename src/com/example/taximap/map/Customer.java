@@ -1,5 +1,7 @@
 package com.example.taximap.map;
 
+import java.util.Locale;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -10,7 +12,6 @@ public class Customer {
 	private LatLng latlng;
 	private String name;
 	private int numPassenger;
-	private double distance;
 	public MarkerOptions markerOptions;
 	public Marker marker;
 	
@@ -24,7 +25,7 @@ public class Customer {
 		this.numPassenger=numPassenger;
 	}
 	public String snippet(){
-		return String.format("%s,%d riders", this.name,this.numPassenger);
+		return String.format(Locale.US,"%s,%d riders", this.name,this.numPassenger);
 	}
 
 }
