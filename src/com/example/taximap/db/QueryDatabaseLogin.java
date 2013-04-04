@@ -23,9 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.sax.StartElementListener;
 import android.util.Log;
-import android.widget.Toast;
 
 
 public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
