@@ -25,6 +25,9 @@ public class Constants {
      */
     public static final int CUSTOMER = 6;
     
+    /**
+     * For filters and classifications
+     */
     public static final int COMPANY = 7;
     public static final int RATING = 8;
     public static final int DISTANCE = 9;
