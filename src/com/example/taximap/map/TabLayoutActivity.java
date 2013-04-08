@@ -88,7 +88,7 @@ public class TabLayoutActivity extends TabActivity {
 		return true;
 	}
 
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {		// menu/action bar
 		switch (item.getItemId()) {
 		case R.id.menu_filter:
 			// requestCode=1

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 
+// this view is currently not active
 public class HelpWithWebView extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		String URL=null;
