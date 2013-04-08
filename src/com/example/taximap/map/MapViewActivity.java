@@ -20,8 +20,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-//import com.google.android.maps.GeoPoint;
-//import com.google.android.maps.MapActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -251,11 +249,11 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 					driver.isActive = true;
 				}
 				if (FilterActivity.filters != null) { // filter is previously set
-					for (String key : FilterActivity.filters.get(Constants.DRIVER).keySet()) {
+					for (int key : FilterActivity.filters.get(Constants.DRIVER).keySet()) {
 						String value = FilterActivity.filters.get(Constants.DRIVER)
 								.get(key);
 						if (!value.equals("Any")) { // is not "Any"
-							if (key.equals("company")) {
+							if (key == Constants.COMPANY) {
 								for (Driver driver : driverLst) {
 									if (!driver.company.equals(companies.get(value))) { 
 										driver.isActive = false;
@@ -263,7 +261,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 								}
 								FilterActivity.classificationCode[0] = '1';
 							}
-							if (key.equals("rating")) {
+							if (key == Constants.RATING) {
 								for (Driver driver : driverLst) {
 									if (driver.rating < ratings.get(value)) { 
 										Log.e(TAG, String.format("%s<%s",
@@ -273,7 +271,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 								}
 								FilterActivity.classificationCode[1] = '1';
 							}
-							if (key.equals("distance")) {
+							if (key == Constants.DISTANCE) {
 								for (Driver driver : driverLst) {
 									if (driver.distance > distance.get(value)) {
 										driver.isActive = false;

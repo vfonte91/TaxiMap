@@ -19,10 +19,9 @@ import android.widget.Spinner;
 import com.example.taximap.Constants;
 import com.example.taximap.R;
 
-public class FilterActivity extends Activity implements OnItemSelectedListener,
-		OnClickListener {
-	public static SparseArray<Map<String, String>> filters; 
-	public static SparseArray<Map<String, Boolean>> classifications;	
+public class FilterActivity extends Activity implements OnItemSelectedListener, OnClickListener {
+	public static SparseArray<Map<Integer,String>> filters; 
+	public static SparseArray<Map<Integer, Boolean>> classifications;	
 	private static int markerType;
 	private static CheckBox companyCheck,ratingCheck;
 	public static char[] classificationCode={'0','0'}; //company and rating 
@@ -37,6 +36,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.filter_layout);
+		filters = new SparseArray<Map<Integer, String>>();
+		classifications = new SparseArray<Map<Integer, Boolean>>();
 		resetFilter();
 		classificationCode[0]='0';
 		classificationCode[1]='0';
@@ -52,25 +53,25 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 		resetFilter();
 	}
 	private static void resetFilter(){
-		filters = new SparseArray<Map<String, String>>();
+		filters.clear();
 		if (markerType == Constants.DRIVER) {
-			filters.put(Constants.DRIVER, new HashMap<String, String>());
-			filters.get(Constants.DRIVER).put("company", "");
-			filters.get(Constants.DRIVER).put("rating", "");
-			filters.get(Constants.DRIVER).put("distance", "");
+			filters.put(Constants.DRIVER, new HashMap<Integer, String>());
+			filters.get(Constants.DRIVER).put(Constants.COMPANY, "");
+			filters.get(Constants.DRIVER).put(Constants.RATING, "");
+			filters.get(Constants.DRIVER).put(Constants.DISTANCE, "");
 		} else if (markerType == Constants.CUSTOMER) {
-			filters.put(Constants.CUSTOMER, new HashMap<String, String>());
-			filters.get(Constants.CUSTOMER).put("distance", "");
+			filters.put(Constants.CUSTOMER, new HashMap<Integer, String>());
+			filters.get(Constants.CUSTOMER).put(Constants.DISTANCE, "");
 		}
-		classifications = new SparseArray<Map<String, Boolean>>();
+		classifications.clear();
 		if (markerType == Constants.DRIVER) {
-			classifications.put(Constants.DRIVER, new HashMap<String, Boolean>());
-			classifications.get(Constants.DRIVER).put("company", false);
-			classifications.get(Constants.DRIVER).put("rating", false);
-			classifications.get(Constants.DRIVER).put("distance", false);
+			classifications.put(Constants.DRIVER, new HashMap<Integer, Boolean>());
+			classifications.get(Constants.DRIVER).put(Constants.COMPANY, false);
+			classifications.get(Constants.DRIVER).put(Constants.RATING, false);
+			classifications.get(Constants.DRIVER).put(Constants.DISTANCE, false);
 		} else if (markerType == Constants.CUSTOMER) {
-			classifications.put(Constants.CUSTOMER, new HashMap<String, Boolean>());
-			classifications.get(Constants.CUSTOMER).put("distance", false);
+			classifications.put(Constants.CUSTOMER, new HashMap<Integer, Boolean>());
+			classifications.get(Constants.CUSTOMER).put(Constants.DISTANCE, false);
 		}
 	}
 	
@@ -82,15 +83,15 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 			findViewById(R.id.textView2).setVisibility(View.VISIBLE);
 			findViewById(R.id.company_filter).setVisibility(View.VISIBLE);
 			findViewById(R.id.rating_filter).setVisibility(View.VISIBLE);
-			String[] keyArray = { "company", "rating", "distance" };
-			for (String key : keyArray) {
-				if (key.equals("company")) {
+			int[] keyArray = { Constants.COMPANY, Constants.RATING, Constants.DISTANCE};
+			for (int key : keyArray) {
+				if (key == Constants.COMPANY) {
 					itemLst = R.array.company_list;
 					viewId = R.id.company_filter;
-				} else if (key.equals("rating")) {
+				} else if (key == Constants.RATING) {
 					itemLst = R.array.rating_list;
 					viewId = R.id.rating_filter;
-				} else if (key.equals( "distance")) {
+				} else if (key == Constants.DISTANCE) {
 					itemLst = R.array.dist_list;
 					viewId = R.id.dist_filter;
 				}
@@ -107,9 +108,9 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 			findViewById(R.id.textView2).setVisibility(View.GONE);
 			findViewById(R.id.company_filter).setVisibility(View.GONE);
 			findViewById(R.id.rating_filter).setVisibility(View.GONE);
-			String[] keyArray = {"distance"};
-			for (String key : keyArray) {
-				if (key == "distance") {
+			int[] keyArray = {Constants.DISTANCE};
+			for (int key : keyArray) {
+				if (key == Constants.DISTANCE) {
 					itemLst = R.array.dist_list;
 					viewId = R.id.dist_filter;
 				}
@@ -119,33 +120,31 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
 	}
 
 	// fires on new selection
-	public void onItemSelected(AdapterView<?> parent, View view, int pos,
-			long id) {
+	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		String value="";
 		switch (parent.getId()) {
 		case R.id.company_filter:
 			value=parent.getItemAtPosition(pos).toString();
-			updateFilter("company", value);
+			updateFilter(Constants.COMPANY, value);
 			break;
 		case R.id.rating_filter:
 			value=parent.getItemAtPosition(pos).toString();
-			updateFilter("rating", value);
+			updateFilter(Constants.RATING, value);
 			break;
 		case R.id.dist_filter:
 			value=parent.getItemAtPosition(pos).toString();
-			updateFilter("distance", value);
+			updateFilter(Constants.DISTANCE, value);
 			break;
 		}
 	}
 
-	public void updateFilter(String key, String value) {
+	public void updateFilter(int key, String value) {
 		filters.get(markerType).put(key, value);
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -167,6 +166,5 @@ public class FilterActivity extends Activity implements OnItemSelectedListener,
             this.finish();
 			break;
 		}
-
 	}
 }
