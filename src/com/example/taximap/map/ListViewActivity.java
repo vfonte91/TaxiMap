@@ -167,4 +167,10 @@ public class ListViewActivity extends Activity implements
             }
         }, 2000);
     } 
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		MapViewActivity.diableLocationUpdate();		// remove location updates after app exits 
+	}
 }

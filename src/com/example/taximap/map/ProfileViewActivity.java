@@ -7,6 +7,7 @@ import android.os.Handler;
 import com.example.taximap.*;
 import com.google.android.gms.maps.model.LatLng;
 
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +60,6 @@ public class ProfileViewActivity extends Activity {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             Login.exitStatus=true;
-            MapViewActivity.diableLocationUpdate();		// remove location updates after app exits
             return;
         }
         //super.onBackPressed();
@@ -72,4 +72,12 @@ public class ProfileViewActivity extends Activity {
             }
         }, 2000);
     } 
+	
+	private static final String TAG = "-------------";
+	@Override
+	public void onStop(){
+		super.onStop();
+		Log.e(TAG, "profile onStop()");
+		MapViewActivity.diableLocationUpdate();		// remove location updates after app exits 
+	}
 }

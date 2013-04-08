@@ -488,7 +488,6 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             Login.exitStatus=true;
-            diableLocationUpdate();
             return;
         }
         //super.onBackPressed();
@@ -500,8 +499,36 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
              doubleBackToExitPressedOnce=false;   
             }
         }, 2000);
-    } 
+    }
 	
+	public void onDestroy(){
+    	super.onDestroy();
+    	Log.e(TAG, "Map view onDestroy()");
+
+    }
+	public void onPause(){
+    	super.onPause();
+    	Log.e(TAG, "Map view onPause()");
+    }
+
+	// this is the callback called for pressing both double clicking back 
+	// or single clicking home button. 
+    public void onStop(){
+    	super.onStop();
+    	//Log.e(TAG, "Map view onStop()");
+        diableLocationUpdate();
+    }
+    
+    public void onStart(){
+    	super.onStart();
+    	Log.e(TAG, "onStart()");
+    }
+
+    public void onRestart(){
+    	super.onRestart();
+    	Log.e(TAG, "onRestart()");
+    }
+    
 	public static void diableLocationUpdate(){
 		locationManager.removeUpdates(locationListener);		// remove location updates after app exits
 	}
