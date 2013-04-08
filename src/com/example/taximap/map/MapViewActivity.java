@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.taximap.Constants;
+import com.example.taximap.Login;
 import com.example.taximap.R;
 import com.example.taximap.db.QueryDatabaseCustomerLoc;
 import com.example.taximap.db.QueryDatabaseDriverLoc;
@@ -472,6 +473,33 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		distance.put("Within 30 mins", 15); // 15 miles, 30 miles/hour speed
 		distance.put("Within 20 mins", 10);
 		distance.put("Within 10 mins", 5);
-		
 	}
+	
+	private boolean doubleBackToExitPressedOnce = false;
+
+	@Override
+	protected void onResume() {			// called when logged in with authentication.
+	    super.onResume();
+	    // .... other stuff in my onResume ....
+	    this.doubleBackToExitPressedOnce = false;
+	}
+
+	@Override
+	public void onBackPressed() {		//this handler helps to reset the variable after 2 second.
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            Login.exitStatus=true;
+            locationManager.removeUpdates(this);		// remove location updates after app exits
+            return;
+        }
+        //super.onBackPressed();
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+             doubleBackToExitPressedOnce=false;   
+            }
+        }, 2000);
+    } 
 }

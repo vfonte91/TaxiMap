@@ -21,7 +21,7 @@ import com.example.taximap.menu.Contact;
 import com.example.taximap.menu.Help;
  
 public class FragmentTabsActivity extends ActivityGroup {
-	
+
 	private AccountManager mAccountManager;
     /** Called when the activity is first created. */
     @Override
@@ -114,29 +114,5 @@ public class FragmentTabsActivity extends ActivityGroup {
 
 	}
 	
-	private boolean doubleBackToExitPressedOnce = false;
-
-	@Override
-	protected void onResume() {
-	    super.onResume();
-	    // .... other stuff in my onResume ....
-	    this.doubleBackToExitPressedOnce = false;
-	}
-
-	@Override
-	public void onBackPressed() {		//this handler helps to reset the variable after 2 second.
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-        super.onBackPressed();
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-             doubleBackToExitPressedOnce=false;   
-            }
-        }, 2000);
-    } 
+	
 }

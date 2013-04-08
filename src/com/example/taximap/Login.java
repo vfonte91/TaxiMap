@@ -38,6 +38,15 @@ public class Login extends Activity implements OnClickListener{
 	        btnNewUser.setOnClickListener(this);
         }
      }
+    
+	public static Boolean exitStatus=false;
+    public void onResume(){
+    	if(exitStatus==true){
+    		finish();
+    	}
+    	super.onResume();
+    	//Log.i(TAG, "onResume()");
+    }
 
     // The commented functions are for due 3
     /*public void onStart(){
@@ -45,10 +54,7 @@ public class Login extends Activity implements OnClickListener{
     	Log.i(TAG, "onStart()");
     }
 
-    public void onResume(){
-    	super.onResume();
-    	Log.i(TAG, "onResume()");
-    }
+
 
     public void onPause(){
     	super.onPause();
