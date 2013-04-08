@@ -2,6 +2,7 @@ package com.example.taximap.map;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.TabActivity;
@@ -9,52 +10,39 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.Toast;
-import android.widget.TabHost.TabSpec;
 import com.example.taximap.*;
 import com.example.taximap.menu.Contact;
 import com.example.taximap.menu.Help;
-import com.example.taximap.menu.Settings;
  
-public class TabLayoutActivity extends TabActivity {
+public class FragmentTabsActivity extends ActivityGroup {
 	
 	private AccountManager mAccountManager;
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountManager = AccountManager.get(this);
-        setContentView(R.layout.tablayout);
+        setContentView(R.layout.fragment_tabs);
  
-        TabHost tabHost = getTabHost();
- 
-        // Tab for MapView
-        TabSpec mapspec = tabHost.newTabSpec("Map");
-        // setting Title and Icon for the Tab
-        mapspec.setIndicator("Map", getResources().getDrawable(R.layout.icon_map_tab));
-        Intent mapIntent = new Intent(this, MapViewActivity.class);
-        mapspec.setContent(mapIntent);
- 
-        // Tab for ListView
-        TabSpec listspec = tabHost.newTabSpec("List");
-        listspec.setIndicator("List", getResources().getDrawable(R.layout.icon_list_tab));
-        Intent listIntent = new Intent(this, ListViewActivity.class);
-        listspec.setContent(listIntent);
- 
-        // Tab for Profile
-        TabSpec helpspec = tabHost.newTabSpec("Profile");
-        helpspec.setIndicator("Profile", getResources().getDrawable(R.layout.icon_profile_tab));
-        Intent helpIntent = new Intent(this, ProfileViewActivity.class);
-        helpspec.setContent(helpIntent);
- 
+        final TabHost tabHost = (TabHost)findViewById(R.id.tabhost);
+        tabHost.setup(this.getLocalActivityManager());
         // Adding all TabSpec to TabHost
-        tabHost.addTab(mapspec); // Adding photos tab
-        tabHost.addTab(listspec); // Adding songs tab
-        tabHost.addTab(helpspec); // Adding videos tab
+        tabHost.addTab(tabHost.newTabSpec("Map")
+        		.setIndicator("Map", getResources().getDrawable(R.layout.icon_map_tab))
+        		.setContent(new Intent(this, MapViewActivity.class))); // Adding photos tab
+        tabHost.addTab(tabHost.newTabSpec("List")
+        		.setIndicator("List", getResources().getDrawable(R.layout.icon_list_tab))
+        		.setContent(new Intent(this, ListViewActivity.class))); // Adding songs tab
+        tabHost.addTab(tabHost.newTabSpec("Profile")
+        		.setIndicator("Profile", getResources().getDrawable(R.layout.icon_profile_tab))
+        		.setContent(new Intent(this, ProfileViewActivity.class))); // Adding videos tab
+        tabHost.setCurrentTab(0);
     }
     
     private void quitApplication() {
@@ -73,7 +61,7 @@ public class TabLayoutActivity extends TabActivity {
 					    		//set LOGOUT key to null in users Account so it won't automatically log in
 								mAccountManager.setUserData(userAccount, Constants.LOGOUT, "true");
 								//Go back to log in screen
-								startActivity(new Intent(TabLayoutActivity.this, Login.class));
+								startActivity(new Intent(FragmentTabsActivity.this, Login.class));
 							}
 						})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {

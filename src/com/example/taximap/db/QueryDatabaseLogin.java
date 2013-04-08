@@ -16,6 +16,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import com.example.taximap.Constants;
+import com.example.taximap.map.FragmentTabsActivity;
 import com.example.taximap.map.MapViewActivity;
 import com.example.taximap.map.TabLayoutActivity;
 
@@ -74,7 +75,7 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		     }else{
 		        	MapViewActivity.markerType = Constants.CUSTOMER;
 		     }
-	            context.startActivity(new Intent(context,TabLayoutActivity.class));          
+	            context.startActivity(new Intent(context,FragmentTabsActivity.class));  		//changed from   TabLayoutActivity      
         } else if(result[0]==-5){ 
         	new AlertDialog.Builder(context)
     		.setTitle("Error")
