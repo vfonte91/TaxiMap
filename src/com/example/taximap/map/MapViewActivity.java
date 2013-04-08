@@ -54,10 +54,10 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	public static LatLng myLastLatLng = new LatLng(39.983434,-83.003082);
 	public static String myLastAddress = "Mahoning CT, Columbus OH 43210";
 	private static boolean hailStatus=false;
-	// private static OnLocationChangedListener mListener;
-	private static LocationManager locationManager;
+	public static LocationManager locationManager;
 	private static final String TAG = "-------------";
 	private static Activity context;
+	private static LocationListener locationListener;
 	private static Map<String, String> companies;
 	private static Map<String, Integer> ratings;
 	private static Map<String, Integer> distance;
@@ -65,13 +65,15 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		context=this;
+		locationListener=(LocationListener) this;
 		//Create user filters
 		createFilters();
 		setContentView(R.layout.content_map_layout);
 		gmap = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 		setupMapView();
-
 		enableLocationUpdate();
 		loadMarkerHandler= new Handler();
 		loadMarkerRunnable=new Runnable(){
@@ -81,7 +83,6 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				loadMarkerHandler.postDelayed(this, delayTime);
 			}
 		};
-		context=this;
 		//callDB();
 		new Thread(loadMarkerRunnable).run();
 		((Button)findViewById(R.id.hailTaxi)).setOnClickListener(this);
@@ -104,14 +105,14 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				// minTime, float minDistance, LocationListener listener)
 				// min time interval 5s, min difference meters 10m.
 				locationManager.requestLocationUpdates(
-						LocationManager.GPS_PROVIDER, timeInterval, distDifference, this);
+						LocationManager.GPS_PROVIDER, timeInterval, distDifference, locationListener);
 			} else{
 				Toast.makeText(this, "GPS is disabled will try Network location",
 						Toast.LENGTH_LONG).show();
 			} 
 			 if (networkIsEnabled) {
 				locationManager.requestLocationUpdates(
-						LocationManager.NETWORK_PROVIDER, timeInterval, distDifference, this);
+						LocationManager.NETWORK_PROVIDER, timeInterval, distDifference, locationListener);
 			} else { // Show an error dialog that GPS is disabled...
 				Toast.makeText(this, "Both GPS and Network are disabled. Location will not be updated.",
 						Toast.LENGTH_LONG).show();
@@ -487,7 +488,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             Login.exitStatus=true;
-            locationManager.removeUpdates(this);		// remove location updates after app exits
+            diableLocationUpdate();
             return;
         }
         //super.onBackPressed();
@@ -500,4 +501,8 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
             }
         }, 2000);
     } 
+	
+	public static void diableLocationUpdate(){
+		locationManager.removeUpdates(locationListener);		// remove location updates after app exits
+	}
 }
