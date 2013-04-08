@@ -24,4 +24,9 @@ public class Constants {
      * Customer marker type
      */
     public static final int CUSTOMER = 6;
+    
+    public static final int COMPANY = 7;
+    public static final int RATING = 8;
+    public static final int DISTANCE = 9;
+    public static final int ANY = 10;
 }
