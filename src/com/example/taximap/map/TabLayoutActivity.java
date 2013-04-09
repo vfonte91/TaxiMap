@@ -158,5 +158,5 @@ public class TabLayoutActivity extends TabActivity {
              doubleBackToExitPressedOnce=false;   
             }
         }, 2000);
-    } 
+    }
 }
