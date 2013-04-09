@@ -150,7 +150,6 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.button_apply_filter:
-			Intent intent=new Intent();
 			if(companyCheck.isChecked()){
 				classificationCode[0]='1';
 			}else{
