@@ -34,13 +34,13 @@ public class FragmentTabsActivity extends ActivityGroup {
         tabHost.setup(this.getLocalActivityManager());
         // Adding all TabSpec to TabHost
         tabHost.addTab(tabHost.newTabSpec("Map")
-        		.setIndicator("Map", getResources().getDrawable(R.layout.icon_map_tab))
+        		.setIndicator("Map")
         		.setContent(new Intent(this, MapViewActivity.class))); // Adding photos tab
         tabHost.addTab(tabHost.newTabSpec("List")
-        		.setIndicator("List", getResources().getDrawable(R.layout.icon_list_tab))
+        		.setIndicator("List")
         		.setContent(new Intent(this, ListViewActivity.class))); // Adding songs tab
         tabHost.addTab(tabHost.newTabSpec("Profile")
-        		.setIndicator("Profile", getResources().getDrawable(R.layout.icon_profile_tab))
+        		.setIndicator("Profile")
         		.setContent(new Intent(this, ProfileViewActivity.class))); // Adding videos tab
         tabHost.setCurrentTab(0);
     }
