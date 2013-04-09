@@ -50,7 +50,6 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	}
 	protected void onResume(){
 		super.onResume();
-		resetFilter();
 	}
 	private static void resetFilter(){
 		filters.clear();

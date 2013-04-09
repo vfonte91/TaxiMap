@@ -23,6 +23,9 @@ import com.example.taximap.menu.Settings;
 public class TabLayoutActivity extends TabActivity {
 	
 	private AccountManager mAccountManager;
+	private Intent filterIntent;
+	private Intent helpIntent;
+	private Intent contactIntent;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,11 @@ public class TabLayoutActivity extends TabActivity {
         tabHost.addTab(mapspec); // Adding photos tab
         tabHost.addTab(listspec); // Adding songs tab
         tabHost.addTab(helpspec); // Adding videos tab
+        
+        //Instantiate intents
+        this.filterIntent = new Intent(this, FilterActivity.class);
+        this.helpIntent = new Intent(this, Help.class);
+        this.contactIntent = new Intent(this, Contact.class);
     }
     
     private void quitApplication() {
@@ -93,13 +101,13 @@ public class TabLayoutActivity extends TabActivity {
 		switch (item.getItemId()) {
 		case R.id.menu_filter:
 			// requestCode=1
-			startActivityForResult(new Intent(this, FilterActivity.class), 1);
+			startActivityForResult(this.filterIntent, 1);
 			break;
 		case R.id.menu_help:
-			startActivity(new Intent(this, Help.class));
+			startActivity(this.helpIntent);
 			return true;
 		case R.id.menu_contacts:
-			startActivity(new Intent(this, Contact.class));
+			startActivity(this.contactIntent);
 			return true;
 		case R.id.menu_exit:
 			quitApplication();
