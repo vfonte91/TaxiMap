@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+//this view is currently not active
 public class Settings extends PreferenceActivity {
 	
 	private final static String 	OPT_LOCATION 		= "location";

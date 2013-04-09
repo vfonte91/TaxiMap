@@ -10,25 +10,42 @@
         android:layout_width="wrap_content"
         android:layout_height="320dp" >
 
-        <!-- HEADER STARTS -->
-
-        <LinearLayout
-            android:id="@+id/header"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@layout/header_gradient" >
-        </LinearLayout>
+		<LinearLayout
+			    android:id="@+id/header"
+			    style="@style/HeaderStyle">
+		</LinearLayout>
+		
+  		<LinearLayout
+  		    	android:id="@+id/header_background"
+  		    	android:layout_below="@id/header"
+  		    	style="@style/HeaderBackgroundStyle">
+  		</LinearLayout>
 
         <!-- HEADER ENDS -->
+        
+  		<!--FOOTER STARTS-->
+  		
+   		<LinearLayout
+	  		    android:id="@+id/footer"
+	  		    style="@style/FooterStyle" >
+	  	</LinearLayout>
+	  	
+   		<LinearLayout
+  		    	android:id="@+id/footer_background"
+  		    	android:layout_above="@id/footer"
+  		    	style="@style/FooterBackgroundStyle" >
+  		</LinearLayout>  	
+
+        <!-- FOOTER ENDS -->
+        
         <!-- BODY BEGINS -->
 
         <LinearLayout
             style="@style/LinearLayout"
-            android:layout_below="@id/header"
+            android:layout_below="@id/header_background"
             android:orientation="vertical"
             android:padding="10dip" >
-
+            
             <TextView
             	style="@style/TextView"
                 android:layout_width="wrap_content"
@@ -36,8 +53,12 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/padding2"
                 android:text="@string/new_account"
-                android:textSize="@dimen/text2" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/Yellow" />
 
+            <!-- USERNAME BEGINS -->
+            
             <TextView
             	style="@style/TextView"
                 android:layout_width="wrap_content"
@@ -51,11 +72,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:maxLength="16"
                 android:singleLine="true" />
 
+            <!-- USERNAME ENDS -->
+            
+            <!-- PASSWORD BEGINS -->
+            
             <TextView
             	style="@style/TextView"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="@string/new_password"
@@ -68,9 +94,13 @@
                 android:inputType="textPassword"
                 android:singleLine="true" />
 
+            <!-- PASSWORD ENDS -->
+            
+            <!-- CONFIRM PASSWORD BEGINS -->
+            
             <TextView
             	style="@style/TextView"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="@string/confirm_password"
@@ -83,16 +113,24 @@
                 android:inputType="textPassword"
                 android:singleLine="true" />
 
+            <!-- CONFIRM PASSWORD ENDS -->
+           
+            <!-- BUTTONS BEGIN -->
+             
             <Button
-                style="@style/Button"
+                style="@style/YellowButtonStyle"
                 android:id="@+id/done_button"
-                android:layout_marginTop="@dimen/margin_top2"
-                android:text="@string/done" />
+                android:text="@string/done"
+                android:layout_marginTop="10dp" />
 
             <Button
-                style="@style/Button"
+                style="@style/YellowButtonStyle"
                 android:id="@+id/cancel_button"
-                android:text="@string/cancel" />
+                android:text="@string/cancel"
+                android:layout_marginTop="10dp" />
+            
+            <!-- BUTTONS END -->
+            
         </LinearLayout>
     </RelativeLayout>
 

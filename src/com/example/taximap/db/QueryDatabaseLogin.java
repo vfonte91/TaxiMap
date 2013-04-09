@@ -15,7 +15,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import com.example.taximap.UserState;
+import com.example.taximap.Constants;
+import com.example.taximap.map.FragmentTabsActivity;
 import com.example.taximap.map.MapViewActivity;
 import com.example.taximap.map.TabLayoutActivity;
 
@@ -24,9 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.sax.StartElementListener;
 import android.util.Log;
-import android.widget.Toast;
 
 
 public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
@@ -59,7 +58,7 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		        String  uid_string = json_login.getString("uid");		       
 		        String type_string = json_login.getString("type");
 		        return_result[0] = Integer.valueOf(uid_string);
-		        return_result[1] = Integer.valueOf(type_string);		        
+		        return_result[1] = Integer.valueOf(type_string);
 		}catch(Exception e){
 		        Log.e("log_tag", "Error in http connection "+e.toString());
 		        return_result[0] = -5;
@@ -70,15 +69,13 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 	protected void onPostExecute(Integer[] result) {
 		if(result[0]>0){ 
 			 MapViewActivity.uID=result[0].toString();			//wei added
-			 if(result[1].toString()=="0"){		//customer login
-		        	MapViewActivity.markerType="driver";
-		        }
-		        else if(result[1].toString()=="1"){
-		        	MapViewActivity.markerType="customer";
-		        }else{
-		        	Toast.makeText(context, "Invalid user type", Toast.LENGTH_SHORT);
-		        }
-	            context.startActivity(new Intent(context,TabLayoutActivity.class));          
+			 Log.e("???",result[0].toString()+" "+result[1].toString());
+			 if(result[1]==0){		//customer login
+		        	MapViewActivity.markerType = Constants.DRIVER;
+		     }else{
+		        	MapViewActivity.markerType = Constants.CUSTOMER;
+		     }
+	            context.startActivity(new Intent(context,FragmentTabsActivity.class));  		//changed from   TabLayoutActivity      
         } else if(result[0]==-5){ 
         	new AlertDialog.Builder(context)
     		.setTitle("Error")

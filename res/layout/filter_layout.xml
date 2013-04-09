@@ -1,95 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/padding1">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ScrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
 
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Classification Options" />
-    </TableRow>
+    <RelativeLayout
+        style="@style/RelativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
-    <TableRow>
-        <LinearLayout
-            android:orientation="horizontal">
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="By Company" />
+        <!-- HEADER STARTS -->	
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="By Rating" />
+		<LinearLayout
+			    android:id="@+id/header"
+			    style="@style/HeaderStyle">
+		</LinearLayout>
+		
+  		<LinearLayout
+  		    	android:id="@+id/header_background"
+  		    	android:layout_below="@id/header"
+  		    	style="@style/HeaderBackgroundStyle">
+  		</LinearLayout>
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="By Distance" />
-        </LinearLayout>
-    </TableRow>
+        <!-- HEADER ENDS -->
+        
+  		<!--FOOTER STARTS-->
+  		
+   		<LinearLayout
+	  		    android:id="@+id/footer"
+	  		    style="@style/FooterStyle" >
+	  	</LinearLayout>
+	  	
+   		<LinearLayout
+  		    	android:id="@+id/footer_background"
+  		    	android:layout_above="@id/footer"
+  		    	style="@style/FooterBackgroundStyle" >
+  		</LinearLayout>  		
+	  		
+  		<!--FOOTER ENDS-->
+        
+        
+        <!-- BODY BEGINS -->
+  
+		<LinearLayout
+            style="@style/LinearLayout"
+            android:layout_below="@id/header_background"
+            android:orientation="vertical"
+            android:padding="10dip">
+	        <LinearLayout
+	            android:orientation="horizontal"
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="2dp" >
+	
+	            <CheckBox
+	                android:id="@+id/by_company"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/filter_by_company"
+	                android:textSize="14sp" />
+	
+	            <CheckBox
+	                android:id="@+id/by_rating"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/filter_by_rating"
+	                android:textSize="14sp" />
+	
+	        </LinearLayout>
+	
+	        <TextView
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/filter_options"
+	            android:textSize="18sp"
+	            android:textColor="@color/Yellow"
+	            android:textStyle="bold" />
+	
+	        <TextView
+	            android:id="@+id/textView1"
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/filter_company"
+	            android:textSize="14sp" />
+	
+	        <Spinner
+	            android:id="@+id/company_filter"
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content" />
+	
+	        <TextView
+	            android:id="@+id/textView2"
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/filter_rating"
+	            android:textSize="14sp" />
+	
+	        <Spinner
+	            android:id="@+id/rating_filter"
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content" />
+	
+	        <TextView
+	            android:id="@+id/textView3"
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/filter_distance"
+	            android:textSize="14sp" />
 
-    <TableRow>
+	        <Spinner
+	            android:id="@+id/dist_filter"
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filter Options" />
-    </TableRow>
-    
-    <TableRow>
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Company:" />
-
-        <Spinner
-            android:id="@+id/company_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
-
-    <TableRow>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rating:" />
-
-        <Spinner
-            android:id="@+id/rating_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
-
-    <TableRow>
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Distance:" />
-
-        <Spinner
-            android:id="@+id/dist_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
-
-    <TableRow>
-    </TableRow>
-
-    <TableRow>
-        <Button
-            android:id="@+id/button_apply_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Apply" />
-    </TableRow>
-
-</TableLayout>
+	        <Button
+                style="@style/YellowButtonStyle"
+	            android:id="@+id/button_apply_filter"
+	            android:text="@string/filter_apply" 
+                android:layout_marginTop="10dp" />
+		</LinearLayout>
+  	</RelativeLayout>
+</ScrollView>

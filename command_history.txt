@@ -1,0 +1,55 @@
+    1  ls
+    2  cd C:\Users\Administrator\git
+    3  cd Users
+    4  cd ..
+    5  ls
+    6  cd Users
+    7  ls
+    8  cd WChen/
+    9  ls
+   10  cd ..
+   11  ls
+   12  cd All\ Users/
+   13  ls
+   14  cd 
+   15  cd ..
+   16  la
+   17  ls
+   18  cd Administrator/
+   19  ls
+   20  cd git/
+   21  ls
+   22  cd TaxiMap/
+   23  git st
+   24  git status
+   25  git rm --cached project.properties
+   26  git st
+   27  git status
+   28  ls
+   29  git st
+   30  git status
+   31  git pull
+   32  ls
+   33  git st
+   34  git status
+   35  git log
+   36  ls
+   37  less .gitignore 
+   38  git oull
+   39  git pull
+   40  git status
+   41  git push
+   42  git st
+   43  git status
+   44  git status
+   45  history
+   46  dir
+   47  pwd
+   48  cat history > command
+   49  cat 'history' > command_history.txt
+   50  cat `history` > command_history.txt
+   51  `history` > command_history.txt
+   52  `history` | cat > command_history.txt
+   53  `history` | > command_history.txt
+   54  `history` > command_history.txt
+   55  history > command_history.txt

@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu" >
 
     <item
-        android:id="@+id/menu_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Settings"/>
+        android:id="@+id/menu_filter"
+        android:title="Filters"/>
     <item
         android:id="@+id/menu_help"
-        android:icon="@android:drawable/ic_menu_info_details"
         android:title="Help"/>
     <item
-        android:id="@+id/menu_exit"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
-        android:title="Exit"/>
-    <item
         android:id="@+id/menu_contacts"
-        android:icon="@android:drawable/ic_menu_view"
         android:title="Contacts"/>
+    <item
+        android:id="@+id/menu_exit"
+        android:title="Log Out"/>
 
 </menu>
