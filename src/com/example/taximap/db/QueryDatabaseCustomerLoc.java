@@ -30,13 +30,13 @@ public class QueryDatabaseCustomerLoc  extends AsyncTask<String, Void, Integer>{
 	protected Integer doInBackground(String... driver_info) {
 		Integer return_count = 0;
 		String line;
-		//the data to send
+		//Prepare the data to send
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("id",String.valueOf(driver_info[0])));
 		nameValuePairs.add(new BasicNameValuePair("lat",String.valueOf(driver_info[1])));
 		nameValuePairs.add(new BasicNameValuePair("lon",String.valueOf(driver_info[2])));
 		 
-		//try connecting to the server
+		//Try connecting to the server
 		try{
 		        HttpClient httpclient = new DefaultHttpClient();
 		        HttpPost httppost = new HttpPost("http://ec2-23-22-121-122.compute-1.amazonaws.com/driver_locations.php");
@@ -46,6 +46,8 @@ public class QueryDatabaseCustomerLoc  extends AsyncTask<String, Void, Integer>{
 		        InputStream is = entity.getContent();
 		        BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
 	        	MapViewActivity.customerLst = new ArrayList<Customer>();
+	        	
+	        	//Pass returned data to customer list
 		        while((line = reader.readLine()) != null){
 		        	return_count++;				        
 		        	JSONObject json_convert = new JSONObject(line);
