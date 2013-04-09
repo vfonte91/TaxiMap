@@ -28,7 +28,7 @@ import android.util.Log;
 
 
 public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
-	int puid=-1;
+	int puid=-1;		//Use -1 for the case of no user id returned from server
 	Context context;
 	
 	public QueryDatabaseLogin(Context context) {
@@ -38,7 +38,8 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 	protected Integer[] doInBackground(String... username) {
 		Integer[] return_result = new Integer[2];
 		String line;
-		//the data to send
+		
+		//Prepare the data to send to server
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("username",username[0]));
 		nameValuePairs.add(new BasicNameValuePair("password",username[1]));
@@ -54,6 +55,8 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		        BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
 		        line = reader.readLine();
 		        JSONObject json_login = new JSONObject(line);
+		        
+		        //Store data returned from server call
 		        String  uid_string = json_login.getString("uid");		       
 		        String type_string = json_login.getString("type");
 		        return_result[0] = Integer.valueOf(uid_string);
@@ -66,8 +69,8 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 	}
 	
 	protected void onPostExecute(Integer[] result) {
-		if(result[0]>0){ 
-			 MapViewActivity.uID=result[0].toString();			//wei added
+		if(result[0]>0){ //If the database found the user/pass combo
+			 MapViewActivity.uID=result[0].toString();		
 			 Log.e("???",result[0].toString()+" "+result[1].toString());
 			 if(result[1]==0){		//customer login
 		        	MapViewActivity.markerType = Constants.DRIVER;
@@ -75,7 +78,7 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		        	MapViewActivity.markerType = Constants.CUSTOMER;
 		     }
 	            context.startActivity(new Intent(context,FragmentTabsActivity.class));  		//changed from   TabLayoutActivity      
-        } else if(result[0]==-5){ 
+        } else if(result[0]==-5){ //If the database couldn't be connected to show error
         	new AlertDialog.Builder(context)
     		.setTitle("Error")
     		.setMessage("Trouble Connecting To Database, Check Network Connection")
@@ -83,7 +86,7 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
     			public void onClick(DialogInterface dialog, int which) {}
     		})
     		.show();
-        } else { 
+        } else {  //If couldnt find user/pass combo in database promt user
         	new AlertDialog.Builder(context)
     		.setTitle("Error")
     		.setMessage("Login failed")
