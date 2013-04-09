@@ -26,6 +26,7 @@ public class FragmentTabsActivity extends ActivityGroup {
 	private Intent filterIntent;
 	private Intent helpIntent;
 	private Intent contactIntent;
+	private TabHost tabHost;
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class FragmentTabsActivity extends ActivityGroup {
         mAccountManager = AccountManager.get(this);
         setContentView(R.layout.fragment_tabs);
  
-        final TabHost tabHost = (TabHost)findViewById(R.id.tabhost);
+        tabHost = (TabHost)findViewById(R.id.tabhost);
         tabHost.setup(this.getLocalActivityManager());
         // Adding all TabSpec to TabHost
         tabHost.addTab(tabHost.newTabSpec("Map")
@@ -108,6 +109,7 @@ public class FragmentTabsActivity extends ActivityGroup {
 		if (requestCode == 1) {
 			// do something
 			if (resultCode == RESULT_OK) {
+				tabHost.setCurrentTab(0);
 				MapViewActivity.loadMarkers();
 			} else {
 				Toast.makeText(this, "Filter Cancelled", Toast.LENGTH_SHORT)
