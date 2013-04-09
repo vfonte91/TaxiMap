@@ -18,7 +18,6 @@ public class Login extends Activity implements OnClickListener{
    private EditText passwordEditableField;
    private AccountManager mAccountManager;
 
-   private static final String TAG = "Login Activity";
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);

@@ -35,17 +35,19 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.filter_layout);
-		filters = new SparseArray<Map<Integer, String>>();
-		classifications = new SparseArray<Map<Integer, Boolean>>();
-		resetFilter();
-		classificationCode[0]='0';
-		classificationCode[1]='0';
-		initSpinner();
 		((Button) findViewById(R.id.button_apply_filter)).setOnClickListener(this);
-		companyCheck=((CheckBox) findViewById(R.id.by_company));
-		companyCheck.setChecked(false);
-		ratingCheck=((CheckBox) findViewById(R.id.by_rating));
-		ratingCheck.setChecked(false);
+		if (filters == null) {
+			filters = new SparseArray<Map<Integer, String>>();
+			classifications = new SparseArray<Map<Integer, Boolean>>();
+			resetFilter();
+			companyCheck=((CheckBox) findViewById(R.id.by_company));
+			companyCheck.setChecked(false);
+			ratingCheck=((CheckBox) findViewById(R.id.by_rating));
+			ratingCheck.setChecked(false);
+			classificationCode[0]='0';
+			classificationCode[1]='0';
+		}
+		initSpinner();
 	}
 	protected void onResume(){
 		super.onResume();
@@ -99,6 +101,13 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 								android.R.layout.simple_spinner_item);
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				sp.setAdapter(adapter);
+			    for (int position = 0; position < adapter.getCount(); position++)
+			    {
+			        if(adapter.getItem(position) == filters.get(Constants.DRIVER).get(key))
+			        {
+			            sp.setSelection(position);
+			        }
+			    }				
 				sp.setOnItemSelectedListener(this);
 			}
 		} else if (markerType == Constants.CUSTOMER) { // not tested

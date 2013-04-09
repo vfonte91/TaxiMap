@@ -43,6 +43,7 @@ public class FragmentTabsActivity extends ActivityGroup {
         		.setIndicator("Profile")
         		.setContent(new Intent(this, ProfileViewActivity.class))); // Adding videos tab
         tabHost.setCurrentTab(0);
+        //Create intents for contact, filter, and help views
         this.contactIntent = new Intent(this, Contact.class);
         this.helpIntent = new Intent(this, Help.class);
         this.filterIntent = new Intent(this, FilterActivity.class);
@@ -84,12 +85,15 @@ public class FragmentTabsActivity extends ActivityGroup {
 		switch (item.getItemId()) {
 		case R.id.menu_filter:
 			// requestCode=1
+			//Go to filter page
 			startActivityForResult(this.filterIntent, 1);
 			break;
 		case R.id.menu_help:
+			//go to help page
 			startActivity(this.helpIntent);
 			return true;
 		case R.id.menu_contacts:
+			//Go to contact page
 			startActivity(this.contactIntent);
 			return true;
 		case R.id.menu_exit:
@@ -105,7 +109,9 @@ public class FragmentTabsActivity extends ActivityGroup {
 		if (requestCode == 1) {
 			// do something
 			if (resultCode == RESULT_OK) {
+				//Set tab to map
 				tabHost.setCurrentTab(0);
+				//Load markers with new filters
 				MapViewActivity.loadMarkers();
 			} else {
 				Toast.makeText(this, "Filter Cancelled", Toast.LENGTH_SHORT)
