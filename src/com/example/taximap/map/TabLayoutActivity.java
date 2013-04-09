@@ -38,19 +38,19 @@ public class TabLayoutActivity extends TabActivity {
         // Tab for MapView
         TabSpec mapspec = tabHost.newTabSpec("Map");
         // setting Title and Icon for the Tab
-        mapspec.setIndicator("Map", getResources().getDrawable(R.layout.icon_map_tab));
+        mapspec.setIndicator("Map");
         Intent mapIntent = new Intent(this, MapViewActivity.class);
         mapspec.setContent(mapIntent);
  
         // Tab for ListView
         TabSpec listspec = tabHost.newTabSpec("List");
-        listspec.setIndicator("List", getResources().getDrawable(R.layout.icon_list_tab));
+        listspec.setIndicator("List");
         Intent listIntent = new Intent(this, ListViewActivity.class);
         listspec.setContent(listIntent);
  
         // Tab for Profile
         TabSpec helpspec = tabHost.newTabSpec("Profile");
-        helpspec.setIndicator("Profile", getResources().getDrawable(R.layout.icon_profile_tab));
+        helpspec.setIndicator("Profile");
         Intent helpIntent = new Intent(this, ProfileViewActivity.class);
         helpspec.setContent(helpIntent);
  
