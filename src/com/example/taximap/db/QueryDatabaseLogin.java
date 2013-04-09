@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import com.example.taximap.Constants;
 import com.example.taximap.map.FragmentTabsActivity;
 import com.example.taximap.map.MapViewActivity;
-import com.example.taximap.map.TabLayoutActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;

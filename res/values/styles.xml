@@ -35,6 +35,9 @@
     <style name="TextView" parent="AppBaseTheme">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:ellipsize">none</item>
+        <item name="android:maxLines">10</item>
+        <item name="android:scrollHorizontally">false</item>
     </style>
     
     <style name="Spinner" parent="AppBaseTheme">
@@ -75,6 +78,5 @@
         <item name="android:background">@drawable/button_style_yellow</item>
         <item name="android:textColor">@color/Yellow</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_height">fill_parent</item>
 	</style>
 </resources>

@@ -23,6 +23,10 @@ import com.example.taximap.menu.Help;
 public class FragmentTabsActivity extends ActivityGroup {
 
 	private AccountManager mAccountManager;
+	private Intent filterIntent;
+	private Intent helpIntent;
+	private Intent contactIntent;
+	private TabHost tabHost;
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +34,7 @@ public class FragmentTabsActivity extends ActivityGroup {
         mAccountManager = AccountManager.get(this);
         setContentView(R.layout.fragment_tabs);
  
-        final TabHost tabHost = (TabHost)findViewById(R.id.tabhost);
+        tabHost = (TabHost)findViewById(R.id.tabhost);
         tabHost.setup(this.getLocalActivityManager());
         // Adding all TabSpec to TabHost
         tabHost.addTab(tabHost.newTabSpec("Map")
@@ -43,6 +47,9 @@ public class FragmentTabsActivity extends ActivityGroup {
         		.setIndicator("Profile")
         		.setContent(new Intent(this, ProfileViewActivity.class))); // Adding videos tab
         tabHost.setCurrentTab(0);
+        this.contactIntent = new Intent(this, Contact.class);
+        this.helpIntent = new Intent(this, Help.class);
+        this.filterIntent = new Intent(this, FilterActivity.class);
     }
     
     private void quitApplication() {
@@ -81,13 +88,13 @@ public class FragmentTabsActivity extends ActivityGroup {
 		switch (item.getItemId()) {
 		case R.id.menu_filter:
 			// requestCode=1
-			startActivityForResult(new Intent(this, FilterActivity.class), 1);
+			startActivityForResult(this.filterIntent, 1);
 			break;
 		case R.id.menu_help:
-			startActivity(new Intent(this, Help.class));
+			startActivity(this.helpIntent);
 			return true;
 		case R.id.menu_contacts:
-			startActivity(new Intent(this, Contact.class));
+			startActivity(this.contactIntent);
 			return true;
 		case R.id.menu_exit:
 			quitApplication();
@@ -102,6 +109,7 @@ public class FragmentTabsActivity extends ActivityGroup {
 		if (requestCode == 1) {
 			// do something
 			if (resultCode == RESULT_OK) {
+				tabHost.setCurrentTab(0);
 				MapViewActivity.loadMarkers();
 			} else {
 				Toast.makeText(this, "Filter Cancelled", Toast.LENGTH_SHORT)
