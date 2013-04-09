@@ -109,16 +109,7 @@ public class ListViewActivity extends Activity implements
 					for(int i=0;i<parent.getChildCount();i++){
 						parent.getChildAt(i).setBackgroundColor(0x000000);
 					}
-					parent.getChildAt(position).setBackgroundColor(context.getResources().getColor(R.color.Yellow));
-					/*for(View v:parent.get)
-			    	view.setBackgroundColor(color)
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					MapViewActivity.driverLst.get(pos).marker.hideInfoWindow();*/
+					parent.getChildAt(position).setBackgroundColor(context.getResources().getColor(R.color.WhiteSmoke));
 				}
 				
 			});
