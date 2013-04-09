@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.taximap.Constants;
+import com.example.taximap.Login;
 import com.example.taximap.R;
 import com.example.taximap.db.QueryDatabaseCustomerLoc;
 import com.example.taximap.db.QueryDatabaseDriverLoc;
@@ -53,10 +54,10 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	public static LatLng myLastLatLng = new LatLng(39.983434,-83.003082);
 	public static String myLastAddress = "Mahoning CT, Columbus OH 43210";
 	private static boolean hailStatus=false;
-	// private static OnLocationChangedListener mListener;
-	private static LocationManager locationManager;
+	public static LocationManager locationManager;
 	private static final String TAG = "-------------";
 	private static Activity context;
+	private static LocationListener locationListener;
 	private static Map<String, String> companies;
 	private static Map<String, Integer> ratings;
 	private static Map<String, Integer> distance;
@@ -64,13 +65,15 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		context=this;
+		locationListener=(LocationListener) this;
 		//Create user filters
 		createFilters();
 		setContentView(R.layout.content_map_layout);
 		gmap = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 		setupMapView();
-
 		enableLocationUpdate();
 		loadMarkerHandler= new Handler();
 		loadMarkerRunnable=new Runnable(){
@@ -80,7 +83,6 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				loadMarkerHandler.postDelayed(this, delayTime);
 			}
 		};
-		context=this;
 		//callDB();
 		new Thread(loadMarkerRunnable).run();
 		((Button)findViewById(R.id.hailTaxi)).setOnClickListener(this);
@@ -103,14 +105,14 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				// minTime, float minDistance, LocationListener listener)
 				// min time interval 5s, min difference meters 10m.
 				locationManager.requestLocationUpdates(
-						LocationManager.GPS_PROVIDER, timeInterval, distDifference, this);
+						LocationManager.GPS_PROVIDER, timeInterval, distDifference, locationListener);
 			} else{
 				Toast.makeText(this, "GPS is disabled will try Network location",
 						Toast.LENGTH_LONG).show();
 			} 
 			 if (networkIsEnabled) {
 				locationManager.requestLocationUpdates(
-						LocationManager.NETWORK_PROVIDER, timeInterval, distDifference, this);
+						LocationManager.NETWORK_PROVIDER, timeInterval, distDifference, locationListener);
 			} else { // Show an error dialog that GPS is disabled...
 				Toast.makeText(this, "Both GPS and Network are disabled. Location will not be updated.",
 						Toast.LENGTH_LONG).show();
@@ -470,6 +472,64 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		distance.put("Within 30 mins", 15); // 15 miles, 30 miles/hour speed
 		distance.put("Within 20 mins", 10);
 		distance.put("Within 10 mins", 5);
-		
+	}
+	
+	private boolean doubleBackToExitPressedOnce = false;
+
+	@Override
+	protected void onResume() {			// called when logged in with authentication.
+	    super.onResume();
+	    // .... other stuff in my onResume ....
+	    this.doubleBackToExitPressedOnce = false;
+	}
+
+	@Override
+	public void onBackPressed() {		//this handler helps to reset the variable after 2 second.
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            Login.exitStatus=true;
+            return;
+        }
+        //super.onBackPressed();
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+             doubleBackToExitPressedOnce=false;   
+            }
+        }, 2000);
+    }
+	
+	public void onDestroy(){
+    	super.onDestroy();
+    	Log.e(TAG, "Map view onDestroy()");
+
+    }
+	public void onPause(){
+    	super.onPause();
+    	Log.e(TAG, "Map view onPause()");
+    }
+
+	// this is the callback called for pressing both double clicking back 
+	// or single clicking home button. 
+    public void onStop(){
+    	super.onStop();
+    	//Log.e(TAG, "Map view onStop()");
+        diableLocationUpdate();
+    }
+    
+    public void onStart(){
+    	super.onStart();
+    	Log.e(TAG, "onStart()");
+    }
+
+    public void onRestart(){
+    	super.onRestart();
+    	Log.e(TAG, "onRestart()");
+    }
+    
+	public static void diableLocationUpdate(){
+		locationManager.removeUpdates(locationListener);		// remove location updates after app exits
 	}
 }

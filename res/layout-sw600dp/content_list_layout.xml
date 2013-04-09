@@ -24,25 +24,25 @@
             android:id="@+id/sort_by_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name" />
+            android:text="Sort by Name" />
 
         <Button
             android:id="@+id/sort_by_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Company" />
+            android:text="Sort by Company" />
 
         <Button
             android:id="@+id/sort_by_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rating" />
+            android:text="Sort by Rating" />
 
         <Button
             android:id="@+id/sort_by_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Distance" />
+            android:text="Sort by Distance" />
     </LinearLayout>
 
 </LinearLayout >
