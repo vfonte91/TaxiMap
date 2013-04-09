@@ -35,6 +35,9 @@
     <style name="TextView" parent="AppBaseTheme">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:ellipsize">none</item>
+        <item name="android:maxLines">10</item>
+        <item name="android:scrollHorizontally">false</item>
     </style>
     
     <style name="Spinner" parent="AppBaseTheme">
