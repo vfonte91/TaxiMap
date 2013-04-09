@@ -47,11 +47,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--         <activity
-            android:name=".map.TabLayoutActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-        </activity> -->
         <activity
             android:name=".map.FragmentTabsActivity"
             android:label="@string/app_name"
@@ -86,5 +81,6 @@
 			<meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/authenticator">
 			</meta-data>
 		</service>
+
     </application>
 </manifest>

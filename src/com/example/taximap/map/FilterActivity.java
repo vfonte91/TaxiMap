@@ -1,4 +1,3 @@
-
 package com.example.taximap.map;
 
 import java.util.HashMap;
@@ -162,7 +161,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 			}else{
 				classificationCode[1]='0';
 			}
-			this.setResult(RESULT_OK, intent);
+			this.setResult(RESULT_OK, this.getIntent());
             this.finish();
 			break;
 		}
