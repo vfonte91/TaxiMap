@@ -22,7 +22,8 @@ import com.example.taximap.*;
 public class ListViewActivity extends Activity implements
 		android.view.View.OnClickListener {
 	private static Activity context;
-	private static String sortField="name";
+	private static String sortField = "name";
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_list_layout);
@@ -30,7 +31,7 @@ public class ListViewActivity extends Activity implements
 		((Button) findViewById(R.id.sort_by_company)).setOnClickListener(this);
 		((Button) findViewById(R.id.sort_by_rating)).setOnClickListener(this);
 		((Button) findViewById(R.id.sort_by_distance)).setOnClickListener(this);
-		context=this;
+		context = this;
 	}
 
 	public void onResume() {
@@ -40,7 +41,7 @@ public class ListViewActivity extends Activity implements
 
 	public static void createList() {
 		// bind ListView and use it as the container for listitem
-		if(context==null){
+		if (context == null) {
 			return;
 		}
 		ListView list = (ListView) context.findViewById(R.id.listview);
@@ -86,33 +87,41 @@ public class ListViewActivity extends Activity implements
 						});
 			}
 			for (Driver d : MapViewActivity.driverLst) {
-				HashMap<String, String> map = new HashMap<String, String>();
-				map.put("itemtitle", d.name);
-				map.put("itemtext", d.snippet());
-				mylist.add(map);
+				if (d.isActive) {
+					HashMap<String, String> map = new HashMap<String, String>();
+					map.put("itemtitle", d.name);
+					map.put("itemtext", d.snippet());
+					mylist.add(map);
+				}
+
 			}
 			SimpleAdapter adapter = new SimpleAdapter(context, mylist, // data
-																	// source
+																		// source
 					R.layout.listviewitem, // ListItem XML
 					// key correspondence
 					new String[] { "itemtitle", "itemtext" }, new int[] {
 							R.id.itemtitle, R.id.itemtext });
 			// add and display
 			list.setAdapter(adapter);
-/*			Toast.makeText(this, Integer.toString(list.getCount()),
-					Toast.LENGTH_SHORT).show();*/
-			
+			/*
+			 * Toast.makeText(this, Integer.toString(list.getCount()),
+			 * Toast.LENGTH_SHORT).show();
+			 */
+
 			list.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					for(int i=0;i<parent.getChildCount();i++){
+					for (int i = 0; i < parent.getChildCount(); i++) {
 						parent.getChildAt(i).setBackgroundColor(0x000000);
 					}
-					parent.getChildAt(position).setBackgroundColor(context.getResources().getColor(R.color.WhiteSmoke));
+					parent.getChildAt(position)
+							.setBackgroundColor(
+									context.getResources().getColor(
+											R.color.WhiteSmoke));
 				}
-				
+
 			});
 		}
 	}
@@ -121,54 +130,59 @@ public class ListViewActivity extends Activity implements
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 		case R.id.sort_by_name:
-			sortField="name";
+			sortField = "name";
 			createList();
 			break;
 		case R.id.sort_by_company:
-			sortField="company";
+			sortField = "company";
 			createList();
 			break;
 		case R.id.sort_by_rating:
-			sortField="rating";
+			sortField = "rating";
 			createList();
 			break;
 		case R.id.sort_by_distance:
-			sortField="distance";
+			sortField = "distance";
 			createList();
 			break;
 		}
 
 	}
-	
+
 	private boolean doubleBackToExitPressedOnce = false;
+
 	@Override
-	public void onBackPressed() {		//this handler helps to reset the variable after 2 second.
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            Login.exitStatus=true;
-            MapViewActivity.diableLocationUpdate();		// remove location updates after app exits
-            return;
-        }
-        //super.onBackPressed();
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-             doubleBackToExitPressedOnce=false;   
-            }
-        }, 2000);
-    } 
-	
-	@Override
-	public void onStop(){
-		super.onStop();
-		MapViewActivity.diableLocationUpdate();		// remove location updates after app exits 
+	public void onBackPressed() { // this handler helps to reset the variable
+									// after 2 second.
+		if (doubleBackToExitPressedOnce) {
+			super.onBackPressed();
+			Login.exitStatus = true;
+			MapViewActivity.diableLocationUpdate(); // remove location updates
+													// after app exits
+			return;
+		}
+		// super.onBackPressed();
+		this.doubleBackToExitPressedOnce = true;
+		Toast.makeText(this, "Please click BACK again to exit",
+				Toast.LENGTH_SHORT).show();
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				doubleBackToExitPressedOnce = false;
+			}
+		}, 2000);
 	}
-	
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		MapViewActivity.diableLocationUpdate(); // remove location updates after
+												// app exits
+	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
-	  super.onConfigurationChanged(newConfig);
-	  FragmentTabsActivity.currentTabIndex=1;
+		super.onConfigurationChanged(newConfig);
+		FragmentTabsActivity.currentTabIndex = 1;
 	}
 }
