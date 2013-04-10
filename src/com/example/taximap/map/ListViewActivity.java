@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -163,5 +164,11 @@ public class ListViewActivity extends Activity implements
 	public void onStop(){
 		super.onStop();
 		MapViewActivity.diableLocationUpdate();		// remove location updates after app exits 
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	  super.onConfigurationChanged(newConfig);
+	  FragmentTabsActivity.currentTabIndex=1;
 	}
 }

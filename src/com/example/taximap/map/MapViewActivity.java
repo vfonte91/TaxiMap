@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -531,5 +532,11 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
     
 	public static void diableLocationUpdate(){
 		locationManager.removeUpdates(locationListener);		// remove location updates after app exits
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	  super.onConfigurationChanged(newConfig);
+	  FragmentTabsActivity.currentTabIndex=0;
 	}
 }

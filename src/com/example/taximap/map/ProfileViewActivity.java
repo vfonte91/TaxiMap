@@ -3,6 +3,7 @@ package com.example.taximap.map;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -91,4 +92,11 @@ public class ProfileViewActivity extends Activity {
 		Log.e(TAG, "profile onStop()");
 		MapViewActivity.diableLocationUpdate();		// remove location updates after app exits 
 	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	  super.onConfigurationChanged(newConfig);
+	  FragmentTabsActivity.currentTabIndex=2;
+	}
+	
 }
