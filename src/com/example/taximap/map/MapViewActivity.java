@@ -487,7 +487,8 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	@Override
 	public void onBackPressed() {		//this handler helps to reset the variable after 2 second.
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+            //super.onBackPressed();
+        	finish();
             Login.exitStatus=true;
             return;
         }

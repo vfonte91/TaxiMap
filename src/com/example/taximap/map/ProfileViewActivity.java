@@ -70,7 +70,7 @@ public class ProfileViewActivity extends Activity {
 	@Override
 	public void onBackPressed() {		//this handler helps to reset the variable after 2 second.
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+        	finish();
             Login.exitStatus=true;
             return;
         }

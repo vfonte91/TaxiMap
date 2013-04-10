@@ -155,7 +155,7 @@ public class ListViewActivity extends Activity implements
 	public void onBackPressed() { // this handler helps to reset the variable
 									// after 2 second.
 		if (doubleBackToExitPressedOnce) {
-			super.onBackPressed();
+			finish();
 			Login.exitStatus = true;
 			MapViewActivity.diableLocationUpdate(); // remove location updates
 													// after app exits
