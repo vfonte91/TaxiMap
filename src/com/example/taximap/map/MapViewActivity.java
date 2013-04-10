@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
@@ -38,8 +39,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
-public class MapViewActivity extends FragmentActivity implements OnClickListener,
-		LocationListener, LocationSource {
+public class MapViewActivity extends FragmentActivity implements
+		OnClickListener, LocationListener, LocationSource {
 	private static GoogleMap gmap;
 	public static int markerType = Constants.DRIVER;
 	public static List<Driver> driverLst;
@@ -51,42 +52,42 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	private static Handler loadMarkerHandler;
 	private static Runnable loadMarkerRunnable;
 	public static String uID = "10";
-	public static String uName="TaxiMap User";
-	public static LatLng myLastLatLng = new LatLng(39.983434,-83.003082);
+	public static String uName = "TaxiMap User";
+	public static LatLng myLastLatLng = new LatLng(39.983434, -83.003082);
 	public static String myLastAddress = "Mahoning CT, Columbus OH 43210";
-	private static boolean hailStatus=false;
-	public static LocationManager locationManager;
+	private static boolean hailStatus = false;
+	private static LocationManager locationManager;
 	private static final String TAG = "-------------";
 	private static Activity context;
 	private static LocationListener locationListener;
 	private static Map<String, String> companies;
 	private static Map<String, Integer> ratings;
 	private static Map<String, Integer> distance;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		context=this;
-		locationListener=(LocationListener) this;
-		//Create user filters
+		context = this;
+		locationListener = (LocationListener) this;
+		// Create user filters
 		createFilters();
 		setContentView(R.layout.content_map_layout);
 		gmap = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 		setupMapView();
 		enableLocationUpdate();
-		loadMarkerHandler= new Handler();
-		loadMarkerRunnable=new Runnable(){
-			public void run(){
+		loadMarkerHandler = new Handler();
+		loadMarkerRunnable = new Runnable() {
+			public void run() {
 				callDB();
-				long delayTime=60000;
+				long delayTime = 60000;
 				loadMarkerHandler.postDelayed(this, delayTime);
 			}
 		};
-		//callDB();
+		// callDB();
 		new Thread(loadMarkerRunnable).run();
-		((Button)findViewById(R.id.hailTaxi)).setOnClickListener(this);
+		((Button) findViewById(R.id.hailTaxi)).setOnClickListener(this);
 	}
 
 	private void enableLocationUpdate() {
@@ -99,24 +100,32 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 			boolean networkIsEnabled = locationManager
 					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			// update real time location every 5s
-			long timeInterval=60000;
-			float distDifference=30;
+			long timeInterval = 60000;
+			float distDifference = 30;
 			if (gpsIsEnabled) {
 				// public void requestLocationUpdates (String provider, long
 				// minTime, float minDistance, LocationListener listener)
 				// min time interval 5s, min difference meters 10m.
 				locationManager.requestLocationUpdates(
-						LocationManager.GPS_PROVIDER, timeInterval, distDifference, locationListener);
-			} else{
-				Toast.makeText(this, "GPS is disabled will try Network location",
+						LocationManager.GPS_PROVIDER, timeInterval,
+						distDifference, locationListener);
+			} else {
+				Toast.makeText(this,
+						"GPS is disabled will try Network location",
 						Toast.LENGTH_LONG).show();
-			} 
-			 if (networkIsEnabled) {
+			}
+			if (networkIsEnabled) {
 				locationManager.requestLocationUpdates(
-						LocationManager.NETWORK_PROVIDER, timeInterval, distDifference, locationListener);
+						LocationManager.NETWORK_PROVIDER, timeInterval,
+						distDifference, locationListener);
 			} else { // Show an error dialog that GPS is disabled...
-				Toast.makeText(this, "Both GPS and Network are disabled. Location will not be updated.",
+				Toast.makeText(
+						this,
+						"Both GPS and Network are disabled. Please turn on GPS.",
 						Toast.LENGTH_LONG).show();
+				Intent gpsOptionsIntent = new Intent(
+						android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				startActivity(gpsOptionsIntent);
 			}
 		} else { // Show some generic error dialog because something must have
 					// gone wrong with
@@ -144,31 +153,36 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 	}
 
 	@Override
-	public void onLocationChanged(Location location) {	
+	public void onLocationChanged(Location location) {
 		// Create current user marker if not exists.
 		// move current user marker if exists.
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
-		myLastLatLng=new LatLng(latitude, longitude);
+		myLastLatLng = new LatLng(latitude, longitude);
 		// get physical address from that lat lon location
-		GeolocationHelper.getAddressFromLocation(location, this, new GeocoderHandler());
+		GeolocationHelper.getAddressFromLocation(location, this,
+				new GeocoderHandler());
 		// add a marker to show current user location.
-		if(markerType == Constants.DRIVER){
-			if(currentDriver==null){
-				BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.customerdefault);
-				MarkerOptions markerOptions = new MarkerOptions().position(myLastLatLng)
-						.title(uName).icon(icon);
-				currentCustomer=new Customer(myLastLatLng,uName);
-				currentCustomer.markerOptions=markerOptions;
-				currentCustomer.marker=gmap.addMarker(markerOptions);
-				gmap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(myLastLatLng,10f,0,0)));
+		if (markerType == Constants.DRIVER) {
+			if (currentDriver == null) {
+				BitmapDescriptor icon = BitmapDescriptorFactory
+						.fromResource(R.drawable.customerdefault);
+				MarkerOptions markerOptions = new MarkerOptions()
+						.position(myLastLatLng).title(uName).icon(icon);
+				currentCustomer = new Customer(myLastLatLng, uName);
+				currentCustomer.markerOptions = markerOptions;
+				currentCustomer.marker = gmap.addMarker(markerOptions);
+				gmap.animateCamera(CameraUpdateFactory
+						.newCameraPosition(new CameraPosition(myLastLatLng,
+								10f, 0, 0)));
 				if (currentBounds == null) {
 					boundsBuilder = new LatLngBounds.Builder();
 				}
 				boundsBuilder.include(myLastLatLng);
 				currentBounds = boundsBuilder.build();
-				//gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(currentBounds, 50));	//50px
-			}else{
+				// gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(currentBounds,
+				// 50)); //50px
+			} else {
 				currentCustomer.marker.setPosition(myLastLatLng);
 			}
 		}
@@ -184,48 +198,57 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				address = bundle.getString("address");
 				myLastAddress = address;
 				showUserMarker();
-				ProfileViewActivity.updateLocation(myLastAddress,myLastLatLng);
+				ProfileViewActivity.updateLocation(myLastAddress, myLastLatLng);
 				break;
 			}
 		}
 	}
-	
-	private static void showUserMarker(){
-		if(markerType == Constants.DRIVER){
+
+	private static void showUserMarker() {
+		if (markerType == Constants.DRIVER) {
 			currentCustomer.marker.setSnippet(myLastAddress);
-			 new Thread() {
-			        @Override public void run() {
-			        	while(MapViewActivity.currentCustomer.marker==null){
-							//loop and wait for currentCustomer constructor to complete
-							Log.i(TAG, "currentCustomer.marker==null");
+			new Thread() {
+				@Override
+				public void run() {
+					while (MapViewActivity.currentCustomer.marker == null) {
+						// loop and wait for currentCustomer constructor to
+						// complete
+						Log.i(TAG, "currentCustomer.marker==null");
+					}
+					context.runOnUiThread(new Runnable() {
+						public void run() {
+							MapViewActivity.currentCustomer.marker
+									.showInfoWindow();
+							try {
+								Thread.sleep(2000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							MapViewActivity.currentCustomer.marker
+									.hideInfoWindow();
 						}
-						context.runOnUiThread(new Runnable() {
-						    public void run() {
-						    	MapViewActivity.currentCustomer.marker.showInfoWindow();
-								try {
-									Thread.sleep(2000);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								MapViewActivity.currentCustomer.marker.hideInfoWindow();
-						    }
-						});
-			        }
-			 }.start();
+					});
+				}
+			}.start();
 		}
 	}
+
 	public static void callDB() {
 		if (markerType == Constants.DRIVER) {
 			Log.d("----", uID);
-			(new QueryDatabaseDriverLoc()).execute(uID,Double.toString(myLastLatLng.latitude),Double.toString(myLastLatLng.longitude)); // pass in uid. modify
+			(new QueryDatabaseDriverLoc()).execute(uID,
+					Double.toString(myLastLatLng.latitude),
+					Double.toString(myLastLatLng.longitude)); // pass in uid.
+																// modify
 		} else {
 			Log.d("----", uID);
 			(new QueryDatabaseCustomerLoc()).execute(uID);
 		}
-	}	
-	
-	// load markers to the map every 5 seconds based on filter and classification setting.
+	}
+
+	// load markers to the map every 5 seconds based on filter and
+	// classification setting.
 	// first query db based on myLastLatLng
 	// render markers on the map using classification and filter settings.
 	public static void loadMarkers() {
@@ -234,30 +257,28 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 			// clear all markers except for the current user
 			if (markerType == Constants.DRIVER) {
 				gmap.clear();/*
-				if (driverLst != null) {
-					for(Driver d:driverLst){
-						if(d.marker!=null){
-							d.marker.remove();
-						}else{
-							break;
-						}
-					}
-				}*/
-				if(currentCustomer!=null){
+							 * if (driverLst != null) { for(Driver d:driverLst){
+							 * if(d.marker!=null){ d.marker.remove(); }else{
+							 * break; } } }
+							 */
+				if (currentCustomer != null) {
 					gmap.addMarker(currentCustomer.markerOptions);
 					showUserMarker();
 				}
 				for (Driver driver : driverLst) {
 					driver.isActive = true;
 				}
-				if (FilterActivity.filters != null) { // filter is previously set
-					for (int key : FilterActivity.filters.get(Constants.DRIVER).keySet()) {
-						String value = FilterActivity.filters.get(Constants.DRIVER)
-								.get(key);
+				if (FilterActivity.filters != null) { // filter is previously
+														// set
+					for (int key : FilterActivity.filters.get(Constants.DRIVER)
+							.keySet()) {
+						String value = FilterActivity.filters.get(
+								Constants.DRIVER).get(key);
 						if (!value.equals("Any")) { // is not "Any"
 							if (key == Constants.COMPANY) {
 								for (Driver driver : driverLst) {
-									if (!driver.company.equals(companies.get(value))) { 
+									if (!driver.company.equals(companies
+											.get(value))) {
 										driver.isActive = false;
 									}
 								}
@@ -265,9 +286,10 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 							}
 							if (key == Constants.RATING) {
 								for (Driver driver : driverLst) {
-									if (driver.rating < ratings.get(value)) { 
+									if (driver.rating < ratings.get(value)) {
 										Log.e(TAG, String.format("%s<%s",
-												driver.rating, ratings.get(value)));
+												driver.rating,
+												ratings.get(value)));
 										driver.isActive = false;
 									}
 								}
@@ -283,7 +305,8 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 						}
 					}
 				}
-				// map out active markers and classify by assigning different icons
+				// map out active markers and classify by assigning different
+				// icons
 				boundsBuilder = new LatLngBounds.Builder();
 				if (myLastLatLng != null) {
 					boundsBuilder.include(myLastLatLng);
@@ -291,31 +314,31 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				for (Driver driver : driverLst) {
 					if (driver.isActive) {
 						BitmapDescriptor icon = findIcon(driver);
-						MarkerOptions markerOptions = new MarkerOptions().position(driver.latlng)
-								.title(driver.title())
+						MarkerOptions markerOptions = new MarkerOptions()
+								.position(driver.latlng).title(driver.title())
 								.snippet(driver.snippet()).icon(icon);
 						driver.markerOptions = markerOptions;
-						driver.marker=gmap.addMarker(markerOptions);
+						driver.marker = gmap.addMarker(markerOptions);
 						boundsBuilder.include(driver.latlng);
 					}
 				}
 				currentBounds = boundsBuilder.build();
-	
+
 				gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
-					currentBounds, 50)); // padding 50
-	
-				//showMessages(this, "Drivers Updated");
-				/*updateListView();*/
+						currentBounds, 50)); // padding 50
+
+				// showMessages(this, "Drivers Updated");
+				/* updateListView(); */
 				ListViewActivity.createList();
 			} else if (markerType == Constants.CUSTOMER) {
 			}
 		} catch (java.lang.IllegalStateException e) {
-			//Do not load markers if map size is 0
-			//Markers will be loaded next time location is updated
+			// Do not load markers if map size is 0
+			// Markers will be loaded next time location is updated
 		}
-		
+
 	}
-	
+
 	private static BitmapDescriptor findIcon(Driver driver) {
 		BitmapDescriptor icon = null;
 		// company, rating
@@ -335,8 +358,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 						.fromResource(R.drawable.taxidefault);
 			}
 
-		}
-		else if (s.equals("01")) {
+		} else if (s.equals("01")) {
 			SparseIntArray resource = new SparseIntArray();
 			resource.put(5, R.drawable.taxi5);
 			resource.put(4, R.drawable.taxi4);
@@ -350,8 +372,7 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				icon = BitmapDescriptorFactory
 						.fromResource(R.drawable.taxidefault);
 			}
-		}
-		else if (s.equals("11")) {
+		} else if (s.equals("11")) {
 			Map<String, Integer> resource = new HashMap<String, Integer>();
 			resource.put("Blue Cab5", R.drawable.taxiblue5);
 			resource.put("Blue Cab4", R.drawable.taxiblue4);
@@ -375,10 +396,9 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 				icon = BitmapDescriptorFactory
 						.fromResource(R.drawable.taxidefault);
 			}
-		}else{
+		} else {
 			// default driver icon
-			icon = BitmapDescriptorFactory
-					.fromResource(R.drawable.taxidefault);
+			icon = BitmapDescriptorFactory.fromResource(R.drawable.taxidefault);
 		}
 		return icon;
 	}
@@ -408,55 +428,59 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 
 	@Override
 	public void deactivate() {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
 	}
-	
-    public void onCameraChange(CameraPosition arg0) {
-        // Move camera.
-        gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 10));
-        // Remove listener to prevent position reset on camera move.
-        gmap.setOnCameraChangeListener(null);
-    }
+
+	public void onCameraChange(CameraPosition arg0) {
+		// Move camera.
+		gmap.moveCamera(CameraUpdateFactory.newLatLngBounds(
+				boundsBuilder.build(), 10));
+		// Remove listener to prevent position reset on camera move.
+		gmap.setOnCameraChangeListener(null);
+	}
 
 	@Override
 	public void onClick(View v) {
-		int yellow=R.color.Yellow;
-		int lightYellow=R.color.LightYellow;
-		switch(v.getId()){
+		int yellow = R.color.Yellow;
+		int lightYellow = R.color.LightYellow;
+		switch (v.getId()) {
 		case R.id.hailTaxi:
-			if(hailStatus==true){
+			if (hailStatus == true) {
 				v.setBackgroundColor(getResources().getColor(lightYellow));
 				ProfileViewActivity.cancelHail();
 				Toast.makeText(this, "Pick-up request Cancelled.",
 						Toast.LENGTH_SHORT).show();
-				hailStatus=false;
-			}else{
+				hailStatus = false;
+			} else {
 				v.setBackgroundColor(getResources().getColor(yellow));
 				Time today = new Time(Time.getCurrentTimezone());
 				today.setToNow();
-				String waitTime=getAverageArrivalTime();
-				ProfileViewActivity.updateHail(today.format("%k:%M:%S"), waitTime);
-				Toast.makeText(this, "Pick-up request sent to all drivers in the view. Arrive in "
-						+" "+waitTime+"  minutes",
+				String waitTime = getAverageArrivalTime();
+				ProfileViewActivity.updateHail(today.format("%k:%M:%S"),
+						waitTime);
+				Toast.makeText(
+						this,
+						"Pick-up request sent to all drivers in the view. Arrive in "
+								+ " " + waitTime + "  minutes",
 						Toast.LENGTH_SHORT).show();
-				hailStatus=true;
+				hailStatus = true;
 			}
 		}
 	}
-	
-	private static String getAverageArrivalTime(){
-		double sum=0;
-		int count=0;
-		for(Driver d:driverLst){
-			if(d.isActive){		//30 miles/hour speed
-				sum+=d.distance;
+
+	private static String getAverageArrivalTime() {
+		double sum = 0;
+		int count = 0;
+		for (Driver d : driverLst) {
+			if (d.isActive) { // 30 miles/hour speed
+				sum += d.distance;
 				count++;
 			}
 		}
-		return Integer.toString((int)(sum/count/30*60));
+		return Integer.toString((int) (sum / count / 30 * 60));
 	}
-	
-	//Creates user filters
+
+	// Creates user filters
 	private static void createFilters() {
 		// set up filter mapping
 		companies = new HashMap<String, String>();
@@ -474,70 +498,76 @@ public class MapViewActivity extends FragmentActivity implements OnClickListener
 		distance.put("Within 20 mins", 10);
 		distance.put("Within 10 mins", 5);
 	}
-	
+
 	private boolean doubleBackToExitPressedOnce = false;
 
 	@Override
-	protected void onResume() {			// called when logged in with authentication.
-	    super.onResume();
-	    // .... other stuff in my onResume ....
-	    this.doubleBackToExitPressedOnce = false;
+	protected void onResume() { // called when logged in with authentication.
+		super.onResume();
+		enableLocationUpdate();
+		// .... other stuff in my onResume ....
+		this.doubleBackToExitPressedOnce = false;
 	}
 
 	@Override
-	public void onBackPressed() {		//this handler helps to reset the variable after 2 second.
-        if (doubleBackToExitPressedOnce) {
-            //super.onBackPressed();
-        	finish();
-            Login.exitStatus=true;
-            return;
-        }
-        //super.onBackPressed();
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-             doubleBackToExitPressedOnce=false;   
-            }
-        }, 2000);
-    }
-	
-	public void onDestroy(){
-    	super.onDestroy();
-    	Log.e(TAG, "Map view onDestroy()");
-
-    }
-	public void onPause(){
-    	super.onPause();
-    	Log.e(TAG, "Map view onPause()");
-    }
-
-	// this is the callback called for pressing both double clicking back 
-	// or single clicking home button. 
-    public void onStop(){
-    	super.onStop();
-    	//Log.e(TAG, "Map view onStop()");
-        diableLocationUpdate();
-    }
-    
-    public void onStart(){
-    	super.onStart();
-    	Log.e(TAG, "onStart()");
-    }
-
-    public void onRestart(){
-    	super.onRestart();
-    	Log.e(TAG, "onRestart()");
-    }
-    
-	public static void diableLocationUpdate(){
-		locationManager.removeUpdates(locationListener);		// remove location updates after app exits
+	public void onBackPressed() { // this handler helps to reset the variable
+									// after 2 second.
+		if (doubleBackToExitPressedOnce) {
+			// super.onBackPressed();
+			finish();
+			Login.exitStatus = true;
+			return;
+		}
+		// super.onBackPressed();
+		this.doubleBackToExitPressedOnce = true;
+		Toast.makeText(this, "Please click BACK again to exit",
+				Toast.LENGTH_SHORT).show();
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				doubleBackToExitPressedOnce = false;
+			}
+		}, 2000);
 	}
-	
+
+	public void onDestroy() {
+		super.onDestroy();
+		Log.e(TAG, "Map view onDestroy()");
+
+	}
+
+	public void onPause() {
+		super.onPause();
+		Log.e(TAG, "Map view onPause()");
+	}
+
+	// this is the callback called for pressing both double clicking back
+	// or single clicking home button.
+	public void onStop() {
+		super.onStop();
+		// Log.e(TAG, "Map view onStop()");
+		diableLocationUpdate();
+	}
+
+	public void onStart() {
+		super.onStart();
+		Log.e(TAG, "onStart()");
+	}
+
+	public void onRestart() {
+		super.onRestart();
+		Log.e(TAG, "onRestart()");
+	}
+
+	public static void diableLocationUpdate() {
+		locationManager.removeUpdates(locationListener); // remove location
+															// updates after app
+															// exits
+	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
-	  super.onConfigurationChanged(newConfig);
-	  FragmentTabsActivity.currentTabIndex=0;
+		super.onConfigurationChanged(newConfig);
+		FragmentTabsActivity.currentTabIndex = 0;
 	}
 }
