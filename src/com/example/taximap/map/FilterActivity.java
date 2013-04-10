@@ -32,28 +32,33 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		}
 	}
 	
+	//Called every time Filters menu is selected 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.filter_layout);
 		((Button) findViewById(R.id.button_apply_filter)).setOnClickListener(this);
+		//Check if filters and classifications were previously setup
 		if (filters == null) {
-			filters = new SparseArray<Map<Integer, String>>();
-			classifications = new SparseArray<Map<Integer, Boolean>>();
-			resetFilter();
+			//Setup filters and classifications, plus view
+			createFilter();
+			//Set checkboxes to unchecked
 			companyCheck=((CheckBox) findViewById(R.id.by_company));
 			companyCheck.setChecked(false);
 			ratingCheck=((CheckBox) findViewById(R.id.by_rating));
 			ratingCheck.setChecked(false);
+			//Set classification to none
 			classificationCode[0]='0';
 			classificationCode[1]='0';
 		}
+		//Setup spinners using filter values
 		initSpinner();
 	}
 	protected void onResume(){
 		super.onResume();
 	}
-	private static void resetFilter(){
-		filters.clear();
+	private static void createFilter(){
+		filters = new SparseArray<Map<Integer, String>>();
+		classifications = new SparseArray<Map<Integer, Boolean>>();
 		if (markerType == Constants.DRIVER) {
 			filters.put(Constants.DRIVER, new HashMap<Integer, String>());
 			filters.get(Constants.DRIVER).put(Constants.COMPANY, "");
@@ -63,7 +68,6 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 			filters.put(Constants.CUSTOMER, new HashMap<Integer, String>());
 			filters.get(Constants.CUSTOMER).put(Constants.DISTANCE, "");
 		}
-		classifications.clear();
 		if (markerType == Constants.DRIVER) {
 			classifications.put(Constants.DRIVER, new HashMap<Integer, Boolean>());
 			classifications.get(Constants.DRIVER).put(Constants.COMPANY, false);
@@ -75,7 +79,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		}
 	}
 	
-	private void initSpinner() {		//set filters to empty
+	//Set spinners to values
+	private void initSpinner() {
 		Spinner sp;
 		int itemLst = 0, viewId = 0;
 		if (markerType == Constants.DRIVER) {
@@ -101,13 +106,18 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 								android.R.layout.simple_spinner_item);
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				sp.setAdapter(adapter);
-			    for (int position = 0; position < adapter.getCount(); position++)
-			    {
-			        if(adapter.getItem(position) == filters.get(Constants.DRIVER).get(key))
-			        {
-			            sp.setSelection(position);
-			        }
-			    }				
+				String tmp = filters.get(Constants.DRIVER).get(key);
+				if (!tmp.equals("") && !tmp.equals("Any")) {
+				    for (int position = 0; position < adapter.getCount(); position++)
+				    {
+				    	//If filter was previously set
+				        if(adapter.getItem(position) == filters.get(Constants.DRIVER).get(key))
+				        {
+				        	//set spinner to previously selected value
+				            sp.setSelection(position);
+				        }
+				    }
+				}
 				sp.setOnItemSelectedListener(this);
 			}
 		} else if (markerType == Constants.CUSTOMER) { // not tested
