@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Taxi Map</string>
+  	<string name="help_title">Help</string>
+	<string name="settings_label">Settings</string>
+	
+	<!-- start for login -->
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login_button">Login</string>
+    <string name="new_user_button">New User</string>
+    <string name="new_account">Create New Account</string>
+    <string name="new_user">User Name</string>
+    <string name="new_password">Password</string>
+    <string name="new_register">New? Register Here</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <!-- end for login -->
+    
+    <string name="permission_launch_activity"> This permission allows launching an activity in this application </string>
+    <string name="hail_taxi_button">Hail Taxi</string>
+    <string name="pref_button">Preferences</string>
+    <string name="profile_button">User Profile</string>
+
+	<!-- start for maps -->
+    <string name="switch_view">Switch View</string>
+    <string name="customer_map_view">Customer Map View</string>
+    <string name="driver_map_view">Driver Map View</string>
+    <string name="generic_map_label">Map View</string>
+    <string name="test_load_customers">Test Load Customers</string>
+    <string name="test_load_drivers">Test Load Customers</string>
+    <!-- end for maps -->
+
+
+    <!-- edit profile -->
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="edit_new_password">New Password</string>
+    <string name="edit_confirm_password">Confirm New Password</string>
+    <string name="edit_phone_number">Phone Number</string>
+    <string name="edit_save">Save</string>
+    <string name="edit_cancel">Cancel</string>
+    <!-- end profile -->
+
+	<!-- filter -->
+    <string-array name="car_type">
+        <item>Any</item>
+        <item>Van</item>
+        <item>Car</item>
+    </string-array>
+    <string name="filter_apply">Apply</string>
+    <string name="filter_options">Options</string>
+    <string name="filter_distance">Distance:</string>
+    <string name="filter_rating">Rating:</string>
+    <string name="filter_company">Company:</string>
+    <string name="filter_by_rating">By Rating</string>
+    <string name="filter_by_company">By Company</string>
+    <!-- Changed items the same as defined in the db. Wei -->
+    <!-- Company filters -->
+    <string-array name="company_list">		
+        <item>Any</item>
+        <item>Blue Cab</item>
+        <item>Yellow Cab</item>
+        <item>Green Cab</item>
+    </string-array>
+    <string-array name="rating_list">
+        <item>Any</item>		
+        <item>5 Stars</item>
+        <item>4 Stars and Above</item>
+        <item>3 Stars and Above</item>
+        <item>2 Stars and Above</item>
+        <item>1 Star and Above</item>
+    </string-array>
+	<string-array name="dist_list">
+	    <item>Any</item>		
+        <item>Within 30 mins</item>
+        <item>Within 20 mins</item>
+        <item>Within 10 mins</item>
+    </string-array>
+</resources>

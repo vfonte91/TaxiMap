@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textview_height">25dp</dimen>
+    <dimen name="textview_width">150dp</dimen>
+    <dimen name="ball_radius">30dp</dimen>
+    <dimen name="font_size">16sp</dimen>
+    
+    <dimen name="default_text">16sp</dimen>
+    <dimen name="default_title">20sp</dimen>
+    <dimen name="default_padding">10dip</dimen>
+    
+    <dimen name="margin_top1">10dip</dimen>
+    <dimen name="margin_top2">20dip</dimen>
+    <dimen name="margin_top3">30dip</dimen>
+    
+    <dimen name="margin_bottom1">10dip</dimen>
+    <dimen name="margin_bottom2">20dip</dimen>
+    <dimen name="margin_bottom3">30dip</dimen>
+    
+    <dimen name="padding1">10dip</dimen>
+    <dimen name="padding2">20dip</dimen>
+    <dimen name="padding3">30dip</dimen>
+    
+    <dimen name="text1">15sp</dimen>
+    <dimen name="text2">20sp</dimen>
+    <dimen name="text3">25sp</dimen>
+    
+</resources>
