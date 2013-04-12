@@ -47,6 +47,9 @@ public class ProfileViewActivity extends Activity {
     		Account userAccount = accounts[accounts.length - 1];
     		username = mAccountManager.getUserData(userAccount, Constants.USER_DATA_KEY);
     	}
+    	else {
+    		username = "penis";
+    	}
 	}
 	
 	public static void updateLocation(String add, LatLng latlng) {
