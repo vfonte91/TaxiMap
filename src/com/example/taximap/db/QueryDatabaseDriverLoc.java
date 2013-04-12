@@ -1,3 +1,6 @@
+//Class connects to remote server to retrive 20 nearest drivers and return their locations to MapViewActivity
+//On remote connection this class also updates the customers location in the MySQL database
+
 package com.example.taximap.db;
 
 import java.io.BufferedReader;
@@ -48,7 +51,7 @@ public class QueryDatabaseDriverLoc  extends AsyncTask<String, Void, Integer>{
 		        BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);	
 	        	MapViewActivity.driverLst = new ArrayList<Driver>();
 	        	
-	        	//Populate driver list with values returned from server
+	        	//Populate driver list with values of 20 nearest drivers returned from server
 		        while((line = reader.readLine()) != null){
 		        	return_count++;
 				    JSONObject json_convert = new JSONObject(line);
