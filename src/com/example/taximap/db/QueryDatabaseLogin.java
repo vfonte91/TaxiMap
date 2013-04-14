@@ -1,3 +1,7 @@
+//Class connects to remote server to check if username/pass combo matches the database
+//Connection is secure in that all passwords sent are strongly encrypted 
+//If connection is succesful this class will start the MapViewActivity, if not the user will be prompted
+
 package com.example.taximap.db;
 
 import java.io.BufferedReader;
@@ -74,10 +78,10 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 			 Log.e("???",result[0].toString()+" "+result[1].toString());
 			 if(result[1]==0){		//customer login
 		        	MapViewActivity.markerType = Constants.DRIVER;
-		     }else{
+		     }else{					//driver login
 		        	MapViewActivity.markerType = Constants.CUSTOMER;
 		     }
-	            context.startActivity(new Intent(context,FragmentTabsActivity.class));  		//changed from   TabLayoutActivity      
+	            context.startActivity(new Intent(context,FragmentTabsActivity.class));      
         } else if(result[0]==-5){ //If the database couldn't be connected to show error
         	new AlertDialog.Builder(context)
     		.setTitle("Error")
@@ -86,7 +90,7 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
     			public void onClick(DialogInterface dialog, int which) {}
     		})
     		.show();
-        } else {  //If couldnt find user/pass combo in database promt user
+        } else {  //If couldnt find user/pass combo in database prompt user
         	new AlertDialog.Builder(context)
     		.setTitle("Error")
     		.setMessage("Login failed")

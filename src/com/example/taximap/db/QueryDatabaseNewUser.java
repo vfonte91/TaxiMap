@@ -1,3 +1,5 @@
+//Class connects to remote server to create a new user, on success user will be sent back to login page
+
 package com.example.taximap.db;
 
 import java.io.BufferedReader;
@@ -69,6 +71,7 @@ public class QueryDatabaseNewUser  extends AsyncTask<String, Void, Integer>{
 	}
 	
 	protected void onPostExecute(Integer result) {
+		
 		if(result==1){ //Success
 			//Create new account based on username and account type
 			Account account = new Account(username, Constants.ACCOUNT_TYPE);
