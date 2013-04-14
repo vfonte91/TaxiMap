@@ -49,7 +49,7 @@ public class ProfileViewActivity extends Activity {
     		username = mAccountManager.getUserData(userAccount, Constants.USER_DATA_KEY);
     	}
     	else {
-    		username = "penis";
+    		username = "username";
     	}
 	}
 	
