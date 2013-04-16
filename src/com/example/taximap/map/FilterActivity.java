@@ -170,7 +170,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 			}
 			
 			//this.setResult(RESULT_OK, this.getIntent());
-			Toast.makeText(this, "Loading new markers.."+new String(classificationCode), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Loading new markers..", Toast.LENGTH_SHORT).show();
 			FragmentTabsActivity.tabHost.setCurrentTab(0);
 			this.finish();
 			break;
