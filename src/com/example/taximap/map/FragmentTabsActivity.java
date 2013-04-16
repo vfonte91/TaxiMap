@@ -65,16 +65,16 @@ public class FragmentTabsActivity extends ActivityGroup {
 									int which) {
 								// Get all the accounts for this application on
 								// this device
-								Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
-								// There maybe more than one account, so the
-								// last one created is used
-								Account userAccount = accounts[accounts.length - 1];
-								// set LOGOUT key to null in users Account so it
-								// won't automatically log in
-								mAccountManager.setUserData(userAccount,Constants.LOGOUT, "true");
-								// Go back to log in screen
-								//finish();
-								//Login.exitStatus=true;
+								try {
+									Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+									// There maybe more than one account, so the
+									// last one created is used
+									Account userAccount = accounts[accounts.length - 1];
+									// set LOGOUT key to null in users Account so it
+									// won't automatically log in
+									mAccountManager.setUserData(userAccount,Constants.LOGOUT, "true");
+									// Go back to log in screen
+								} catch (Exception e) {}
 								startActivity(new Intent(
 										FragmentTabsActivity.this, Login.class));
 
@@ -96,9 +96,7 @@ public class FragmentTabsActivity extends ActivityGroup {
 	public boolean onOptionsItemSelected(MenuItem item) { // menu/action bar
 		switch (item.getItemId()) {
 		case R.id.menu_filter:
-			// requestCode=1
 			// Go to filter page
-			//startActivityForResult(this.filterIntent, 1);
 			startActivity(this.filterIntent);
 			break;
 		case R.id.menu_help:

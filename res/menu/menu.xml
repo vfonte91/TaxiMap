@@ -10,7 +10,7 @@
         android:title="Help"/>
     <item
         android:id="@+id/menu_contacts"
-        android:title="Contacts"/>
+        android:title="About"/>
     <item
         android:id="@+id/menu_exit"
         android:title="Log Out"/>
