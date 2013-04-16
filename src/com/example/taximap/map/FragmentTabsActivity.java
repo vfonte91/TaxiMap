@@ -56,6 +56,7 @@ public class FragmentTabsActivity extends ActivityGroup {
 				.setContent(new Intent(this, ProfileViewActivity.class))); // Adding
 																			// videos
 																			// tab
+		tabHost.setCurrentTab(2);
 		tabHost.setCurrentTab(currentTabIndex);
 	}
 
