@@ -8,10 +8,13 @@ import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Login extends Activity implements OnClickListener{
    private EditText userNameEditableField;
@@ -39,41 +42,34 @@ public class Login extends Activity implements OnClickListener{
      }
     
 	public static Boolean exitStatus=false;
+    private boolean doubleBackToExitPressedOnce = false;
     public void onResume(){
     	if(exitStatus==true){
     		finish();
     	}
+		this.doubleBackToExitPressedOnce = false;
     	super.onResume();
     	//Log.i(TAG, "onResume()");
     }
 
-    // The commented functions are for due 3
-    /*public void onStart(){
-    	super.onStart();
-    	Log.i(TAG, "onStart()");
-    }
-
-
-
-    public void onPause(){
-    	super.onPause();
-    	Log.i(TAG, "onPause()");
-    }
-
-    public void onStop(){
-    	super.onStop();
-    	Log.i(TAG, "onStop()");
-    }
-
-    public void onDestroy(){
-    	super.onDestroy();
-    	Log.i(TAG, "onDestroy()");
-    }
-
-    public void onRestart(){
-    	super.onRestart();
-    	Log.i(TAG, "onRestart()");
-    }*/
+	@Override
+	public void onBackPressed() { // this handler helps to reset the variable
+									// after 2 second.
+		if (doubleBackToExitPressedOnce) {
+			super.onBackPressed();
+			finish();
+		}
+		// super.onBackPressed();
+		this.doubleBackToExitPressedOnce = true;
+		Toast.makeText(this, "Please click BACK again to exit",
+				Toast.LENGTH_SHORT).show();
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				doubleBackToExitPressedOnce = false;
+			}
+		}, 2000);
+	}
     
     //Check if account exists on device
     private boolean savedAccount() {

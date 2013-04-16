@@ -79,8 +79,11 @@ public class FragmentTabsActivity extends ActivityGroup {
 								// won't automatically log in
 								//mAccountManager.setUserData(userAccount,Constants.LOGOUT, "true");
 								// Go back to log in screen
+								finish();
+								Login.exitStatus=true;
 								startActivity(new Intent(
 										FragmentTabsActivity.this, Login.class));
+
 							}
 						})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
