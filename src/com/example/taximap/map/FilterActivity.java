@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.taximap.Constants;
 import com.example.taximap.R;
@@ -23,7 +24,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	public static SparseArray<Map<Integer, Boolean>> classifications;	
 	private static int markerType;
 	private static CheckBox companyCheck,ratingCheck;
-	public static char[] classificationCode={'0','0'}; //company and rating 
+	public static char[] classificationCode={'0','0'}; //company and rating
+	
 	static {
 		if (MapViewActivity.markerType != 0) {
 			markerType = MapViewActivity.markerType;
@@ -42,14 +44,15 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 			//Setup filters and classifications, plus view
 			createFilter();
 			//Set checkboxes to unchecked
-			companyCheck=((CheckBox) findViewById(R.id.by_company));
-			companyCheck.setChecked(false);
-			ratingCheck=((CheckBox) findViewById(R.id.by_rating));
-			ratingCheck.setChecked(false);
-			//Set classification to none
-			classificationCode[0]='0';
-			classificationCode[1]='0';
 		}
+		// set listener
+		companyCheck=((CheckBox) findViewById(R.id.by_company));
+		companyCheck.setChecked(false);
+		ratingCheck=((CheckBox) findViewById(R.id.by_rating));
+		ratingCheck.setChecked(false);
+		//Set classification to none
+		classificationCode[0]='0';
+		classificationCode[1]='0';
 		//Setup spinners using filter values
 		initSpinner();
 	}
@@ -120,20 +123,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 				}
 				sp.setOnItemSelectedListener(this);
 			}
-		} else if (markerType == Constants.CUSTOMER) { // not tested
-			findViewById(R.id.textView1).setVisibility(View.GONE);
-			findViewById(R.id.textView2).setVisibility(View.GONE);
-			findViewById(R.id.company_filter).setVisibility(View.GONE);
-			findViewById(R.id.rating_filter).setVisibility(View.GONE);
-			int[] keyArray = {Constants.DISTANCE};
-			for (int key : keyArray) {
-				if (key == Constants.DISTANCE) {
-					itemLst = R.array.dist_list;
-					viewId = R.id.dist_filter;
-				}
-			}
-		}
-		
+		}		
 	}
 
 	// fires on new selection
@@ -178,8 +168,11 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 			}else{
 				classificationCode[1]='0';
 			}
-			this.setResult(RESULT_OK, this.getIntent());
-            this.finish();
+			
+			//this.setResult(RESULT_OK, this.getIntent());
+			Toast.makeText(this, "Loading new markers.."+new String(classificationCode), Toast.LENGTH_SHORT).show();
+			FragmentTabsActivity.tabHost.setCurrentTab(0);
+			this.finish();
 			break;
 		}
 	}

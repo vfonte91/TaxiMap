@@ -252,7 +252,7 @@ public class MapViewActivity extends FragmentActivity implements
 	// first query db based on myLastLatLng
 	// render markers on the map using classification and filter settings.
 	public static void loadMarkers() {
-
+		
 		try {
 			// clear all markers except for the current user
 			if (markerType == Constants.DRIVER) {
@@ -280,25 +280,32 @@ public class MapViewActivity extends FragmentActivity implements
 									if (!driver.company.equals(companies
 											.get(value))) {
 										driver.isActive = false;
+									}else{
+										driver.isActive = true;
 									}
 								}
-								FilterActivity.classificationCode[0] = '1';
+								FilterActivity.classificationCode[0] = '1';		// should classify by company by default
 							}
 							if (key == Constants.RATING) {
 								for (Driver driver : driverLst) {
 									if (driver.rating < ratings.get(value)) {
-										Log.e(TAG, String.format("%s<%s",
+/*										Log.e(TAG, String.format("%s<%s",
 												driver.rating,
-												ratings.get(value)));
+												ratings.get(value)));*/
 										driver.isActive = false;
+									}else{
+										driver.isActive = true;
 									}
 								}
-								FilterActivity.classificationCode[1] = '1';
+								FilterActivity.classificationCode[1] = '1';		// should classify by rating by default
 							}
 							if (key == Constants.DISTANCE) {
 								for (Driver driver : driverLst) {
 									if (driver.distance > distance.get(value)) {
 										driver.isActive = false;
+									}
+									else{
+										driver.isActive = true;
 									}
 								}
 							}
@@ -507,6 +514,7 @@ public class MapViewActivity extends FragmentActivity implements
 		enableLocationUpdate();
 		// .... other stuff in my onResume ....
 		this.doubleBackToExitPressedOnce = false;
+		Log.e(TAG, "Map view onResume()");
 	}
 
 	@Override
@@ -551,12 +559,15 @@ public class MapViewActivity extends FragmentActivity implements
 
 	public void onStart() {
 		super.onStart();
-		Log.e(TAG, "onStart()");
+		Log.e(TAG, "Map View onStart()");
 	}
 
-	public void onRestart() {
+	public void onRestart() {		
 		super.onRestart();
-		Log.e(TAG, "onRestart()");
+		if(driverLst!=null){
+			loadMarkers();
+		}
+		Log.e(TAG, "Map View onRestart()");
 	}
 
 	public static void diableLocationUpdate() {

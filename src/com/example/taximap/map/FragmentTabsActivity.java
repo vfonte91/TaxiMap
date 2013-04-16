@@ -22,7 +22,7 @@ public class FragmentTabsActivity extends ActivityGroup {
 	private Intent filterIntent;
 	private Intent helpIntent;
 	private Intent contactIntent;
-	private static TabHost tabHost = null;
+	public static TabHost tabHost = null;
 	public static int currentTabIndex = 0;
 
 	/** Called when the activity is first created. */
@@ -103,7 +103,8 @@ public class FragmentTabsActivity extends ActivityGroup {
 		case R.id.menu_filter:
 			// requestCode=1
 			// Go to filter page
-			startActivityForResult(this.filterIntent, 1);
+			//startActivityForResult(this.filterIntent, 1);
+			startActivity(this.filterIntent);
 			break;
 		case R.id.menu_help:
 			// go to help page
@@ -121,14 +122,15 @@ public class FragmentTabsActivity extends ActivityGroup {
 	}
 
 	// callback from filter activity
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+/*	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			// do something
 			if (resultCode == RESULT_OK) {
+				Toast.makeText(this, "onActivityResult", Toast.LENGTH_SHORT)
+				.show();
 				// Set tab to map
 				tabHost.setCurrentTab(0);
 				// Load markers with new filters
-				MapViewActivity.loadMarkers();
 			} else {
 				Toast.makeText(this, "Filter Cancelled", Toast.LENGTH_SHORT)
 						.show();
@@ -138,5 +140,5 @@ public class FragmentTabsActivity extends ActivityGroup {
 					.show();
 		}
 	}
-
+*/
 }
