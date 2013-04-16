@@ -23,6 +23,7 @@ import com.example.taximap.Constants;
 import com.example.taximap.map.FragmentTabsActivity;
 import com.example.taximap.map.MapViewActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -81,7 +82,8 @@ public class QueryDatabaseLogin  extends AsyncTask<String, Void, Integer[]>{
 		     }else{					//driver login
 		        	MapViewActivity.markerType = Constants.CUSTOMER;
 		     }
-	            context.startActivity(new Intent(context,FragmentTabsActivity.class));      
+	            context.startActivity(new Intent(context,FragmentTabsActivity.class));   
+	            ((Activity) context).finish();
         } else if(result[0]==-5){ //If the database couldn't be connected to show error
         	new AlertDialog.Builder(context)
     		.setTitle("Error")

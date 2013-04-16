@@ -80,7 +80,7 @@ public class FragmentTabsActivity extends ActivityGroup {
 								//mAccountManager.setUserData(userAccount,Constants.LOGOUT, "true");
 								// Go back to log in screen
 								finish();
-								Login.exitStatus=true;
+								//Login.exitStatus=true;
 								startActivity(new Intent(
 										FragmentTabsActivity.this, Login.class));
 

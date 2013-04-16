@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -157,7 +158,7 @@ public class ListViewActivity extends Activity implements
 									// after 2 second.
 		if (doubleBackToExitPressedOnce) {
 			finish();
-			Login.exitStatus = true;
+			startActivity(new Intent(this, Login.class));
 			MapViewActivity.diableLocationUpdate(); // remove location updates
 													// after app exits
 			return;

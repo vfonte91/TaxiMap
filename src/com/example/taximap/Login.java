@@ -41,22 +41,26 @@ public class Login extends Activity implements OnClickListener{
         }
      }
     
-	public static Boolean exitStatus=false;
+	//public static Boolean exitStatus=false;
     private boolean doubleBackToExitPressedOnce = false;
     public void onResume(){
-    	if(exitStatus==true){
+    	/*if(exitStatus==true){
     		finish();
-    	}
+    	}*/
 		this.doubleBackToExitPressedOnce = false;
     	super.onResume();
     	//Log.i(TAG, "onResume()");
     }
+    
+/*    public void quiteApplication(){
+    	finish();
+    }*/
 
 	@Override
 	public void onBackPressed() { // this handler helps to reset the variable
 									// after 2 second.
 		if (doubleBackToExitPressedOnce) {
-			super.onBackPressed();
+			//super.onBackPressed();
 			finish();
 		}
 		// super.onBackPressed();

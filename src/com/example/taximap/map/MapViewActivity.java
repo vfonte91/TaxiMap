@@ -523,7 +523,8 @@ public class MapViewActivity extends FragmentActivity implements
 		if (doubleBackToExitPressedOnce) {
 			// super.onBackPressed();
 			finish();
-			Login.exitStatus = true;
+			startActivity(new Intent(
+					this, Login.class));
 		}
 		// super.onBackPressed();
 		this.doubleBackToExitPressedOnce = true;

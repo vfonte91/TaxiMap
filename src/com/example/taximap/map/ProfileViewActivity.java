@@ -3,6 +3,7 @@ package com.example.taximap.map;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -74,7 +75,7 @@ public class ProfileViewActivity extends Activity {
 	public void onBackPressed() {		//this handler helps to reset the variable after 2 second.
         if (doubleBackToExitPressedOnce) {
         	finish();
-            Login.exitStatus=true;
+        	startActivity(new Intent(this, Login.class));
             return;
         }
         //super.onBackPressed();
