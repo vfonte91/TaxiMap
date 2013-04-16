@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight=".70"
-        android:apiKey="@string/maps_api_key"
         android:clickable="true"
         android:enabled="true" />
 
@@ -18,8 +17,5 @@
         android:id="@+id/load_drivers"
         android:layout_marginTop="@dimen/margin_top2"
         android:text="@string/test_load_drivers" />
-
-    <!-- Emulator 0K2eMNyjc5HFPsiobLh6uLHb8F9ZFmh4uIm7VTA -->
-    <!-- Real Device 0l4sCTTyRmXQBa7aedeNr7yN2V3ake5LgKVIzRA -->
 
 </LinearLayout>

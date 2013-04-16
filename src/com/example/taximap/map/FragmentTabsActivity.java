@@ -33,8 +33,8 @@ public class FragmentTabsActivity extends ActivityGroup {
 															// func
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_tabs);
+		mAccountManager = AccountManager.get(this);
 		if (tabHost == null) {
-			mAccountManager = AccountManager.get(this);
 			// Wei put them into this if statement so they only created once.
 			this.contactIntent = new Intent(this, Contact.class);
 			this.helpIntent = new Intent(this, Help.class);
@@ -45,17 +45,11 @@ public class FragmentTabsActivity extends ActivityGroup {
 		tabHost.setup(this.getLocalActivityManager());
 		// Adding all TabSpec to TabHost
 		tabHost.addTab(tabHost.newTabSpec("Map").setIndicator("Map")
-				.setContent(new Intent(this, MapViewActivity.class))); // Adding
-																		// photos
-																		// tab
+				.setContent(new Intent(this, MapViewActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec("List").setIndicator("List")
-				.setContent(new Intent(this, ListViewActivity.class))); // Adding
-																		// songs
-																		// tab
+				.setContent(new Intent(this, ListViewActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec("Profile").setIndicator("Profile")
-				.setContent(new Intent(this, ProfileViewActivity.class))); // Adding
-																			// videos
-																			// tab
+				.setContent(new Intent(this, ProfileViewActivity.class))); 
 		tabHost.setCurrentTab(2);
 		tabHost.setCurrentTab(currentTabIndex);
 	}
@@ -71,15 +65,15 @@ public class FragmentTabsActivity extends ActivityGroup {
 									int which) {
 								// Get all the accounts for this application on
 								// this device
-								//Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+								Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
 								// There maybe more than one account, so the
 								// last one created is used
-								//Account userAccount = accounts[accounts.length - 1];
+								Account userAccount = accounts[accounts.length - 1];
 								// set LOGOUT key to null in users Account so it
 								// won't automatically log in
-								//mAccountManager.setUserData(userAccount,Constants.LOGOUT, "true");
+								mAccountManager.setUserData(userAccount,Constants.LOGOUT, "true");
 								// Go back to log in screen
-								finish();
+								//finish();
 								//Login.exitStatus=true;
 								startActivity(new Intent(
 										FragmentTabsActivity.this, Login.class));
@@ -121,25 +115,4 @@ public class FragmentTabsActivity extends ActivityGroup {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	// callback from filter activity
-/*	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1) {
-			// do something
-			if (resultCode == RESULT_OK) {
-				Toast.makeText(this, "onActivityResult", Toast.LENGTH_SHORT)
-				.show();
-				// Set tab to map
-				tabHost.setCurrentTab(0);
-				// Load markers with new filters
-			} else {
-				Toast.makeText(this, "Filter Cancelled", Toast.LENGTH_SHORT)
-						.show();
-			}
-		} else {
-			Toast.makeText(this, "Request Code Error", Toast.LENGTH_SHORT)
-					.show();
-		}
-	}
-*/
 }
