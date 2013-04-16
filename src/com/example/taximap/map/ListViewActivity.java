@@ -23,7 +23,8 @@ public class ListViewActivity extends Activity implements
 		android.view.View.OnClickListener {
 	private static Activity context;
 	private static String sortField = "name";
-
+	private static ListView list=null;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_list_layout);
@@ -44,7 +45,7 @@ public class ListViewActivity extends Activity implements
 		if (context == null) {
 			return;
 		}
-		ListView list = (ListView) context.findViewById(R.id.listview);
+		list = (ListView) context.findViewById(R.id.listview);
 		list.setAdapter(null);
 		ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
 		// sort DriverList by name default

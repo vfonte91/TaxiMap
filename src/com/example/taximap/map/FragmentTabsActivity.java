@@ -71,15 +71,13 @@ public class FragmentTabsActivity extends ActivityGroup {
 									int which) {
 								// Get all the accounts for this application on
 								// this device
-								Account[] accounts = mAccountManager
-										.getAccountsByType(Constants.ACCOUNT_TYPE);
+								//Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
 								// There maybe more than one account, so the
 								// last one created is used
-								Account userAccount = accounts[accounts.length - 1];
+								//Account userAccount = accounts[accounts.length - 1];
 								// set LOGOUT key to null in users Account so it
 								// won't automatically log in
-								mAccountManager.setUserData(userAccount,
-										Constants.LOGOUT, "true");
+								//mAccountManager.setUserData(userAccount,Constants.LOGOUT, "true");
 								// Go back to log in screen
 								startActivity(new Intent(
 										FragmentTabsActivity.this, Login.class));
