@@ -273,7 +273,7 @@ public class MapViewActivity extends FragmentActivity implements
 					for (int key : FilterActivity.filters.get(Constants.DRIVER)
 							.keySet()) {
 						String value = FilterActivity.filters.get(
-								Constants.DRIVER).get(key);
+								Constants.DRIVER).get(key); 
 						if (!value.equals("Any")) { // is not "Any"
 							if (key == Constants.COMPANY) {
 								for (Driver driver : driverLst) {
